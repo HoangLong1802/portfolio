@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <h1>My Portfolio</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Hello! I am a web developer passionate about building beautiful websites.</p>
+            <img src="profile.jpg" alt="My Profile Picture" />
+        </section>
+
+        <section id="projects">
+            <h2>Projects</h2>
+            <ul>
+                <li>Project One - <a href="https://github.com/yourusername/project1" target="_blank" rel="noopener">GitHub Repo</a></li>
+                <li>Project Two - <a href="https://github.com/yourusername/project2" target="_blank" rel="noopener">GitHub Repo</a></li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <form id="contact-form">
+                <label for="name">Name:</label><br />
+                <input type="text" id="name" name="name" required /><br />
+                
+                <label for="email">Email:</label><br />
+                <input type="email" id="email" name="email" required /><br />
+                
+                <label for="message">Message:</label><br />
+                <textarea id="message" name="message" required></textarea><br />
+                
+                <button type="submit">Send</button>
+            </form>
+            <p id="form-message"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Portfolio</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+z`
