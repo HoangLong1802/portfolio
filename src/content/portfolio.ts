@@ -413,7 +413,10 @@ export const portfolioContent = {
         "I bridge users, systems, and engineering by turning support problems into practical workflows, automation, and software experiments.",
     },
     a11y: {
+      mobileNavigation: "Mobile navigation",
+      mobileNavigationToggle: "Open navigation menu",
       primaryNavigation: "Primary navigation",
+      themeToggle: "Toggle theme",
       skipToContent: "Skip to content",
     },
     navigation: [
@@ -536,7 +539,10 @@ export const portfolioContent = {
         "Tôi kết nối người dùng, hệ thống và kỹ thuật bằng cách chuyển vấn đề support thành workflow thực tế, automation và thử nghiệm phần mềm.",
     },
     a11y: {
+      mobileNavigation: "Điều hướng di động",
+      mobileNavigationToggle: "Mở menu điều hướng",
       primaryNavigation: "Điều hướng chính",
+      themeToggle: "Chuyển giao diện sáng/tối",
       skipToContent: "Bỏ qua tới nội dung",
     },
     navigation: [

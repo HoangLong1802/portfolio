@@ -42,7 +42,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   - `npm run typecheck`
   - `npm run test` once a test script exists
   - `npm run build`
-- The current `package.json` does not define a test script. Do not claim tests passed until one exists; document this limitation or add focused tests when behavior changes.
+- The current `package.json` defines a test script. Run it and report the actual result for every implementation phase.
 - If any check cannot run or fails, report the exact command and reason.
 
 ## Security And Secrets

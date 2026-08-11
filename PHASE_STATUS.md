@@ -1,34 +1,33 @@
 # Phase Status
 
-Last updated: 2026-08-11
+Last updated: 2026-08-12
 
 ## Stop Conditions
 
 - Stop before production deployment unless the user explicitly authorizes deployment and provides required account/domain/public URL decisions.
 - Stop before publishing verified personal information that has not been supplied: CV files, email, LinkedIn, exact job dates/titles, screenshots, and public KPI permission.
-- Do not claim tests, demos, deployment, metrics, or production usage without current evidence.
+- Do not claim tests, demos, deployment, metrics, customers, production usage, or project outcomes without current evidence.
 
-## Current Phase Summary
+## Phase Tracker
 
-| Phase | Status | Evidence | Verification |
-| --- | --- | --- | --- |
-| Repository rules / AGENTS.md | Complete | `AGENTS.md` contains durable repository rules and keeps detailed phase instructions in `docs/PORTFOLIO_PLAN.md`. | Read back and checked required headings/commands. |
-| Phase 0 - Audit, positioning, execution plan | Complete | `docs/PHASE_0_AUDIT.md` records current repo audit, public repo evidence, positioning, sitemap, content model, architecture, test strategy, risks, phases, and missing facts. | Reviewed source plan, current worktree, Next.js 16 local docs, and seven public repositories cloned to ignored `.repo-audit/`. |
-| Phase 1 - Scaffold, content model, quality gates | Complete | Next.js App Router foundation now uses typed bilingual content in `src/content/portfolio.ts`, locale routes, reusable server components, Vitest content guardrails, and truthful project limitations. | Passed `npm run lint`, `npm run typecheck`, `npm run test`, and `npm run build`. |
-| Phase 2 - Visual system and responsive shell | Pending | Phase 1 provides the static shell and content model; the final visual system is not started. | Not started. |
-| Phase 3 - Hero, experience, metrics, skills, contact | Blocked on verified personal facts | Needs current CV, public KPI permission, email, LinkedIn, exact dates/titles, and CV asset. | Not started. |
-| Phase 4 - Project cards and case studies | Pending | Phase 0 project audit exists; screenshots/live URLs still need confirmation. | Not started. |
-| Phase 5 - Motion and memorable interactions | Pending | Must wait until static content and shell are complete. | Not started. |
-| Phase 6 - Built with Codex journal | Pending | Needs actual phase history and commits. | Not started. |
-| Phase 7 - SEO, accessibility, performance, testing | Pending | Must wait until content/routes are complete. | Not started. |
-| Phase 8 - Vercel deployment | Stop before production | Requires user authorization, verified public URLs, CV/contact data, and account/domain decisions. | Not started. |
-| Phase 9 - Final HR and technical review | Pending | Requires deployment-ready portfolio. | Not started. |
+| Phase | Current status | Acceptance criteria | Verification results | Blockers | Related commit |
+| --- | --- | --- | --- | --- | --- |
+| Phase 0 - Audit, positioning, execution plan | Complete | Evidence-based project inventory; unsupported claims identified; positioning, sitemap, content model, architecture, risks, phases, and missing facts documented; no app code changed. | `docs/PHASE_0_AUDIT.md` created from repo inspection, ignored `.repo-audit/` clones, and Next.js 16 local docs. App checks not run because Phase 0 was docs/status only. | None for Phase 0. | `0338211` |
+| Phase 1 - Scaffold, content model, quality gates | Complete | Current Next.js App Router foundation; strict TypeScript; typed bilingual content; home/project routes; reusable semantic components; lint/typecheck/test/build scripts; safe `.env.example`, README, decision log. | Passed `npm run lint`; `npm run typecheck`; `npm run test` (6 tests); `npm run build` (24 static pages/routes). | None for Phase 1. | `d9030f3` |
+| Phase 2 - Visual system and responsive shell | Complete | Navy/charcoal visual system; CSS design tokens; sticky responsive nav; language switcher; theme control; footer; accessible links/cards/badges/focus states; simple CSS transitions only; QA at 360/768/1024/1440. | Passed `npm run lint`; `npm run typecheck`; `npm run test` (6 tests); `npm run build` (24 static pages/routes). Production QA passed for EN/VN at all four widths with no horizontal overflow; keyboard/mouse/touch menu, theme, reduced motion, and 200% effective-scale checks passed. See `docs/PHASE_2_VISUAL_QA.md`. | None for Phase 2. | Pending local commit |
+| Phase 3 - Hero, experience, metrics, skills, contact | Pending | Verified recruiter-facing hero, metrics, about, experience, skills, education, contact, CV behavior, and equivalent EN/VN copy. | Not started. | Requires current CV, public KPI permission, email, LinkedIn, exact dates/titles, and CV asset. | Pending |
+| Phase 4 - Featured project cards and case-study pages | Pending | Evidence-backed featured/secondary project cards and detail pages; honest demo/screenshot status; architecture diagrams; tests for data/routes. | Not started. | Requires owner-approved screenshots or explicit approval for labelled placeholders; live/demo URLs beyond DevMentor need verification. | Pending |
+| Phase 5 - Motion and memorable interactions | Pending | Reduced-motion-aware motion layer; no scroll hijacking; no hydration/console errors; reported bundle/performance impact. | Not started. | Depends on static content and project pages. | Pending |
+| Phase 6 - Built with Codex journal | Pending | Homepage process link and `/process` pages sourced from real phase history and commits; no fake productivity or runtime claims. | Not started. | Depends on actual phase history. | Pending |
+| Phase 7 - SEO, accessibility, performance, testing | Pending | Metadata, structured data where valid, robust 404/empty states, automated tests where practical, keyboard/contrast/reduced-motion audit, Lighthouse report, secret scan, dependency review. | Not started. | Depends on content/routes being complete enough to audit honestly. | Pending |
+| Phase 8 - Vercel deployment | Stop before production | Local build verified; preview deployment prepared and smoke-tested; production promotion only after explicit approval. | Not started. | Requires account/login authorization, canonical URL, final public contact/CV/demo decisions, and explicit production approval. | Pending |
+| Phase 9 - Final HR and technical review | Pending | HR, support-manager, and senior-frontend review; findings first; approved fixes only; full checks after fixes. | Not started. | Requires deployment-ready portfolio. | Pending |
 
 ## Latest Verification Notes
 
-- `git status --short` initially failed because the folder was not a Git repository.
-- DevMentor Vercel URL from repository metadata returned HTTP 200 to a HEAD request.
-- Application checks were not run for Phase 0 because this phase changed documentation/status only and the current scaffold was already known to be off-plan.
-- `.repo-audit/` is ignored and contains shallow clones used only for local evidence gathering.
-- Phase 1 verification passed on 2026-08-11: `npm run lint`, `npm run typecheck`, `npm run test` (6 tests), and `npm run build` (24 static pages/routes generated).
-- Next.js route types are generated through `next typegen` before `tsc --noEmit`; stale `.next/dev` artifacts were removed after path verification.
+- Phase 0 evidence lives in `docs/PHASE_0_AUDIT.md`.
+- Phase 1 content guardrails live in `src/content/portfolio.test.ts`.
+- `next typegen` runs before `tsc --noEmit` in `npm run typecheck`.
+- `.repo-audit/`, `.next/`, `node_modules/`, `next-env.d.ts`, and `test-results/` are ignored.
+- Phase 2 production QA used Microsoft Edge 151 with exact DevTools Protocol viewport metrics; generated screenshots and raw results remain in ignored `test-results/phase2/`.
+- The first Phase 2 screenshot attempt was invalid because it used a stale server. Final QA was rerun against the current production build after restarting the server.

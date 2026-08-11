@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { RootShell } from "@/components/layout/root-shell";
 import { createRootMetadata, viewport } from "@/lib/seo";
+import "../globals.css";
 
 export { viewport };
 

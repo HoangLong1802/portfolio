@@ -105,7 +105,10 @@ export type ContactContent = {
 };
 
 export type A11yContent = {
+  readonly mobileNavigation: string;
+  readonly mobileNavigationToggle: string;
   readonly primaryNavigation: string;
+  readonly themeToggle: string;
   readonly skipToContent: string;
 };
 

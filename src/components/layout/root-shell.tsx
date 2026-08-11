@@ -9,12 +9,32 @@ type RootShellProps = {
   readonly locale: Locale;
 };
 
+function ThemeScript() {
+  const script = `
+    (function () {
+      try {
+        var storedTheme = window.localStorage.getItem("portfolio-theme");
+        var prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        var theme = storedTheme === "light" || storedTheme === "dark"
+          ? storedTheme
+          : prefersLight ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+      } catch (error) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+  `;
+
+  return <script dangerouslySetInnerHTML={{ __html: script }} />;
+}
+
 export function RootShell({ children, locale }: RootShellProps) {
   const content = getPortfolioContent(locale);
 
   return (
-    <html lang={content.lang} suppressHydrationWarning>
+    <html lang={content.lang} data-theme="dark" suppressHydrationWarning>
       <body>
+        <ThemeScript />
         <a className="skip-link" href="#main-content">
           {content.a11y.skipToContent}
         </a>
