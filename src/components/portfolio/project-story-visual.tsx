@@ -84,7 +84,7 @@ export function ProjectStoryVisual({ project }: ProjectStoryVisualProps) {
         </div>
       ) : null}
 
-      {project.slug === "webbanjewry" ? (
+      {project.slug === "jewelry-commerce" ? (
         <div className="project-visual__canvas project-visual__canvas--commerce" aria-hidden="true">
           <div className="project-visual__products">
             <span />

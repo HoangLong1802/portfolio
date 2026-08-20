@@ -1,5 +1,5 @@
 import { portfolioContent } from "@/content/portfolio";
-import { supportedLocales, type Locale, type Metric, type PortfolioContent, type Project } from "@/types/portfolio";
+import { supportedLocales, type EvidenceLink, type Locale, type Metric, type PortfolioContent, type Project } from "@/types/portfolio";
 
 export const defaultLocale: Locale = "en";
 
@@ -12,7 +12,20 @@ export function getAllProjects(locale: Locale = defaultLocale): readonly Project
 }
 
 export function getProjectBySlug(locale: Locale, slug: string): Project | undefined {
-  return getAllProjects(locale).find((project) => project.slug === slug);
+  const resolvedSlug = slug === "webbanjewry" || slug === "jewelry-store" ? "jewelry-commerce" : slug;
+  return getAllProjects(locale).find((project) => project.slug === resolvedSlug);
+}
+
+export function getProjectEvidenceLinks(project: Project): {
+  readonly demo: EvidenceLink | undefined;
+  readonly source: EvidenceLink | undefined;
+} {
+  return {
+    demo: project.evidence.find(
+      (item) => !item.href.startsWith("https://github.com/") && /demo/i.test(`${item.label} ${item.note}`),
+    ),
+    source: project.evidence.find((item) => item.href.startsWith("https://github.com/")),
+  };
 }
 
 export function getPublicMetrics(metrics: readonly Metric[]): readonly Metric[] {

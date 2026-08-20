@@ -479,3 +479,25 @@ Review all uncommitted changes against AGENTS.md and the current phase acceptanc
 - Codex tự đọc hướng dẫn repo trong `AGENTS.md`: https://learn.chatgpt.com/docs/agent-configuration/agents-md
 - Motion for React hỗ trợ reduced-motion và có chiến lược giảm bundle bằng LazyMotion: https://motion.dev/docs/react-accessibility và https://motion.dev/docs/react-lazy-motion
 - Vercel hỗ trợ triển khai Next.js với cấu hình tối thiểu: https://vercel.com/docs/frameworks/full-stack/nextjs
+
+## 21. Navigation, project selection and scroll-motion upgrade
+
+```text
+Maintain one shared active-section provider for the header and left progress navigation.
+
+Implementation constraints:
+- Observe the eight canonical homepage section IDs with one IntersectionObserver reading zone.
+- Use a requestAnimationFrame geometry fallback only when IntersectionObserver is unavailable.
+- Lock the selected navigation target during smooth anchor travel, then release on scrollend or a cleaned-up stability fallback.
+- Keep hashes native so direct loads and browser history continue to work without route reloads.
+- Render Helpdesk Lab, DevMentor AI, and Jewelry Commerce from the existing project data through one accessible tab selector.
+- Keep Helpdesk-specific lab evidence visible only when Helpdesk Lab is selected.
+- Use the installed Motion package for heading/content reveals, a short stagger for the three project cards, and a 320ms-or-less project-panel transition.
+- Reduced motion must remove translations, smooth scrolling, and indicator interpolation.
+
+Acceptance:
+- Scroll order is 01 → 08 downward and 08 → 01 upward without reversals or skipped readable sections.
+- Clicking Experience, Skills, Projects, and Certifications shows only the intended active item during smooth travel.
+- Mouse/touch and Arrow/Home/End keyboard project selection update the selected card and tabpanel without moving the page.
+- EN/VI layouts pass at 375, 430, 768, 1024, and 1440px with no horizontal overflow.
+```

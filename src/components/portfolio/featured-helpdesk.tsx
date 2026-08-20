@@ -1,4 +1,5 @@
 import type { FeaturedLabContent } from "@/types/portfolio";
+import { portfolioSections } from "@/config/portfolio-sections";
 import { ExternalLink } from "../ui/external-link";
 import { PageSection } from "../ui/page-section";
 
@@ -9,7 +10,13 @@ type FeaturedHelpdeskProps = {
 
 export function FeaturedHelpdesk({ content, externalLabel }: FeaturedHelpdeskProps) {
   return (
-    <PageSection body={content.body} eyebrow={content.eyebrow} id="project" title={content.title}>
+    <PageSection
+      body={content.body}
+      eyebrow={content.eyebrow}
+      id={portfolioSections.helpdeskLab}
+      navigationParent={portfolioSections.projects}
+      title={content.title}
+    >
       <aside className="featured-lab__why" aria-labelledby="featured-lab-why-title">
         <h3 id="featured-lab-why-title">{content.whyTitle}</h3>
         <div>

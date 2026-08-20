@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { getProjectEvidenceLinks } from "@/lib/portfolio";
 import type { PortfolioContent, Project } from "@/types/portfolio";
 import { ExternalLink } from "../ui/external-link";
 import { PageSection } from "../ui/page-section";
 import { StatusBadge } from "../ui/status-badge";
+import { ProjectDemoSequence } from "./project-demo-sequence";
 
 type ProjectDetailPageProps = {
   readonly content: PortfolioContent;
@@ -11,6 +13,7 @@ type ProjectDetailPageProps = {
 
 export function ProjectDetailPage({ content, project }: ProjectDetailPageProps) {
   const backHref = content.locale === "vi" ? "/vi#projects" : "/#projects";
+  const { demo, source } = getProjectEvidenceLinks(project);
 
   return (
     <article className="section-shell project-detail">
@@ -23,6 +26,28 @@ export function ProjectDetailPage({ content, project }: ProjectDetailPageProps) 
       </div>
       <h1>{project.title}</h1>
       <p className="project-detail__summary">{project.summary}</p>
+      <div className="project-detail__actions">
+        {source ? (
+          <ExternalLink
+            className="action-link action-link--secondary"
+            externalLabel={content.a11y.externalLink}
+            href={source.href}
+            label={content.projectLabels.sourceRepository}
+          />
+        ) : null}
+        {demo && !project.backendHealthUrl ? (
+          <ExternalLink
+            className="action-link action-link--primary"
+            externalLabel={content.a11y.externalLink}
+            href={demo.href}
+            label={content.projectLabels.liveDemo}
+          />
+        ) : null}
+      </div>
+      {project.demoNotice ? <p className="project-demo-notice project-demo-notice--detail">{project.demoNotice}</p> : null}
+      {demo && project.backendHealthUrl ? (
+        <ProjectDemoSequence content={content} demoHref={demo.href} project={project} />
+      ) : null}
 
       <PageSection
         body={project.problem}

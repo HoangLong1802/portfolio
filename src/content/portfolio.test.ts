@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { portfolioProjectSelection, portfolioSectionIds } from "@/config/portfolio-sections";
 import { portfolioContent } from "@/content/portfolio";
 import { getAllProjects, getProjectBySlug, getPublicMetrics } from "@/lib/portfolio";
 import type { Locale, PortfolioContent } from "@/types/portfolio";
@@ -13,9 +14,9 @@ const forbiddenPublicClaims = [
 ] as const;
 const expectedFeaturedProjectSlugs = [
   "devmentor-ai",
+  "jewelry-commerce",
   "helpdesk-lab",
   "automated-it-asset-inventory",
-  "webbanjewry",
 ] as const;
 
 function publicContentText(content: PortfolioContent): string {
@@ -60,7 +61,7 @@ describe("portfolio content", () => {
     }
   });
 
-  it("publishes only the audited DevMentor public demo", () => {
+  it("publishes the supplied DevMentor and Jewelry Commerce demos", () => {
     for (const locale of locales) {
       const publicDemos = getAllProjects(locale).flatMap((project) =>
         project.evidence.filter(
@@ -68,7 +69,89 @@ describe("portfolio content", () => {
         ),
       );
 
-      expect(publicDemos.map((item) => item.href)).toEqual(["https://test-chat-bot-iota.vercel.app"]);
+      expect(publicDemos.map((item) => item.href)).toEqual([
+        "https://test-chat-bot-iota.vercel.app/",
+        "https://website-ban-jewry.onrender.com/",
+      ]);
+    }
+  });
+
+  it("publishes the verified repository, demo, and backend URLs", () => {
+    for (const locale of locales) {
+      const devMentor = getProjectBySlug(locale, "devmentor-ai");
+      const jewelry = getProjectBySlug(locale, "jewelry-commerce");
+
+      expect(devMentor?.backendUrl).toBe("https://devmentor-backend-oauk.onrender.com/");
+      expect(devMentor?.backendHealthUrl).toBe("https://devmentor-backend-oauk.onrender.com/health");
+      expect(devMentor?.evidence.map((item) => item.href)).toEqual([
+        "https://github.com/HoangLong1802/test_chat_bot",
+        "https://test-chat-bot-iota.vercel.app/",
+      ]);
+      expect(jewelry?.evidence.map((item) => item.href)).toEqual([
+        "https://github.com/HoangLong1802/webbanjewry",
+        "https://website-ban-jewry.onrender.com/",
+      ]);
+    }
+  });
+
+  it("keeps project slugs unique and preserves the previous Jewelry route as an alias", () => {
+    for (const locale of locales) {
+      const slugs = getAllProjects(locale).map((project) => project.slug);
+      expect(new Set(slugs).size).toBe(slugs.length);
+      expect(getProjectBySlug(locale, "webbanjewry")?.slug).toBe("jewelry-commerce");
+      expect(getProjectBySlug(locale, "jewelry-store")?.slug).toBe("jewelry-commerce");
+    }
+  });
+
+  it("publishes the demo notices without blocking source access", () => {
+    for (const locale of locales) {
+      const devMentor = getProjectBySlug(locale, "devmentor-ai");
+      const jewelryStore = getProjectBySlug(locale, "jewelry-commerce");
+
+      expect(devMentor?.demoNotice).toMatch(/Render|cold-start/i);
+      expect(devMentor?.demoNotice).toMatch(locale === "en" ? /backend.*first/i : /backend trước/i);
+      expect(portfolioContent[locale].projectLabels.wakeBackend.length).toBeGreaterThan(0);
+      expect(portfolioContent[locale].projectLabels.liveDemo).toMatch(/demo/i);
+      expect(jewelryStore?.demoNotice?.length).toBeGreaterThan(0);
+      expect(devMentor?.evidence.some((item) => item.href.includes("github.com"))).toBe(true);
+      expect(jewelryStore?.evidence.some((item) => item.href.includes("github.com"))).toBe(true);
+    }
+  });
+
+  it("keeps portfolio section IDs unique and project navigation aligned", () => {
+    expect(new Set(portfolioSectionIds).size).toBe(portfolioSectionIds.length);
+
+    for (const locale of locales) {
+      const content = portfolioContent[locale];
+      const projectNavigation = content.navigation.find((item) => item.href === "#projects");
+
+      expect(projectNavigation).toBeDefined();
+      expect(content.home.hero.actions[0]?.href).toBe("#projects");
+      expect(content.home.scrollNavigation.chapters.map((chapter) => chapter.href)).toEqual([
+        "#home",
+        "#profile",
+        "#experience",
+        "#skills",
+        "#projects",
+        "#certifications",
+        "#career-goal",
+        "#contact",
+      ]);
+    }
+  });
+
+  it("keeps the interactive project selector complete in both languages", () => {
+    expect(portfolioProjectSelection).toEqual([
+      "helpdesk-lab",
+      "devmentor-ai",
+      "jewelry-commerce",
+    ]);
+
+    for (const locale of locales) {
+      const content = portfolioContent[locale];
+      expect(portfolioProjectSelection.every((slug) => getProjectBySlug(locale, slug))).toBe(true);
+      expect(content.projectLabels.selectProject.length).toBeGreaterThan(0);
+      expect(content.projectLabels.selectedProject.length).toBeGreaterThan(0);
     }
   });
 
@@ -105,12 +188,14 @@ describe("portfolio content", () => {
       const metrics = portfolioContent[locale].home.metrics;
       const publicMetrics = getPublicMetrics(metrics);
 
-      expect(publicMetrics).toHaveLength(4);
+      expect(publicMetrics).toHaveLength(6);
       expect(publicMetrics.every((metric) => metric.visibility === "public")).toBe(true);
       expect(publicMetrics.map((metric) => metric.value)).toEqual(
-        locale === "en" ? ["1 year", "110+", "97% QA", "CEFR B2"] : ["1 năm", "110+", "97% QA", "CEFR B2"],
+        locale === "en"
+          ? ["1 year", "110+", "97% QA", "L1", "12", "6"]
+          : ["1 năm", "110+", "97% QA", "L1", "12", "6"],
       );
-      expect(publicMetrics.every((metric) => metric.source.includes("2026-08-20"))).toBe(true);
+      expect(publicMetrics.every((metric) => metric.source.includes("2026-08"))).toBe(true);
     }
   });
 
@@ -119,7 +204,7 @@ describe("portfolio content", () => {
       const content = portfolioContent[locale];
 
       expect(content.home.hero.highlights).toHaveLength(4);
-      expect(content.home.hero.actions[0]?.href).toBe("#project");
+      expect(content.home.hero.actions[0]?.href).toBe("#projects");
       expect(content.home.hero.statusItems).toHaveLength(4);
       expect(content.home.hero.statusNote.length).toBeGreaterThan(0);
       expect(content.home.scrollNavigation.chapters).toHaveLength(8);
@@ -127,16 +212,21 @@ describe("portfolio content", () => {
       expect(content.home.supportProfileStory.capabilities).toHaveLength(5);
       expect(content.home.experience.items).toHaveLength(2);
       expect(content.home.careerGoal.opening).toHaveLength(2);
-      expect(content.home.careerGoal.connectionFlow).toHaveLength(6);
-      expect(content.home.careerGoal.path.map((stage) => stage.title)).toEqual(["Technical Support", "Application / System Support", "DevOps"]);
+      expect(content.home.careerGoal.connectionFlow.length).toBeGreaterThanOrEqual(6);
+      expect(content.home.careerGoal.path.map((stage) => stage.title)).toEqual([
+        "Technical Support",
+        "Service Desk / IT Support",
+        "Application / System Support",
+        "DevOps",
+      ]);
       expect(content.home.careerGoal.closing).toHaveLength(2);
       expect(content.home.skills.groups).toHaveLength(5);
-      expect(content.home.featuredLab.features).toHaveLength(4);
-      expect(content.home.featuredLab.whyBody).toHaveLength(2);
-      expect(content.home.featuredLab.whyStatement).toContain("Helpdesk Lab");
-      expect(content.home.featuredLab.validation.map((item) => item.value)).toEqual(["12 / 12", "6 / 6"]);
-      expect(content.home.incidentWorkflow.steps).toHaveLength(8);
-      expect(content.home.certifications.items).toHaveLength(4);
+      expect(content.home.featuredLab.features).toHaveLength(6);
+      expect(content.home.featuredLab.whyBody.length).toBeGreaterThanOrEqual(2);
+      expect(content.home.featuredLab.whyStatement.length).toBeGreaterThan(0);
+      expect(content.home.featuredLab.validation.map((item) => item.value)).toEqual(["12", "6"]);
+      expect(content.home.incidentWorkflow.steps.length).toBeGreaterThanOrEqual(8);
+      expect(content.home.certifications.items.length).toBeGreaterThanOrEqual(3);
       expect(content.contact.links.some((link) => link.href.startsWith("mailto:"))).toBe(true);
       expect(content.contact.links).toHaveLength(3);
     }

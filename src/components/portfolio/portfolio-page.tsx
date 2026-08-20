@@ -1,11 +1,12 @@
+import { portfolioSections } from "@/config/portfolio-sections";
 import { getPublicMetrics } from "@/lib/portfolio";
 import type { PortfolioContent } from "@/types/portfolio";
+import { Reveal } from "../motion/reveal";
 import { ExternalLink } from "../ui/external-link";
 import { PageSection } from "../ui/page-section";
 import { CareerGoal } from "./career-goal";
 import { ExperienceTimeline } from "./experience-timeline";
-import { FeaturedHelpdesk } from "./featured-helpdesk";
-import { IncidentWorkflow } from "./incident-workflow";
+import { ProjectShowcase } from "./project-showcase";
 import { ScrollProgressNavigation } from "./scroll-progress-navigation";
 
 type PortfolioPageProps = {
@@ -19,7 +20,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
     <>
       <ScrollProgressNavigation content={content.home.scrollNavigation} />
 
-      <section className="section-shell hero" id="home">
+      <section className="section-shell hero" id={portfolioSections.home}>
         <div className="hero__copy">
           <p className="eyebrow">{content.home.hero.eyebrow}</p>
           <h1>{content.profile.name}</h1>
@@ -65,7 +66,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         </aside>
       </section>
 
-      <section className="support-profile" id="profile" aria-labelledby="support-profile-title">
+      <section className="support-profile" id={portfolioSections.profile} aria-labelledby="support-profile-title">
         <div className="evidence-strip" aria-label={content.home.metricsLabel}>
           <div className="evidence-strip__inner">
             <p className="evidence-strip__label">{content.home.metricsLabel}</p>
@@ -80,25 +81,31 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
           </div>
         </div>
         <div className="section-shell support-profile__story">
-          <p className="eyebrow">{content.home.supportProfileStory.eyebrow}</p>
-          <h2 id="support-profile-title">{content.home.supportProfileStory.title}</h2>
-          <div className="support-profile__description">
-            {content.home.supportProfileStory.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-          </div>
-          <ol aria-label={content.home.supportProfileStory.eyebrow}>
-            {content.home.supportProfileStory.capabilities.map((capability, index) => (
-              <li key={capability}>
-                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                <strong>{capability}</strong>
-              </li>
-            ))}
-          </ol>
+          <Reveal pattern="heading">
+            <div className="support-profile__heading">
+              <p className="eyebrow">{content.home.supportProfileStory.eyebrow}</p>
+              <h2 id="support-profile-title">{content.home.supportProfileStory.title}</h2>
+              <div className="support-profile__description">
+                {content.home.supportProfileStory.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
+            </div>
+          </Reveal>
+          <Reveal>
+            <ol aria-label={content.home.supportProfileStory.eyebrow}>
+              {content.home.supportProfileStory.capabilities.map((capability, index) => (
+                <li key={capability}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{capability}</strong>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </div>
       </section>
 
       <ExperienceTimeline content={content.home.experience} />
 
-      <PageSection body={content.home.skills.body} eyebrow={content.home.skills.eyebrow} id="skills" title={content.home.skills.title}>
+      <PageSection body={content.home.skills.body} eyebrow={content.home.skills.eyebrow} id={portfolioSections.skills} title={content.home.skills.title}>
         <div className="skill-grid">
           {content.home.skills.groups.map((group, index) => (
             <article className="skill-card" key={group.title}>
@@ -112,10 +119,9 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         </div>
       </PageSection>
 
-      <FeaturedHelpdesk content={content.home.featuredLab} externalLabel={content.a11y.externalLink} />
-      <IncidentWorkflow content={content.home.incidentWorkflow} />
+      <ProjectShowcase content={content} />
 
-      <PageSection body={content.home.certifications.body} eyebrow={content.home.certifications.eyebrow} id="certifications" title={content.home.certifications.title}>
+      <PageSection body={content.home.certifications.body} eyebrow={content.home.certifications.eyebrow} id={portfolioSections.certifications} title={content.home.certifications.title}>
         <div className="certification-grid">
           {content.home.certifications.items.map((certification) => (
             <article className="certification-card" key={certification.title}>
@@ -132,7 +138,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
 
       <CareerGoal content={content.home.careerGoal} />
 
-      <PageSection body={content.home.contact.body} eyebrow={content.home.contact.eyebrow} id="contact" title={content.home.contact.title}>
+      <PageSection body={content.home.contact.body} eyebrow={content.home.contact.eyebrow} id={portfolioSections.contact} title={content.home.contact.title}>
         <div className="action-row">
           {content.contact.links.map((link) =>
             link.href.startsWith("http") ? (

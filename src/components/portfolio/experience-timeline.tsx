@@ -1,4 +1,5 @@
 import type { ExperienceContent } from "@/types/portfolio";
+import { portfolioSections } from "@/config/portfolio-sections";
 import { PageSection } from "../ui/page-section";
 
 type ExperienceTimelineProps = {
@@ -7,7 +8,7 @@ type ExperienceTimelineProps = {
 
 export function ExperienceTimeline({ content }: ExperienceTimelineProps) {
   return (
-    <PageSection body={content.body} eyebrow={content.eyebrow} id="experience" title={content.title}>
+    <PageSection body={content.body} eyebrow={content.eyebrow} id={portfolioSections.experience} title={content.title}>
       <ol className="experience-timeline">
         {content.items.map((item) => (
           <li className="experience-item" key={`${item.company}-${item.period}`}>

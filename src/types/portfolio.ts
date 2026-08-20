@@ -65,6 +65,10 @@ export type SupportProfileStoryContent = {
   readonly title: string;
 };
 
+export type PersonalStoryContent = SectionCopy & {
+  readonly paragraphs: readonly string[];
+};
+
 export type ScrollNavigationContent = {
   readonly chapters: readonly {
     readonly href: `#${string}`;
@@ -140,6 +144,41 @@ export type CertificationsContent = SectionCopy & {
   readonly items: readonly Certification[];
 };
 
+export type HandsOnLabsContent = SectionCopy & {
+  readonly items: readonly {
+    readonly body: string;
+    readonly href: string;
+    readonly items: readonly string[];
+    readonly label: string;
+    readonly title: string;
+  }[];
+};
+
+export type EducationContent = SectionCopy & {
+  readonly items: readonly {
+    readonly note: string;
+    readonly title: string;
+  }[];
+};
+
+export type EnglishContent = SectionCopy & {
+  readonly proof: string;
+};
+
+export type DevOpsDirectionContent = SectionCopy & {
+  readonly currentItems: readonly string[];
+  readonly currentLabel: string;
+  readonly flow: readonly string[];
+  readonly futureItems: readonly string[];
+  readonly futureLabel: string;
+  readonly label: string;
+  readonly statement: string;
+};
+
+export type SupportValuesContent = SectionCopy & {
+  readonly items: readonly FocusItem[];
+};
+
 export type CareerGoalContent = {
   readonly closing: readonly string[];
   readonly connectionFlow: readonly string[];
@@ -165,20 +204,27 @@ export type HomeContent = {
   readonly careerGoal: CareerGoalContent;
   readonly certifications: CertificationsContent;
   readonly contact: SectionCopy;
+  readonly devOpsDirection?: DevOpsDirectionContent;
+  readonly education?: EducationContent;
+  readonly english?: EnglishContent;
   readonly experience: ExperienceContent;
   readonly featuredLab: FeaturedLabContent;
   readonly focus: SectionCopy & {
     readonly items: readonly FocusItem[];
   };
   readonly hero: HeroCopy;
+  readonly handsOnLabs?: HandsOnLabsContent;
   readonly incidentWorkflow: IncidentWorkflowContent;
   readonly metrics: readonly Metric[];
   readonly metricsLabel: string;
+  readonly projectOverview: SectionCopy;
   readonly projects: SectionCopy;
   readonly scrollNavigation: ScrollNavigationContent;
   readonly skills: SkillsContent;
+  readonly story: PersonalStoryContent;
   readonly supportProfileStory: SupportProfileStoryContent;
   readonly supportFlow: SupportFlowContent;
+  readonly supportValues?: SupportValuesContent;
 };
 
 export type Profile = {
@@ -204,16 +250,21 @@ export type ProjectStory = {
 };
 
 export type ProjectCategory =
+  | "ai-full-stack"
   | "automation-learning"
   | "data-science-learning"
+  | "full-stack-ecommerce"
   | "full-stack-learning"
   | "portfolio-lab"
   | "simulation-learning";
 
 export type Project = {
+  readonly backendUrl?: string;
+  readonly backendHealthUrl?: string;
   readonly category: ProjectCategory;
   readonly categoryLabel: string;
   readonly contributions: readonly string[];
+  readonly demoNotice?: string;
   readonly evidence: readonly EvidenceLink[];
   readonly limitations: readonly string[];
   readonly maturityLabel: string;
@@ -243,9 +294,12 @@ export type ProjectLabels = {
   readonly problem: string;
   readonly readCaseStudy: string;
   readonly role: string;
+  readonly selectProject: string;
+  readonly selectedProject: string;
   readonly sourceRepository: string;
   readonly techStack: string;
   readonly value: string;
+  readonly wakeBackend: string;
 };
 
 export type SiteContent = {

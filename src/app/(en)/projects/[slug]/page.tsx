@@ -10,9 +10,9 @@ type ProjectPageProps = {
 };
 
 export function generateStaticParams() {
-  return getAllProjects("en").map((project) => ({
+  return [...getAllProjects("en").map((project) => ({
     slug: project.slug,
-  }));
+  })), { slug: "jewelry-store" }, { slug: "webbanjewry" }];
 }
 
 export async function generateMetadata({ params }: ProjectPageProps) {

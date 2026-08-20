@@ -1,4 +1,5 @@
 import type { IncidentWorkflowContent } from "@/types/portfolio";
+import { portfolioSections } from "@/config/portfolio-sections";
 import { PageSection } from "../ui/page-section";
 
 type IncidentWorkflowProps = {
@@ -7,7 +8,13 @@ type IncidentWorkflowProps = {
 
 export function IncidentWorkflow({ content }: IncidentWorkflowProps) {
   return (
-    <PageSection body={content.body} eyebrow={content.eyebrow} id="workflow" title={content.title}>
+    <PageSection
+      body={content.body}
+      eyebrow={content.eyebrow}
+      id={portfolioSections.workflow}
+      navigationParent={portfolioSections.projects}
+      title={content.title}
+    >
       <div className="incident-process">
         <ol>
           {content.steps.map((step, index) => (

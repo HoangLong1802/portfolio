@@ -6,44 +6,57 @@ const englishProjects = [
   {
     slug: "devmentor-ai",
     title: "DevMentor AI",
-    category: "full-stack-learning",
-    categoryLabel: "Full-stack learning project",
-    maturityLabel: "Public demo checked on 2026-08-11",
+    backendUrl: "https://devmentor-backend-oauk.onrender.com/",
+    backendHealthUrl: "https://devmentor-backend-oauk.onrender.com/health",
+    category: "ai-full-stack",
+    categoryLabel: "AI-powered full-stack learning platform",
+    maturityLabel: "Public full-stack demo",
     summary:
-      "A learning project that combines a React client, FastAPI backend, document parsing, JWT/RBAC concepts, and OpenAI-compatible provider configuration.",
+      "An AI-assisted technical interview and tutoring platform that turns role-specific PDF learning material into document-grounded conversations, assessments, scoring, and actionable feedback.",
     problem:
-      "Explore how an AI-assisted mentoring product could combine chat, uploaded learning materials, authentication, and deployment boundaries.",
+      "Generic AI interview tools can generate questions that are disconnected from a learner's actual curriculum or technical role. DevMentor AI explores how document-grounded retrieval, structured AI prompting, authentication, and assessment state can be combined into one reproducible learning workflow.",
     story: {
       role:
-        "Built the learning project's React/FastAPI boundary, document pipeline, and supporting deployment setup.",
+        "Built the React and FastAPI application boundary, document ingestion and retrieval pipeline, authentication flow, AI evaluation workflow, assessment state, and deployment setup.",
       value:
-        "Demonstrates how document-grounded mentoring, protected workflows, and assessment state can fit within one reproducible full-stack system.",
+        "Demonstrates practical full-stack AI engineering through document-grounded interviews, protected APIs, role-based access, scored assessments, and browser-based assessment monitoring.",
       visualAlt:
-        "Product visual based on verified DevMentor features: PDF context, guided conversation, assessment scoring, and protected JWT/RBAC routes.",
-      visualLabels: ["PDF context", "Mentor chat", "Assessment", "JWT / RBAC"],
+        "DevMentor AI interface showing role-based technical learning, PDF-grounded chat, assessment scoring, and interview feedback.",
+      visualLabels: ["PDF-grounded AI", "Technical interview", "Assessment scoring", "JWT / RBAC"],
     },
     contributions: [
-      "Built a React and Vite client with a FastAPI backend boundary.",
-      "Connected document ingestion experiments with PyPDF2 and provider-based AI configuration.",
-      "Added Docker Compose and Nginx deployment notes for a reproducible local setup.",
-      "Kept backend tests in the source repository as evidence of expected behavior.",
+      "Built a responsive React SPA with desktop, tablet, and mobile workflows.",
+      "Implemented a FastAPI backend with Pydantic request validation.",
+      "Extracted PDF text with PyPDF2 and indexed overlapping document chunks.",
+      "Added bounded relevance retrieval so prompts use position-specific document context.",
+      "Generated technical interview questions and evaluated answers with structured AI responses.",
+      "Scored correctness, technical understanding, explanation, and practical application.",
+      "Implemented bcrypt password hashing, expiring JWT access tokens, and user/admin authorization.",
+      "Persisted users in MongoDB with local JSON fallback for development.",
+      "Protected chat, assessment, document, report, and administrator routes.",
+      "Handled camera permission and browser visibility events during assessments.",
+      "Recorded assessment state, answers, feedback, scores, and violation history.",
+      "Added Docker, Docker Compose, Nginx, and service health-check support.",
     ],
-    techStack: ["React", "Vite", "FastAPI", "Python", "JWT", "RBAC", "Docker", "Nginx"],
+    demoNotice:
+      "Render's free backend may need a moment to wake. Check the backend first, wait for a response, then open the frontend demo.",
+    techStack: ["React", "Vite", "FastAPI", "Python", "OpenAI API", "PyPDF2", "MongoDB", "JWT", "Docker"],
     evidence: [
       {
         label: "Source repository",
         href: `${githubBase}/test_chat_bot`,
-        note: "README, deployment notes, backend requirements, and tests were audited in Phase 0.",
+        note: "README, application source, deployment files, and backend tests document the listed capabilities.",
       },
       {
-        label: "Public demo",
-        href: "https://test-chat-bot-iota.vercel.app",
-        note: "The URL returned HTTP 200 during the 2026-08-11 local audit.",
+        label: "Live demo",
+        href: "https://test-chat-bot-iota.vercel.app/",
+        note: "Public frontend deployment; the Render-hosted API may need a short cold-start.",
       },
     ],
     limitations: [
-      "No verified real-world user base, hardened production authentication, or owner-approved screenshots yet.",
-      "AI providers require private API keys and must not be exposed through public environment variables.",
+      "No verified real-world user base or hardened production deployment is claimed.",
+      "Retrieval uses bounded chunking and relevance ranking rather than an embeddings-based vector index.",
+      "AI features require a configured backend provider key; browser-facing environment variables must not expose secrets.",
     ],
   },
   {
@@ -122,41 +135,57 @@ const englishProjects = [
     ],
   },
   {
-    slug: "webbanjewry",
-    title: "MERN Jewelry Store",
-    category: "full-stack-learning",
-    categoryLabel: "Full-stack learning project",
-    maturityLabel: "Source-audited prototype",
+    slug: "jewelry-commerce",
+    title: "Jewelry Commerce Platform",
+    category: "full-stack-ecommerce",
+    categoryLabel: "Full-stack e-commerce platform",
+    maturityLabel: "Deployed full-stack demo",
     summary:
-      "A jewelry commerce learning project with separate React clients and a Node/Express/MongoDB backend.",
+      "A full-stack jewelry e-commerce platform with separate customer and administrator experiences for product discovery, shopping, order management, and store administration.",
     problem:
-      "Practice e-commerce flows, authentication, product data, and separate client/server responsibilities.",
+      "An online retail platform requires more than a product catalog: customers need reliable browsing, cart, authentication, and ordering workflows while administrators need secure tools for managing products, categories, customers, and orders.",
     story: {
       role:
-        "Structured the learning monorepo across customer/admin React clients and the Node/Express/MongoDB backend.",
+        "Built a modular full-stack commerce application with separate React customer and administrator clients backed by a Node.js and Express API.",
       value:
-        "Demonstrates authentication, product, cart, and order-flow boundaries across separate client and server applications.",
+        "Demonstrates end-to-end e-commerce workflows, authentication, CRUD administration, API security, MongoDB persistence, and multi-client application architecture.",
       visualAlt:
-        "Product visual based on verified jewelry-store features: product discovery, cart flow, order APIs, and separate customer/admin clients.",
-      visualLabels: ["Product discovery", "Cart flow", "Order API", "Customer / admin"],
+        "Jewelry commerce interface showing product browsing, shopping flows, and store administration.",
+      visualLabels: ["E-commerce", "Admin dashboard", "Product management", "JWT authentication"],
     },
     contributions: [
-      "Structured separate frontend and backend packages.",
-      "Used Express, MongoDB, Mongoose, JWT, and bcrypt for backend learning.",
-      "Modeled user, product, cart, and order API areas in the server code.",
+      "Built dedicated React applications for customer and administrator experiences.",
+      "Implemented product browsing, search, and category-based filtering.",
+      "Added shopping-cart, order-placement, and order-tracking workflows.",
+      "Implemented customer registration, authentication, and profile management.",
+      "Protected administrator operations with JWT authentication and authorization.",
+      "Built category and product CRUD workflows with image handling.",
+      "Added order-status operations, customer management, and dashboard analytics.",
+      "Used bcrypt password hashing with MongoDB and Mongoose persistence.",
+      "Applied request validation and sanitization at API boundaries.",
+      "Configured Helmet security headers and API rate limiting.",
+      "Added email-notification support through Nodemailer.",
+      "Shared API services and application utilities across the multi-client architecture.",
     ],
-    techStack: ["React", "Node.js", "Express", "MongoDB", "Mongoose", "JWT", "bcrypt"],
+    demoNotice:
+      "Demo availability may vary on Render; the source repository remains available if the deployed service is waking or temporarily unavailable.",
+    techStack: ["React", "Node.js", "Express", "MongoDB", "Mongoose", "JWT", "Axios", "Context API"],
     evidence: [
       {
         label: "Source repository",
         href: `${githubBase}/webbanjewry`,
-        note: "README, package files, API routes, and models were audited in Phase 0.",
+        note: "README, package manifests, middleware, API routes, React clients, and data models support the listed capabilities.",
+      },
+      {
+        label: "Live demo",
+        href: "https://website-ban-jewry.onrender.com/",
+        note: "Owner-supplied Render deployment; availability can vary while the service wakes.",
       },
     ],
     limitations: [
       "The server test script intentionally exits with no tests.",
       "Default admin credentials in the source repository are not production-safe and must not be reused.",
-      "No verified live demo was found during the audit.",
+      "A public deployment URL is supplied, but no production traffic, customer usage, or uptime claim is made.",
     ],
   },
   {
@@ -248,42 +277,53 @@ const englishProjects = [
 const vietnameseProjects = [
   {
     ...englishProjects[0],
-    categoryLabel: "Dự án học full-stack",
-    maturityLabel: "Demo công khai kiểm tra ngày 2026-08-11",
+    categoryLabel: "Nền tảng học full-stack có AI",
+    maturityLabel: "Demo full-stack công khai",
     summary:
-      "Dự án học tập kết hợp React, FastAPI, xử lý tài liệu, khái niệm JWT/RBAC và cấu hình nhà cung cấp AI tương thích OpenAI.",
+      "Nền tảng luyện phỏng vấn và học kỹ thuật có AI, sử dụng tài liệu PDF theo từng vị trí để tạo hội thoại, bài assessment, chấm điểm và phản hồi theo ngữ cảnh.",
     problem:
-      "Khám phá cách một sản phẩm cố vấn học tập có AI có thể kết hợp chat, tài liệu tải lên, xác thực và ranh giới triển khai.",
+      "Các công cụ phỏng vấn AI chung có thể tạo câu hỏi không gắn với curriculum hoặc vị trí kỹ thuật cụ thể. DevMentor AI kết hợp retrieval dựa trên tài liệu, prompting có cấu trúc, authentication và trạng thái assessment thành một workflow học tập có thể tái lập.",
     story: {
       role:
-        "Xây dựng ranh giới React/FastAPI, pipeline tài liệu và cấu hình triển khai hỗ trợ cho dự án học tập.",
+        "Xây dựng ranh giới React/FastAPI, pipeline nạp và retrieval tài liệu, authentication flow, AI evaluation workflow, assessment state và cấu hình deployment.",
       value:
-        "Thể hiện cách mentoring dựa trên tài liệu, workflow được bảo vệ và trạng thái assessment kết hợp trong một hệ thống full-stack có thể tái lập.",
+        "Thể hiện full-stack AI engineering thực tế qua phỏng vấn dựa trên tài liệu, API được bảo vệ, role-based access, assessment có chấm điểm và browser monitoring.",
       visualAlt:
-        "Minh họa sản phẩm dựa trên tính năng DevMentor đã xác minh: ngữ cảnh PDF, hội thoại hướng dẫn, assessment và route JWT/RBAC được bảo vệ.",
-      visualLabels: ["Ngữ cảnh PDF", "Mentor chat", "Assessment", "JWT / RBAC"],
+        "Giao diện DevMentor AI thể hiện học kỹ thuật theo vị trí, chat dựa trên PDF, chấm điểm assessment và phản hồi phỏng vấn.",
+      visualLabels: ["AI dựa trên PDF", "Phỏng vấn kỹ thuật", "Chấm điểm", "JWT / RBAC"],
     },
     contributions: [
-      "Xây dựng client React/Vite cùng ranh giới backend FastAPI.",
-      "Thử nghiệm xử lý tài liệu bằng PyPDF2 và cấu hình AI theo nhà cung cấp.",
-      "Thêm Docker Compose và ghi chú Nginx để tái tạo môi trường cục bộ.",
-      "Giữ các bài test backend trong repository làm bằng chứng hành vi mong đợi.",
+      "Xây dựng React SPA responsive cho desktop, tablet và mobile.",
+      "Triển khai backend FastAPI với Pydantic validation.",
+      "Trích xuất PDF bằng PyPDF2 và lập chỉ mục các document chunk có overlap.",
+      "Giới hạn relevance retrieval theo tài liệu của từng vị trí.",
+      "Tạo câu hỏi phỏng vấn kỹ thuật và đánh giá câu trả lời bằng structured AI responses.",
+      "Chấm điểm correctness, technical understanding, explanation và practical application.",
+      "Triển khai bcrypt, JWT có thời hạn và phân quyền user/admin.",
+      "Lưu user bằng MongoDB với JSON fallback cho môi trường development.",
+      "Bảo vệ các route chat, assessment, document, report và admin.",
+      "Xử lý camera permission và browser visibility events trong assessment.",
+      "Lưu assessment state, câu trả lời, feedback, score và violation history.",
+      "Hỗ trợ Docker, Docker Compose, Nginx và service health check.",
     ],
+    demoNotice:
+      "Backend miễn phí trên Render có thể cần một lúc để khởi động. Hãy kiểm tra backend trước, chờ phản hồi, rồi mở frontend demo.",
     evidence: [
       {
         label: "Repository nguồn",
         href: `${githubBase}/test_chat_bot`,
-        note: "README, ghi chú triển khai, requirements backend và test đã được audit ở Phase 0.",
+        note: "README, application source, deployment files và backend tests mô tả các capability được liệt kê.",
       },
       {
-        label: "Demo công khai",
-        href: "https://test-chat-bot-iota.vercel.app",
-        note: "URL trả HTTP 200 trong audit cục bộ ngày 2026-08-11.",
+        label: "Live demo",
+        href: "https://test-chat-bot-iota.vercel.app/",
+        note: "Frontend deployment công khai; API trên Render có thể cần một khoảng cold-start ngắn.",
       },
     ],
     limitations: [
-      "Chưa có bằng chứng người dùng thực tế, xác thực production đã harden, hoặc screenshot được duyệt.",
-      "Các nhà cung cấp AI cần API key riêng và không được đưa vào biến môi trường public.",
+      "Không claim user base thực tế hoặc production deployment đã harden.",
+      "Retrieval sử dụng document chunk và relevance ranking có giới hạn, chưa dùng embeddings/vector index.",
+      "Tính năng AI cần provider key ở backend; không được expose secret qua biến môi trường phía browser.",
     ],
   },
   {
@@ -357,37 +397,53 @@ const vietnameseProjects = [
   },
   {
     ...englishProjects[3],
-    categoryLabel: "Dự án học full-stack",
-    maturityLabel: "Prototype đã audit nguồn",
+    categoryLabel: "Nền tảng e-commerce full-stack",
+    maturityLabel: "Demo full-stack đã deploy",
     summary:
-      "Dự án học e-commerce trang sức với các client React riêng và backend Node/Express/MongoDB.",
+      "Nền tảng thương mại điện tử trang sức full-stack với giao diện riêng cho khách hàng và quản trị viên, hỗ trợ duyệt sản phẩm, giỏ hàng, đơn hàng và các nghiệp vụ quản trị.",
     problem:
-      "Luyện flow e-commerce, xác thực, dữ liệu sản phẩm và trách nhiệm client/server riêng biệt.",
+      "Một cửa hàng online cần nhiều hơn product catalog: khách hàng cần authentication, browsing, cart và order flow; quản trị viên cần công cụ bảo vệ cho product, category, customer và order operations.",
     story: {
       role:
-        "Tổ chức monorepo học tập gồm client React cho customer/admin và backend Node/Express/MongoDB.",
+        "Xây dựng ứng dụng commerce modular với React client riêng cho customer và admin, sử dụng Node.js/Express API ở backend.",
       value:
-        "Thể hiện ranh giới authentication, product, cart và order flow giữa các ứng dụng client/server riêng biệt.",
+        "Thể hiện e-commerce workflow end-to-end, authentication, CRUD administration, API security, MongoDB persistence và kiến trúc application multi-client.",
       visualAlt:
-        "Minh họa sản phẩm dựa trên tính năng jewelry store đã xác minh: khám phá sản phẩm, giỏ hàng, order API và client customer/admin riêng.",
-      visualLabels: ["Khám phá sản phẩm", "Giỏ hàng", "Order API", "Customer / admin"],
+        "Giao diện thương mại trang sức thể hiện product browsing, shopping flow và quản trị cửa hàng.",
+      visualLabels: ["E-commerce", "Admin dashboard", "Quản lý sản phẩm", "JWT authentication"],
     },
     contributions: [
-      "Tách cấu trúc frontend và backend package.",
-      "Dùng Express, MongoDB, Mongoose, JWT và bcrypt cho phần học backend.",
-      "Mô hình hóa các vùng API user, product, cart và order trong server code.",
+      "Xây dựng React application riêng cho customer và administrator.",
+      "Triển khai product browsing, search và category filtering.",
+      "Thêm shopping cart, order placement và order tracking.",
+      "Triển khai customer registration, authentication và profile management.",
+      "Bảo vệ admin operations bằng JWT authentication và authorization.",
+      "Xây dựng category/product CRUD cùng image handling.",
+      "Thêm order status, customer management và dashboard analytics.",
+      "Dùng bcrypt với MongoDB/Mongoose persistence.",
+      "Áp dụng request validation và sanitization ở API boundary.",
+      "Cấu hình Helmet security headers và API rate limiting.",
+      "Hỗ trợ email notification qua Nodemailer.",
+      "Chia sẻ API services và utility giữa các client.",
     ],
+    demoNotice:
+      "Demo trên Render có thể cần thời gian khởi động hoặc tạm thời không truy cập được; source repository luôn được giữ làm bằng chứng chính.",
     evidence: [
       {
         label: "Repository nguồn",
         href: `${githubBase}/webbanjewry`,
-        note: "README, package files, API routes và models đã được audit ở Phase 0.",
+        note: "README, package manifests, middleware, API routes, React clients và data models hỗ trợ các capability được liệt kê.",
+      },
+      {
+        label: "Live demo",
+        href: "https://website-ban-jewry.onrender.com/",
+        note: "Render deployment do chủ sở hữu cung cấp; availability có thể thay đổi khi service khởi động.",
       },
     ],
     limitations: [
       "Script test của server chủ động thoát với trạng thái chưa có test.",
       "Default admin credentials trong repository nguồn không an toàn cho production và không được tái sử dụng.",
-      "Audit chưa tìm thấy live demo đã xác minh.",
+      "Có URL deployment công khai nhưng không claim production traffic, customer usage hoặc uptime.",
     ],
   },
   {
@@ -467,6 +523,27 @@ const vietnameseProjects = [
   },
 ] as const satisfies readonly Project[];
 
+const projectPriority = [
+  "devmentor-ai",
+  "jewelry-commerce",
+  "helpdesk-lab",
+  "automated-it-asset-inventory",
+  "stock-prediction-ai",
+  "educational-platform",
+  "user-setup-tool",
+] as const;
+
+function prioritizeProjects(projects: readonly Project[]): readonly Project[] {
+  return projectPriority.map((slug) => {
+    const project = projects.find((item) => item.slug === slug);
+    if (!project) throw new Error(`Missing prioritized project: ${slug}`);
+    return project;
+  });
+}
+
+const prioritizedEnglishProjects = prioritizeProjects(englishProjects);
+const prioritizedVietnameseProjects = prioritizeProjects(vietnameseProjects);
+
 export const portfolioContent = {
   en: {
     locale: "en",
@@ -500,14 +577,14 @@ export const portfolioContent = {
       { label: "Home", href: "#home" },
       { label: "Experience", href: "#experience" },
       { label: "Skills", href: "#skills" },
-      { label: "Project", href: "#project" },
+      { label: "Projects", href: "#projects" },
       { label: "Certifications", href: "#certifications" },
       { label: "Contact", href: "#contact" },
     ],
     home: {
       hero: {
         actions: [
-          { label: "Explore My Support Workflow", href: "#project" },
+          { label: "Explore My Projects", href: "#projects" },
           { label: "View Helpdesk Lab", href: `${githubBase}/Helpdesk-Lab` },
           { label: "GitHub", href: githubBase },
           { label: "Contact Me", href: "mailto:TruongHoanglong1802@gmail.com" },
@@ -614,12 +691,12 @@ export const portfolioContent = {
         label: "Portfolio story chapters",
         chapters: [
           { label: "Home", href: "#home" },
-          { label: "Story", href: "#story" },
-          { label: "Proof", href: "#profile" },
-          { label: "Goal", href: "#career-goal" },
+          { label: "Profile", href: "#profile" },
           { label: "Experience", href: "#experience" },
-          { label: "Lab", href: "#project" },
           { label: "Skills", href: "#skills" },
+          { label: "Projects", href: "#projects" },
+          { label: "Credentials", href: "#certifications" },
+          { label: "Goal", href: "#career-goal" },
           { label: "Contact", href: "#contact" },
         ],
       },
@@ -820,9 +897,14 @@ export const portfolioContent = {
         ],
       },
       projects: {
-        eyebrow: "Additional project evidence",
-        title: "More work — from investigation to implementation",
-        body: "Explore additional evidence-backed learning projects with their current maturity, source links, and limitations kept visible.",
+        eyebrow: "Engineering projects",
+        title: "Full-stack systems beyond the support lab",
+        body: "Two source-backed projects demonstrate AI-assisted learning workflows and traditional multi-client e-commerce engineering. Detailed evidence and limitations remain visible in each case study.",
+      },
+      projectOverview: {
+        eyebrow: "Selected projects",
+        title: "Support practice and full-stack engineering",
+        body: "Start with the Helpdesk Lab, then review DevMentor AI and Jewelry Commerce. Each project keeps its source, deployment status, evidence, and limitations visible.",
       },
       education: {
         eyebrow: "Education",
@@ -886,16 +968,19 @@ export const portfolioContent = {
       evidence: "Evidence",
       featuredProjects: "Featured projects",
       limitations: "Limitations",
-      liveDemo: "Live demo",
+      liveDemo: "Open Live Demo",
       moreProjects: "More learning projects",
       projectNavigation: "Featured project navigation",
       projectOf: "Project {current} of {total}",
       problem: "Problem",
       readCaseStudy: "View case study",
       role: "My verified role",
+      selectProject: "Select project",
+      selectedProject: "Selected",
       sourceRepository: "Source code",
       techStack: "Tech stack",
       value: "Value demonstrated",
+      wakeBackend: "Wake / Check Backend",
     },
     notFound: {
       actionLabel: "Return home",
@@ -903,7 +988,7 @@ export const portfolioContent = {
       eyebrow: "Not found",
       title: "This page is outside the current portfolio scope.",
     },
-    projects: englishProjects,
+    projects: prioritizedEnglishProjects,
   },
   vi: {
     locale: "vi",
@@ -935,14 +1020,14 @@ export const portfolioContent = {
       { label: "Trang chủ", href: "#home" },
       { label: "Kinh nghiệm", href: "#experience" },
       { label: "Kỹ năng", href: "#skills" },
-      { label: "Dự án", href: "#project" },
+      { label: "Dự án", href: "#projects" },
       { label: "Chứng chỉ", href: "#certifications" },
       { label: "Liên hệ", href: "#contact" },
     ],
     home: {
       hero: {
         actions: [
-          { label: "Khám phá quy trình support", href: "#project" },
+          { label: "Khám phá các dự án", href: "#projects" },
           { label: "Xem Helpdesk Lab", href: `${githubBase}/Helpdesk-Lab` },
           { label: "GitHub", href: githubBase },
           { label: "Liên hệ", href: "mailto:TruongHoanglong1802@gmail.com" },
@@ -1049,12 +1134,12 @@ export const portfolioContent = {
         label: "Các chương trong câu chuyện portfolio",
         chapters: [
           { label: "Trang chủ", href: "#home" },
-          { label: "Câu chuyện", href: "#story" },
-          { label: "Bằng chứng", href: "#profile" },
-          { label: "Mục tiêu", href: "#career-goal" },
+          { label: "Hồ sơ", href: "#profile" },
           { label: "Kinh nghiệm", href: "#experience" },
-          { label: "Lab", href: "#project" },
           { label: "Kỹ năng", href: "#skills" },
+          { label: "Dự án", href: "#projects" },
+          { label: "Chứng chỉ", href: "#certifications" },
+          { label: "Mục tiêu", href: "#career-goal" },
           { label: "Liên hệ", href: "#contact" },
         ],
       },
@@ -1194,6 +1279,17 @@ export const portfolioContent = {
         steps: ["Người dùng / Monitoring", "Phát hiện incident", "Chẩn đoán ban đầu", "Ticket / Thu thập bằng chứng", "Troubleshooting", "Xử lý hoặc Escalate", "Xác minh phục hồi", "Đóng incident"],
         note: "Sơ đồ quy trình dựng bằng CSS · không dùng thư viện diagram bên ngoài",
       },
+      supportValues: {
+        eyebrow: "Tư duy Support",
+        title: "Cách em tiếp cận công việc Support",
+        body: "Những nguyên tắc em muốn duy trì khi hỗ trợ người dùng và xử lý Incident.",
+        items: [
+          { title: "Hiểu vấn đề trước khi escalate", body: "Em cố gắng thu thập đủ thông tin để người tiếp nhận không phải bắt đầu điều tra lại từ đầu." },
+          { title: "Giao tiếp rõ ràng", body: "Một vấn đề kỹ thuật cũng là trải nghiệm của người dùng. Em muốn người dùng hiểu chuyện gì đang xảy ra và bước tiếp theo là gì." },
+          { title: "Xác minh trước khi đóng Incident", body: "Em không muốn mặc định rằng vấn đề đã được giải quyết chỉ vì một lần kiểm tra thành công." },
+          { title: "Học từ Incident", body: "Nếu một vấn đề liên tục lặp lại, em muốn tìm cách cải thiện documentation, monitoring hoặc automation thay vì chỉ xử lý lại từ đầu." },
+        ],
+      },
       certifications: {
         eyebrow: "Học vấn & chứng chỉ",
         title: "Nền tảng học tập hỗ trợ công việc kỹ thuật tuyến đầu",
@@ -1206,9 +1302,14 @@ export const portfolioContent = {
         ],
       },
       projects: {
-        eyebrow: "Bằng chứng dự án khác",
-        title: "Thêm dự án — từ điều tra đến triển khai",
-        body: "Khám phá thêm các dự án học tập có bằng chứng, với mức độ hoàn thiện, liên kết mã nguồn và giới hạn được trình bày rõ ràng.",
+        eyebrow: "Dự án engineering",
+        title: "Hệ thống full-stack bên cạnh support lab",
+        body: "Hai dự án có source rõ ràng thể hiện workflow học kỹ thuật có AI và kiến trúc e-commerce multi-client truyền thống. Bằng chứng và giới hạn được trình bày trong từng case study.",
+      },
+      projectOverview: {
+        eyebrow: "Dự án tiêu biểu",
+        title: "Thực hành support và xây dựng hệ thống full-stack",
+        body: "Bắt đầu với Helpdesk Lab, sau đó xem DevMentor AI và Jewelry Commerce. Mỗi dự án đều thể hiện rõ source, trạng thái deployment, bằng chứng và giới hạn.",
       },
       contact: {
         eyebrow: "Liên hệ",
@@ -1231,16 +1332,19 @@ export const portfolioContent = {
       evidence: "Bằng chứng",
       featuredProjects: "Dự án nổi bật",
       limitations: "Giới hạn",
-      liveDemo: "Demo trực tiếp",
+      liveDemo: "Mở Live Demo",
       moreProjects: "Thêm dự án học tập",
       projectNavigation: "Điều hướng dự án nổi bật",
       projectOf: "Dự án {current} / {total}",
       problem: "Vấn đề",
       readCaseStudy: "Xem case study",
       role: "Vai trò đã xác minh",
+      selectProject: "Chọn dự án",
+      selectedProject: "Đang chọn",
       sourceRepository: "Mã nguồn",
       techStack: "Tech stack",
       value: "Giá trị thể hiện",
+      wakeBackend: "Khởi động / Kiểm tra Backend",
     },
     notFound: {
       actionLabel: "Về trang chủ",
@@ -1248,6 +1352,6 @@ export const portfolioContent = {
       eyebrow: "Không tìm thấy",
       title: "Trang này nằm ngoài phạm vi portfolio hiện tại.",
     },
-    projects: vietnameseProjects,
+    projects: prioritizedVietnameseProjects,
   },
 } as const satisfies Record<"en" | "vi", PortfolioContent>;
