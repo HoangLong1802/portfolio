@@ -1,10 +1,10 @@
-import type { PortfolioContent } from "@/types/portfolio";
+"use client";
 
-type SiteFooterProps = {
-  readonly content: PortfolioContent;
-};
+import { usePortfolioLocale } from "../localization/portfolio-locale-provider";
 
-export function SiteFooter({ content }: SiteFooterProps) {
+export function SiteFooter() {
+  const { content } = usePortfolioLocale();
+
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">

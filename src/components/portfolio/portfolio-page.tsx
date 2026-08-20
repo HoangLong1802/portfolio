@@ -1,8 +1,12 @@
-import Link from "next/link";
-import { getLocalizedPath, getPublicMetrics } from "@/lib/portfolio";
+import { getPublicMetrics } from "@/lib/portfolio";
 import type { PortfolioContent } from "@/types/portfolio";
+import { ExternalLink } from "../ui/external-link";
 import { PageSection } from "../ui/page-section";
-import { StatusBadge } from "../ui/status-badge";
+import { CareerGoal } from "./career-goal";
+import { ExperienceTimeline } from "./experience-timeline";
+import { FeaturedHelpdesk } from "./featured-helpdesk";
+import { IncidentWorkflow } from "./incident-workflow";
+import { ScrollProgressNavigation } from "./scroll-progress-navigation";
 
 type PortfolioPageProps = {
   readonly content: PortfolioContent;
@@ -13,86 +17,130 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
 
   return (
     <>
-      <section className="section-shell hero">
-        <p className="eyebrow">{content.home.hero.eyebrow}</p>
-        <h1>{content.home.hero.title}</h1>
-        <p className="hero__summary">{content.home.hero.summary}</p>
-        <div className="action-row">
-          <Link className="action-link action-link--primary" href="#projects">
-            {content.home.hero.primaryActionLabel}
-          </Link>
-          <Link className="action-link action-link--secondary" href="#contact">
-            {content.home.hero.secondaryActionLabel}
-          </Link>
+      <ScrollProgressNavigation content={content.home.scrollNavigation} />
+
+      <section className="section-shell hero" id="home">
+        <div className="hero__copy">
+          <p className="eyebrow">{content.home.hero.eyebrow}</p>
+          <h1>{content.profile.name}</h1>
+          <p className="hero__role">{content.home.hero.title}</p>
+          <p className="hero__summary">{content.home.hero.summary}</p>
+          <ul className="hero__highlights" aria-label={content.home.hero.highlightLabel}>
+            {content.home.hero.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+          </ul>
+          <div className="action-row">
+            {content.home.hero.actions.map((action, index) => (
+              <a
+                className={`action-link ${index === 0 ? "action-link--primary" : "action-link--secondary"}`}
+                href={action.href}
+                key={action.href}
+              >
+                <span>{action.label}</span>
+                {action.href.startsWith("http") ? (
+                  <>
+                    <span className="external-link__icon" aria-hidden="true">{"\u2197"}</span>
+                    <span className="sr-only"> ({content.a11y.externalLink})</span>
+                  </>
+                ) : null}
+              </a>
+            ))}
+          </div>
         </div>
-        <div className="metric-grid" aria-label={content.home.metricsLabel}>
-          {publicMetrics.map((metric) => (
-            <article className="metric-card" key={metric.label}>
-              <p className="metric-card__value">{metric.value}</p>
-              <p className="metric-card__label">{metric.label}</p>
-            </article>
-          ))}
+        <aside className="hero-status" aria-label={content.home.hero.statusLabel}>
+          <div className="hero-status__bar">
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <p>{content.home.hero.statusLabel}</p>
+          </div>
+          <dl>
+            {content.home.hero.statusItems.map((item) => (
+              <div key={item.label}>
+                <dt><span aria-hidden="true" />{item.label}</dt>
+                <dd>{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="hero-status__note">{content.home.hero.statusNote}</p>
+        </aside>
+      </section>
+
+      <section className="support-profile" id="profile" aria-labelledby="support-profile-title">
+        <div className="evidence-strip" aria-label={content.home.metricsLabel}>
+          <div className="evidence-strip__inner">
+            <p className="evidence-strip__label">{content.home.metricsLabel}</p>
+            <div className="metric-grid">
+              {publicMetrics.map((metric) => (
+                <div className="metric-card" key={metric.label}>
+                  <p className="metric-card__value">{metric.value}</p>
+                  <p className="metric-card__label">{metric.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="section-shell support-profile__story">
+          <p className="eyebrow">{content.home.supportProfileStory.eyebrow}</p>
+          <h2 id="support-profile-title">{content.home.supportProfileStory.title}</h2>
+          <div className="support-profile__description">
+            {content.home.supportProfileStory.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+          <ol aria-label={content.home.supportProfileStory.eyebrow}>
+            {content.home.supportProfileStory.capabilities.map((capability, index) => (
+              <li key={capability}>
+                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <strong>{capability}</strong>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      <PageSection
-        body={content.home.focus.body}
-        eyebrow={content.home.focus.eyebrow}
-        id="focus"
-        title={content.home.focus.title}
-      >
-        <div className="focus-grid">
-          {content.home.focus.items.map((item) => (
-            <article className="info-card" key={item.title}>
-              <h3>{item.title}</h3>
-              <p className="card__body">{item.body}</p>
-            </article>
-          ))}
-        </div>
-      </PageSection>
+      <ExperienceTimeline content={content.home.experience} />
 
-      <PageSection
-        body={content.home.projects.body}
-        eyebrow={content.home.projects.eyebrow}
-        id="projects"
-        title={content.home.projects.title}
-      >
-        <div className="project-grid">
-          {content.projects.map((project) => (
-            <article className="project-card" key={project.slug}>
-              <div className="card__meta">
-                <StatusBadge label={project.categoryLabel} />
-                <span className="muted-text">{project.maturityLabel}</span>
+      <PageSection body={content.home.skills.body} eyebrow={content.home.skills.eyebrow} id="skills" title={content.home.skills.title}>
+        <div className="skill-grid">
+          {content.home.skills.groups.map((group, index) => (
+            <article className="skill-card" key={group.title}>
+              <div className="skill-card__heading">
+                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <h3>{group.title}</h3>
               </div>
-              <h3>{project.title}</h3>
-              <p className="card__body">{project.summary}</p>
-              <ul className="tech-list" aria-label={content.projectLabels.techStack}>
-                {project.techStack.slice(0, 5).map((item) => (
-                  <li className="tech-list__item" key={item}>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link className="text-link" href={getLocalizedPath(content.locale, `/projects/${project.slug}`)}>
-                {content.projectLabels.readCaseStudy}
-              </Link>
+              <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
             </article>
           ))}
         </div>
       </PageSection>
 
-      <PageSection
-        body={content.home.contact.body}
-        eyebrow={content.home.contact.eyebrow}
-        id="contact"
-        title={content.home.contact.title}
-      >
-        <div className="action-row">
-          {content.contact.links.map((link) => (
-            <Link className="action-link action-link--secondary" href={link.href} key={link.href}>
-              {link.label}
-            </Link>
+      <FeaturedHelpdesk content={content.home.featuredLab} externalLabel={content.a11y.externalLink} />
+      <IncidentWorkflow content={content.home.incidentWorkflow} />
+
+      <PageSection body={content.home.certifications.body} eyebrow={content.home.certifications.eyebrow} id="certifications" title={content.home.certifications.title}>
+        <div className="certification-grid">
+          {content.home.certifications.items.map((certification) => (
+            <article className="certification-card" key={certification.title}>
+              <span className="certification-card__mark" aria-hidden="true">✓</span>
+              <div>
+                <h3>{certification.title}</h3>
+                <p>{certification.issuer}</p>
+                {certification.note ? <p className="certification-card__note">{certification.note}</p> : null}
+              </div>
+            </article>
           ))}
+        </div>
+      </PageSection>
+
+      <CareerGoal content={content.home.careerGoal} />
+
+      <PageSection body={content.home.contact.body} eyebrow={content.home.contact.eyebrow} id="contact" title={content.home.contact.title}>
+        <div className="action-row">
+          {content.contact.links.map((link) =>
+            link.href.startsWith("http") ? (
+              <ExternalLink className="action-link action-link--secondary" externalLabel={content.a11y.externalLink} href={link.href} key={link.href} label={link.label} />
+            ) : (
+              <a className="action-link action-link--primary" href={link.href} key={link.href}>{link.label}</a>
+            ),
+          )}
         </div>
         <p className="muted-text">{content.contact.pendingNote}</p>
       </PageSection>

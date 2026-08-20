@@ -24,6 +24,19 @@ export type FocusItem = {
   readonly body: string;
 };
 
+export type SupportFlowStep = {
+  readonly body: string;
+  readonly title: string;
+};
+
+export type SupportFlowContent = {
+  readonly description: string;
+  readonly eyebrow: string;
+  readonly note: string;
+  readonly steps: readonly SupportFlowStep[];
+  readonly title: string;
+};
+
 export type SectionCopy = {
   readonly body: string;
   readonly eyebrow: string;
@@ -31,25 +44,147 @@ export type SectionCopy = {
 };
 
 export type HeroCopy = {
+  readonly actions: readonly ContactLink[];
   readonly eyebrow: string;
-  readonly primaryActionLabel: string;
-  readonly secondaryActionLabel: string;
+  readonly highlightLabel: string;
+  readonly highlights: readonly string[];
+  readonly statusItems: readonly {
+    readonly label: string;
+    readonly value: string;
+  }[];
+  readonly statusLabel: string;
+  readonly statusNote: string;
   readonly summary: string;
   readonly title: string;
 };
 
+export type SupportProfileStoryContent = {
+  readonly capabilities: readonly string[];
+  readonly description: readonly string[];
+  readonly eyebrow: string;
+  readonly title: string;
+};
+
+export type ScrollNavigationContent = {
+  readonly chapters: readonly {
+    readonly href: `#${string}`;
+    readonly label: string;
+  }[];
+  readonly label: string;
+};
+
+export type ExperienceItem = {
+  readonly company: string;
+  readonly headline?: string;
+  readonly highlights: readonly string[];
+  readonly label?: string;
+  readonly period: string;
+  readonly responsibilities: readonly string[];
+  readonly role: string;
+  readonly tags: readonly string[];
+};
+
+export type ExperienceContent = SectionCopy & {
+  readonly items: readonly ExperienceItem[];
+};
+
+export type SkillGroup = {
+  readonly items: readonly string[];
+  readonly title: string;
+};
+
+export type SkillsContent = SectionCopy & {
+  readonly groups: readonly SkillGroup[];
+};
+
+export type FeatureItem = {
+  readonly body: string;
+  readonly points: readonly string[];
+  readonly title: string;
+};
+
+export type FeaturedLabContent = SectionCopy & {
+  readonly actionLabel: string;
+  readonly features: readonly FeatureItem[];
+  readonly note: string;
+  readonly sourceUrl: string;
+  readonly techStack: readonly string[];
+  readonly techStackLabel: string;
+  readonly validation: readonly {
+    readonly label: string;
+    readonly value: string;
+  }[];
+  readonly validationLabel: string;
+  readonly whyBody: readonly string[];
+  readonly whyStatement: string;
+  readonly whyTitle: string;
+};
+
+export type IncidentWorkflowStep = {
+  readonly label: string;
+  readonly thinking: string;
+};
+
+export type IncidentWorkflowContent = SectionCopy & {
+  readonly note: string;
+  readonly steps: readonly (string | IncidentWorkflowStep)[];
+};
+
+export type Certification = {
+  readonly issuer: string;
+  readonly note?: string;
+  readonly title: string;
+};
+
+export type CertificationsContent = SectionCopy & {
+  readonly items: readonly Certification[];
+};
+
+export type CareerGoalContent = {
+  readonly closing: readonly string[];
+  readonly connectionFlow: readonly string[];
+  readonly connectionLabel: string;
+  readonly eyebrow: string;
+  readonly immediateGoal: string;
+  readonly insight: string;
+  readonly labStory: string;
+  readonly focusItems?: readonly string[];
+  readonly longTermText: string;
+  readonly longTermTitle: string;
+  readonly opening: readonly string[];
+  readonly path: readonly {
+    readonly description: string;
+    readonly title: string;
+  }[];
+  readonly pathLabel: string;
+  readonly rationale: string;
+  readonly title: string;
+};
+
 export type HomeContent = {
+  readonly careerGoal: CareerGoalContent;
+  readonly certifications: CertificationsContent;
   readonly contact: SectionCopy;
+  readonly experience: ExperienceContent;
+  readonly featuredLab: FeaturedLabContent;
   readonly focus: SectionCopy & {
     readonly items: readonly FocusItem[];
   };
   readonly hero: HeroCopy;
+  readonly incidentWorkflow: IncidentWorkflowContent;
   readonly metrics: readonly Metric[];
   readonly metricsLabel: string;
   readonly projects: SectionCopy;
+  readonly scrollNavigation: ScrollNavigationContent;
+  readonly skills: SkillsContent;
+  readonly supportProfileStory: SupportProfileStoryContent;
+  readonly supportFlow: SupportFlowContent;
 };
 
 export type Profile = {
+  readonly email: string;
+  readonly github: string;
+  readonly location: string;
   readonly name: string;
   readonly role: string;
   readonly summary: string;
@@ -59,6 +194,13 @@ export type EvidenceLink = {
   readonly href: string;
   readonly label: string;
   readonly note: string;
+};
+
+export type ProjectStory = {
+  readonly role: string;
+  readonly value: string;
+  readonly visualAlt: string;
+  readonly visualLabels: readonly [string, string, string, string];
 };
 
 export type ProjectCategory =
@@ -77,9 +219,14 @@ export type Project = {
   readonly maturityLabel: string;
   readonly problem: string;
   readonly slug: string;
+  readonly story?: ProjectStory;
   readonly summary: string;
   readonly techStack: readonly string[];
   readonly title: string;
+};
+
+export type FeaturedProject = Project & {
+  readonly story: ProjectStory;
 };
 
 export type ProjectLabels = {
@@ -87,10 +234,18 @@ export type ProjectLabels = {
   readonly context: string;
   readonly contributions: string;
   readonly evidence: string;
+  readonly featuredProjects: string;
   readonly limitations: string;
+  readonly liveDemo: string;
+  readonly moreProjects: string;
+  readonly projectNavigation: string;
+  readonly projectOf: string;
   readonly problem: string;
   readonly readCaseStudy: string;
+  readonly role: string;
+  readonly sourceRepository: string;
   readonly techStack: string;
+  readonly value: string;
 };
 
 export type SiteContent = {
@@ -105,6 +260,8 @@ export type ContactContent = {
 };
 
 export type A11yContent = {
+  readonly externalLink: string;
+  readonly languageSwitcher: string;
   readonly mobileNavigation: string;
   readonly mobileNavigationToggle: string;
   readonly primaryNavigation: string;

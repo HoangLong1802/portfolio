@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { ProjectDetailPage } from "@/components/portfolio/project-detail-page";
+import { LocalizedProjectDetailPage } from "@/components/portfolio/localized-project-detail-page";
 import { getAllProjects, getPortfolioContent, getProjectBySlug } from "@/lib/portfolio";
 import { createProjectMetadata } from "@/lib/seo";
 
@@ -29,12 +29,11 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const content = getPortfolioContent("en");
   const project = getProjectBySlug("en", slug);
 
   if (!project) {
     notFound();
   }
 
-  return <ProjectDetailPage content={content} project={project} />;
+  return <LocalizedProjectDetailPage slug={slug} />;
 }

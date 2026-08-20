@@ -5,11 +5,8 @@ import type { Locale, PortfolioContent, Project } from "@/types/portfolio";
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
 export const viewport: Viewport = {
-  colorScheme: "dark light",
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0b0f17" },
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-  ],
+  colorScheme: "dark",
+  themeColor: "#091413",
 };
 
 export function absoluteUrl(path: string): string {

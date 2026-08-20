@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { PortfolioContent, Project } from "@/types/portfolio";
+import { ExternalLink } from "../ui/external-link";
 import { PageSection } from "../ui/page-section";
 import { StatusBadge } from "../ui/status-badge";
 
@@ -56,9 +57,12 @@ export function ProjectDetailPage({ content, project }: ProjectDetailPageProps) 
         <ul className="evidence-list">
           {project.evidence.map((item) => (
             <li key={item.label}>
-              <Link className="text-link" href={item.href}>
-                {item.label}
-              </Link>
+              <ExternalLink
+                className="text-link"
+                externalLabel={content.a11y.externalLink}
+                href={item.href}
+                label={item.label}
+              />
               <span className="muted-text"> - {item.note}</span>
             </li>
           ))}
