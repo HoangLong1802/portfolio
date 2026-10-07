@@ -4,8 +4,8 @@ export const portfolioSections = {
   experience: "experience",
   skills: "skills",
   projects: "projects",
-  helpdeskLab: "helpdesk-lab",
   workflow: "workflow",
+  helpdeskLab: "helpdesk-lab",
   engineeringProjects: "engineering-projects",
   projectCaseStudy: "project-case-study",
   certifications: "certifications",
@@ -16,7 +16,7 @@ export const portfolioSections = {
 export const portfolioSectionIds = Object.values(portfolioSections);
 
 export const portfolioProjectSelection = [
-  "helpdesk-lab",
-  "devmentor-ai",
-  "jewelry-commerce",
+  "customer-support-operations-analytics",
+  "stock-prediction-ai",
+  "automated-it-asset-inventory",
 ] as const;

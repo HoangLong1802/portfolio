@@ -1,6 +1,12 @@
 # Phase Status
 
-Last updated: 2026-08-20
+Last updated: 2026-10-07
+
+## Current Portfolio Repositioning
+
+The 2026-10-07 owner direction supersedes the older support/DevOps product positioning recorded in the historical phase tracker below. The current site targets entry-level Data Analyst and Operations Analytics roles. Its primary project is the synthetic Customer Support Operations Analytics case study; no PBIX/dashboard screenshots, verified LinkedIn URL, or current CV PDF are available yet. FPT employment details also remain a TODO pending source verification.
+
+Current implementation checks: `npm run lint`, `npm run typecheck`, `npm run test` (20 tests), and `npm run build` passed after the redesign. Final production browser QA at 360×640, 768×900, and 1440×900 confirmed no horizontal overflow and a visible hero CTA. Keyboard navigation opened the mobile menu and selecting Projects closed it; EN and VI detail pages rendered all eight case-study sections; no page errors were recorded.
 
 ## Stop Conditions
 

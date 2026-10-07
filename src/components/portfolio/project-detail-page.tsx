@@ -14,6 +14,18 @@ type ProjectDetailPageProps = {
 export function ProjectDetailPage({ content, project }: ProjectDetailPageProps) {
   const backHref = content.locale === "vi" ? "/vi#projects" : "/#projects";
   const { demo, source } = getProjectEvidenceLinks(project);
+  const caseStudySections = project.caseStudy
+    ? [
+        { title: content.projectLabels.problem, details: [project.problem] },
+        { title: content.projectLabels.dataset, details: [project.caseStudy.dataset] },
+        { title: content.projectLabels.cleaning, details: project.caseStudy.cleaning },
+        { title: content.projectLabels.analysis, details: project.caseStudy.analysis },
+        { title: content.projectLabels.visualization, details: [project.caseStudy.visualization] },
+        { title: content.projectLabels.findings, details: project.caseStudy.findings },
+        { title: content.projectLabels.recommendation, details: project.caseStudy.recommendations },
+        { title: content.projectLabels.limitations, details: project.limitations },
+      ]
+    : [];
 
   return (
     <article className="section-shell project-detail">
@@ -49,24 +61,50 @@ export function ProjectDetailPage({ content, project }: ProjectDetailPageProps) 
         <ProjectDemoSequence content={content} demoHref={demo.href} project={project} />
       ) : null}
 
-      <PageSection
-        body={project.problem}
-        eyebrow={content.projectLabels.context}
-        id="context"
-        title={content.projectLabels.problem}
-      />
-
-      <PageSection
-        eyebrow={content.projectLabels.contributions}
-        id="contributions"
-        title={content.projectLabels.contributions}
-      >
-        <ul className="evidence-list">
-          {project.contributions.map((item) => (
-            <li key={item}>{item}</li>
+      {project.caseStudy ? (
+        <ol className="case-study-steps">
+          {caseStudySections.map((section, index) => (
+            <li className="case-study-step" id={`case-study-${index + 1}`} key={section.title}>
+              <span className="case-study-step__number">{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h2>{section.title}</h2>
+                {section.details.length === 1 ? (
+                  <p>{section.details[0]}</p>
+                ) : (
+                  <ul className="evidence-list">
+                    {section.details.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                )}
+              </div>
+            </li>
           ))}
-        </ul>
-      </PageSection>
+        </ol>
+      ) : (
+        <>
+          <PageSection
+            body={project.problem}
+            eyebrow={content.projectLabels.context}
+            id="context"
+            title={content.projectLabels.problem}
+          />
+
+          <PageSection
+            eyebrow={content.projectLabels.contributions}
+            id="contributions"
+            title={content.projectLabels.contributions}
+          >
+            <ul className="evidence-list">
+              {project.contributions.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </PageSection>
+        </>
+      )}
+
+      {project.story ? (
+        <PageSection eyebrow={content.projectLabels.role} id="project-role" title={content.projectLabels.value}>
+          <p className="section-intro">{project.story.role}</p>
+        </PageSection>
+      ) : null}
 
       <PageSection eyebrow={content.projectLabels.techStack} id="tech-stack" title={content.projectLabels.techStack}>
         <ul className="tech-list">
@@ -94,13 +132,13 @@ export function ProjectDetailPage({ content, project }: ProjectDetailPageProps) 
         </ul>
       </PageSection>
 
-      <PageSection eyebrow={content.projectLabels.limitations} id="limitations" title={content.projectLabels.limitations}>
-        <ul className="limitation-list">
-          {project.limitations.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </PageSection>
+      {!project.caseStudy ? (
+        <PageSection eyebrow={content.projectLabels.limitations} id="limitations" title={content.projectLabels.limitations}>
+          <ul className="limitation-list">
+            {project.limitations.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </PageSection>
+      ) : null}
     </article>
   );
 }

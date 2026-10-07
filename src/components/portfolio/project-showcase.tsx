@@ -1,140 +1,120 @@
-"use client";
-
-import { useState, type KeyboardEvent } from "react";
-import { AnimatePresence, useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
-import { portfolioProjectSelection, portfolioSections } from "@/config/portfolio-sections";
+import Link from "next/link";
+import { getLocalizedPath } from "@/lib/portfolio";
+import { portfolioSections } from "@/config/portfolio-sections";
 import type { PortfolioContent } from "@/types/portfolio";
-import { PageSection } from "../ui/page-section";
-import { FeaturedHelpdesk } from "./featured-helpdesk";
-import { IncidentWorkflow } from "./incident-workflow";
-import { ProjectCard } from "./project-card";
-import { SelectedProjectCaseStudy } from "./selected-project-case-study";
 
 type ProjectShowcaseProps = {
   readonly content: PortfolioContent;
 };
 
 export function ProjectShowcase({ content }: ProjectShowcaseProps) {
-  const projects = portfolioProjectSelection.flatMap((slug) => {
-    const project = content.projects.find((item) => item.slug === slug);
-    return project ? [project] : [];
-  });
-  const [selectedProjectSlug, setSelectedProjectSlug] = useState(projects[0]?.slug ?? "");
-  const selectedProject = projects.find((project) => project.slug === selectedProjectSlug) ?? projects[0];
-  const prefersReducedMotion = useReducedMotion() ?? false;
+  const featuredProject = content.projects[0];
+  const secondaryProjects = content.projects.slice(1, 3);
+  const earlierProjects = content.projects.slice(3);
 
-  if (!selectedProject) return null;
+  if (!featuredProject) return null;
 
-  function selectProject(slug: string, moveFocus = false) {
-    setSelectedProjectSlug(slug);
-    if (moveFocus) {
-      window.requestAnimationFrame(() => document.getElementById(`project-tab-${slug}`)?.focus());
-    }
-  }
-
-  function handleSelectionKeyDown(event: KeyboardEvent<HTMLButtonElement>, slug: string) {
-    const currentIndex = projects.findIndex((project) => project.slug === slug);
-    let nextIndex: number | undefined;
-
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      nextIndex = (currentIndex + 1) % projects.length;
-    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      nextIndex = (currentIndex - 1 + projects.length) % projects.length;
-    } else if (event.key === "Home") {
-      nextIndex = 0;
-    } else if (event.key === "End") {
-      nextIndex = projects.length - 1;
-    }
-
-    if (nextIndex === undefined) return;
-    event.preventDefault();
-    const nextProject = projects[nextIndex];
-    if (nextProject) selectProject(nextProject.slug, true);
-  }
-
-  const cardContainerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.07 } },
-  };
-  const cardVariants = {
-    hidden: { opacity: 0, y: 22 },
-    visible: { opacity: 1, transition: { duration: 0.32 }, y: 0 },
-  };
-  const cardRevealMotion = prefersReducedMotion
-    ? { initial: false as const }
-    : { initial: "hidden", whileInView: "visible" };
-  const panelMotion = prefersReducedMotion
-    ? { animate: { opacity: 1 }, exit: { opacity: 1 }, initial: false as const }
-    : {
-        animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: -8 },
-        initial: { opacity: 0, y: 14 },
-      };
+  const repository = featuredProject.evidence.find((item) => item.href.includes("github.com/"));
+  const workbook = featuredProject.evidence.find((item) => item.href.endsWith(".xlsx"));
+  const findings = featuredProject.caseStudy?.findings ?? [];
 
   return (
-    <>
-      <PageSection
-        body={content.home.projectOverview.body}
-        eyebrow={content.home.projectOverview.eyebrow}
-        id={portfolioSections.projects}
-        title={content.home.projectOverview.title}
-      >
-        <m.div
-          {...cardRevealMotion}
-          aria-label={content.home.projectOverview.title}
-          className="project-selector__tabs"
-          data-navigation-parent={portfolioSections.projects}
-          id={portfolioSections.engineeringProjects}
-          role="tablist"
-          variants={cardContainerVariants}
-          viewport={{ amount: 0.12, once: true }}
-        >
-          {projects.map((project) => {
-            const selected = project.slug === selectedProject.slug;
-            return (
-              <m.div className="project-selector__card" key={project.slug} variants={cardVariants}>
-                <ProjectCard
-                  content={content}
-                  onSelect={selectProject}
-                  onSelectionKeyDown={handleSelectionKeyDown}
-                  panelId={portfolioSections.projectCaseStudy}
-                  project={project}
-                  selected={selected}
-                  selectionTabIndex={selected ? 0 : -1}
-                />
-              </m.div>
-            );
-          })}
-        </m.div>
-      </PageSection>
+    <section className="section-shell projects-section" id={portfolioSections.projects} aria-labelledby="projects-title">
+      <header className="section-heading">
+        <p className="eyebrow">{content.home.projects.eyebrow}</p>
+        <h2 id="projects-title">{content.home.projects.title}</h2>
+        <p className="section-intro">{content.home.projects.body}</p>
+      </header>
 
-      <div
-        aria-labelledby={`project-tab-${selectedProject.slug}`}
-        className="project-selector__panel"
-        data-navigation-parent={portfolioSections.projects}
-        id={portfolioSections.projectCaseStudy}
-        role="tabpanel"
-        tabIndex={0}
-      >
-        <AnimatePresence initial={false} mode="wait">
-          <m.div
-            {...panelMotion}
-            className="project-selector__panel-content"
-            key={selectedProject.slug}
-            transition={{ duration: prefersReducedMotion ? 0 : 0.16, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {selectedProject.slug === "helpdesk-lab" ? (
-              <>
-                <FeaturedHelpdesk content={content.home.featuredLab} externalLabel={content.a11y.externalLink} />
-                <IncidentWorkflow content={content.home.incidentWorkflow} />
-              </>
-            ) : (
-              <SelectedProjectCaseStudy content={content} project={selectedProject} />
-            )}
-          </m.div>
-        </AnimatePresence>
+      <article className="featured-project" data-project={featuredProject.slug}>
+        <header className="featured-project__header">
+          <div>
+            <p className="eyebrow">{content.home.projectOverview.eyebrow}</p>
+            <h3>{featuredProject.title}</h3>
+            <p className="featured-project__summary">{featuredProject.summary}</p>
+          </div>
+          <span className="project-status">{featuredProject.maturityLabel}</span>
+        </header>
+
+        <div className="featured-project__body">
+          <div className="featured-project__problem">
+            <p className="project-section-label">01 · {content.projectLabels.problem}</p>
+            <p>{featuredProject.problem}</p>
+            <p className="synthetic-note">{content.locale === "vi" ? "Dataset tổng hợp được thiết kế để mô phỏng hoạt động customer support." : "Synthetic dataset designed to simulate customer-support operations."}</p>
+          </div>
+
+          <figure className="project-signal">
+            <figcaption>{content.locale === "vi" ? "Tỷ trọng ticket và resolution SLA breach" : "Ticket share vs. resolution SLA breaches"}</figcaption>
+            <div className="project-signal__row">
+              <span>{content.locale === "vi" ? "Tỷ trọng ticket technical" : "Technical ticket share"}</span>
+              <progress aria-label={content.locale === "vi" ? "Tỷ trọng ticket technical" : "Technical ticket share"} max="100" value="29.49" />
+              <strong>29.49%</strong>
+            </div>
+            <div className="project-signal__row">
+              <span>{content.locale === "vi" ? "Tỷ trọng resolution SLA breach" : "Share of resolution SLA breaches"}</span>
+              <progress aria-label={content.locale === "vi" ? "Tỷ trọng resolution SLA breach" : "Share of resolution SLA breaches"} max="100" value="50.09" />
+              <strong>50.09%</strong>
+            </div>
+            <p>{content.locale === "vi" ? "1.760 trên 3.514 breach resolution thuộc nhóm technical." : "1,760 of 3,514 resolution breaches were in technical cases."}</p>
+          </figure>
+        </div>
+
+        <div className="featured-project__findings">
+          <p className="project-section-label">02 · {content.projectLabels.findings}</p>
+          <ul>
+            {findings.slice(1).map((finding) => <li key={finding}>{finding}</li>)}
+          </ul>
+        </div>
+
+        <footer className="featured-project__footer">
+          <ul className="tech-list" aria-label={content.projectLabels.techStack}>
+            {featuredProject.techStack.map((item) => <li className="tech-list__item" key={item}>{item}</li>)}
+          </ul>
+          <div className="project-actions">
+            <Link className="action-link action-link--primary" href={getLocalizedPath(content.locale, `/projects/${featuredProject.slug}`)}>
+              {content.projectLabels.readCaseStudy}
+            </Link>
+            {repository ? <a className="action-link action-link--secondary" href={repository.href} rel="noreferrer" target="_blank">{content.projectLabels.sourceRepository} ↗</a> : null}
+            {workbook ? <a className="action-link action-link--secondary" href={workbook.href} rel="noreferrer" target="_blank">{content.locale === "vi" ? "Workbook Excel" : "Excel workbook"} ↗</a> : null}
+          </div>
+        </footer>
+      </article>
+
+      <div className="secondary-project-grid">
+        {secondaryProjects.map((project, index) => (
+          <article className="secondary-project" key={project.slug}>
+            <p className="project-section-label">0{index + 3} · {project.categoryLabel}</p>
+            <h3>{project.title}</h3>
+            <p>{project.summary}</p>
+            <p className="secondary-project__problem"><strong>{content.projectLabels.problem}:</strong> {project.problem}</p>
+            <ul className="tech-list" aria-label={content.projectLabels.techStack}>
+              {project.techStack.slice(0, 5).map((item) => <li className="tech-list__item" key={item}>{item}</li>)}
+            </ul>
+            <Link className="text-link" href={getLocalizedPath(content.locale, `/projects/${project.slug}`)}>
+              {content.projectLabels.readCaseStudy} <span aria-hidden="true">→</span>
+            </Link>
+          </article>
+        ))}
       </div>
-    </>
+
+      {earlierProjects.length > 0 ? (
+        <details className="earlier-projects">
+          <summary>{content.projectLabels.earlierProjects}</summary>
+          <ul>
+            {earlierProjects.map((project) => (
+              <li key={project.slug}>
+                <div>
+                  <h3>{project.title}</h3>
+                  <p>{project.categoryLabel} · {project.maturityLabel}</p>
+                </div>
+                <Link className="text-link" href={getLocalizedPath(content.locale, `/projects/${project.slug}`)}>
+                  {content.projectLabels.readCaseStudy} <span aria-hidden="true">→</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </details>
+      ) : null}
+    </section>
   );
 }

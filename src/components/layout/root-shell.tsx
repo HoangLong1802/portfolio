@@ -16,7 +16,7 @@ export function RootShell({ children, locale }: RootShellProps) {
   const content = getPortfolioContent(locale);
 
   return (
-    <html lang={content.lang} data-theme="dark">
+    <html lang={content.lang} data-theme="light">
       <body>
         <PortfolioLocaleProvider initialLocale={locale}>
           <PortfolioMotionProvider>

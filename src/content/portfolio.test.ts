@@ -13,9 +13,8 @@ const forbiddenPublicClaims = [
   "production users",
 ] as const;
 const expectedFeaturedProjectSlugs = [
-  "devmentor-ai",
-  "jewelry-commerce",
-  "helpdesk-lab",
+  "customer-support-operations-analytics",
+  "stock-prediction-ai",
   "automated-it-asset-inventory",
 ] as const;
 
@@ -37,27 +36,24 @@ describe("portfolio content", () => {
     expect(vietnameseSlugs).toEqual(englishSlugs);
   });
 
-  it("keeps the four featured projects in the reviewed order", () => {
+  it("puts the analytics case study and related data projects first", () => {
     for (const locale of locales) {
       const featuredProjectSlugs = getAllProjects(locale)
-        .slice(0, 4)
+        .slice(0, 3)
         .map((project) => project.slug);
 
       expect(featuredProjectSlugs).toEqual(expectedFeaturedProjectSlugs);
     }
   });
 
-  it("provides complete verified stories for every featured project", () => {
+  it("provides verified role and evidence for the primary project", () => {
     for (const locale of locales) {
-      const featuredProjects = getAllProjects(locale).slice(0, 4);
+      const primaryProject = getAllProjects(locale)[0];
 
-      for (const project of featuredProjects) {
-        expect(project.story).toBeDefined();
-        expect(project.story?.role.length).toBeGreaterThan(0);
-        expect(project.story?.value.length).toBeGreaterThan(0);
-        expect(project.story?.visualAlt.length).toBeGreaterThan(0);
-        expect(project.story?.visualLabels).toHaveLength(4);
-      }
+      expect(primaryProject?.story?.role.length).toBeGreaterThan(0);
+      expect(primaryProject?.story?.value.length).toBeGreaterThan(0);
+      expect(primaryProject?.story?.visualAlt.length).toBeGreaterThan(0);
+      expect(primaryProject?.story?.visualLabels).toHaveLength(4);
     }
   });
 
@@ -129,29 +125,27 @@ describe("portfolio content", () => {
       expect(content.home.hero.actions[0]?.href).toBe("#projects");
       expect(content.home.scrollNavigation.chapters.map((chapter) => chapter.href)).toEqual([
         "#home",
-        "#profile",
+        "#projects",
         "#experience",
         "#skills",
-        "#projects",
-        "#certifications",
-        "#career-goal",
+        "#workflow",
+        "#profile",
         "#contact",
       ]);
     }
   });
 
-  it("keeps the interactive project selector complete in both languages", () => {
+  it("keeps the visible data project hierarchy complete in both languages", () => {
     expect(portfolioProjectSelection).toEqual([
-      "helpdesk-lab",
-      "devmentor-ai",
-      "jewelry-commerce",
+      "customer-support-operations-analytics",
+      "stock-prediction-ai",
+      "automated-it-asset-inventory",
     ]);
 
     for (const locale of locales) {
       const content = portfolioContent[locale];
       expect(portfolioProjectSelection.every((slug) => getProjectBySlug(locale, slug))).toBe(true);
-      expect(content.projectLabels.selectProject.length).toBeGreaterThan(0);
-      expect(content.projectLabels.selectedProject.length).toBeGreaterThan(0);
+      expect(content.projectLabels.readCaseStudy.length).toBeGreaterThan(0);
     }
   });
 
@@ -159,7 +153,14 @@ describe("portfolio content", () => {
     for (const locale of locales) {
       const supportFlow = portfolioContent[locale].home.supportFlow;
 
-      expect(supportFlow.steps).toHaveLength(4);
+      expect(supportFlow.steps.map((step) => step.title)).toEqual([
+        "Ask",
+        "Prepare",
+        "Clean",
+        "Analyze",
+        "Visualize",
+        "Recommend",
+      ]);
       expect(supportFlow.note.length).toBeGreaterThan(0);
       expect(supportFlow.steps.every((step) => step.title.length > 0 && step.body.length > 0)).toBe(true);
       expect(portfolioContent[locale].a11y.externalLink.length).toBeGreaterThan(0);
@@ -179,56 +180,66 @@ describe("portfolio content", () => {
 
     expect(vietnameseContent).not.toContain("tôi");
     expect(vietnameseContent).not.toContain("Tôi");
-    expect(vietnameseContent).toContain("Em hứng thú");
-    expect(vietnameseContent).toContain("Em không muốn bỏ qua những nền tảng cần thiết.");
+    expect(vietnameseContent).toContain("Nền tảng của em bắt đầu từ IT và software support");
+    expect(vietnameseContent).toContain("Data Analyst | Operations Analytics");
   });
 
-  it("publishes the owner-supplied support metrics with visible context", () => {
+  it("does not show arbitrary profile counters", () => {
     for (const locale of locales) {
       const metrics = portfolioContent[locale].home.metrics;
       const publicMetrics = getPublicMetrics(metrics);
 
-      expect(publicMetrics).toHaveLength(6);
-      expect(publicMetrics.every((metric) => metric.visibility === "public")).toBe(true);
-      expect(publicMetrics.map((metric) => metric.value)).toEqual(
-        locale === "en"
-          ? ["1 year", "110+", "97% QA", "L1", "12", "6"]
-          : ["1 năm", "110+", "97% QA", "L1", "12", "6"],
-      );
-      expect(publicMetrics.every((metric) => metric.source.includes("2026-08"))).toBe(true);
+      expect(publicMetrics).toEqual([]);
     }
   });
 
-  it("keeps the recruiter-facing support sections complete in both languages", () => {
+  it("keeps recruiter-facing analyst content complete in both languages", () => {
     for (const locale of locales) {
       const content = portfolioContent[locale];
 
-      expect(content.home.hero.highlights).toHaveLength(4);
+      expect(content.home.hero.eyebrow).toContain("DATA ANALYST");
+      expect(content.home.hero.highlights).toEqual(["SQL", "Excel", "Power BI", "Python", "Data Cleaning", "KPI Analysis"]);
       expect(content.home.hero.actions[0]?.href).toBe("#projects");
-      expect(content.home.hero.statusItems).toHaveLength(4);
-      expect(content.home.hero.statusNote.length).toBeGreaterThan(0);
-      expect(content.home.scrollNavigation.chapters).toHaveLength(8);
-      expect(content.home.supportProfileStory.description).toHaveLength(2);
-      expect(content.home.supportProfileStory.capabilities).toHaveLength(5);
-      expect(content.home.experience.items).toHaveLength(2);
-      expect(content.home.careerGoal.opening).toHaveLength(2);
-      expect(content.home.careerGoal.connectionFlow.length).toBeGreaterThanOrEqual(6);
-      expect(content.home.careerGoal.path.map((stage) => stage.title)).toEqual([
-        "Technical Support",
-        "Service Desk / IT Support",
-        "Application / System Support",
-        "DevOps",
+      expect(content.home.scrollNavigation.chapters.map((chapter) => chapter.href)).toEqual([
+        "#home", "#projects", "#experience", "#skills", "#workflow", "#profile", "#contact",
       ]);
-      expect(content.home.careerGoal.closing).toHaveLength(2);
-      expect(content.home.skills.groups).toHaveLength(5);
-      expect(content.home.featuredLab.features).toHaveLength(6);
-      expect(content.home.featuredLab.whyBody.length).toBeGreaterThanOrEqual(2);
-      expect(content.home.featuredLab.whyStatement.length).toBeGreaterThan(0);
-      expect(content.home.featuredLab.validation.map((item) => item.value)).toEqual(["12", "6"]);
-      expect(content.home.incidentWorkflow.steps.length).toBeGreaterThanOrEqual(8);
-      expect(content.home.certifications.items.length).toBeGreaterThanOrEqual(3);
+      expect(content.home.focus.items).toHaveLength(4);
+      expect(content.home.experience.items).toHaveLength(2);
+      expect(content.home.skills.groups.map((group) => group.title)).toEqual([
+        "Data Analysis",
+        "Business Intelligence",
+        "Data & Technical Foundations",
+        "Professional / Operations",
+      ]);
+      expect(content.profile.role).toBe("Data Analyst | Operations Analytics");
       expect(content.contact.links.some((link) => link.href.startsWith("mailto:"))).toBe(true);
-      expect(content.contact.links).toHaveLength(3);
+      expect(content.profile.resumeUrl).toBeNull();
+      expect(content.profile.linkedinUrl).toBeNull();
+    }
+  });
+
+  it("publishes the synthetic support operations evidence and limitations", () => {
+    for (const locale of locales) {
+      const project = getProjectBySlug(locale, "customer-support-operations-analytics");
+      const caseStudy = project?.caseStudy;
+
+      expect(caseStudy).toBeDefined();
+      expect(caseStudy?.dataset).toMatch(/14[,.]774/);
+      expect(caseStudy?.findings).toHaveLength(3);
+      expect(caseStudy?.findings[0]).toMatch(locale === "en" ? /29\.49%.*50\.09%/ : /29,49%.*50,09%/);
+      expect(caseStudy?.recommendations.length).toBeGreaterThan(0);
+      expect(caseStudy?.visualization).toMatch(/PBIX/);
+      expect(project?.limitations.join(" ")).toMatch(/synthetic|tổng hợp/i);
+      expect(project?.limitations.join(" ")).toMatch(/MySQL|Power BI/i);
+      expect(project?.evidence.some((item) => item.href.endsWith("customer_support_analysis.xlsx"))).toBe(true);
+    }
+  });
+
+  it("gives every data-oriented project the full case-study structure", () => {
+    for (const locale of locales) {
+      for (const slug of portfolioProjectSelection) {
+        expect(getProjectBySlug(locale, slug)?.caseStudy).toBeDefined();
+      }
     }
   });
 

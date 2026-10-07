@@ -1,6 +1,6 @@
 # Truong Hoang Long Portfolio
 
-Personal portfolio foundation built with Next.js App Router, strict TypeScript, typed bilingual content, and evidence-backed project descriptions.
+Bilingual portfolio for an entry-level Data Analyst focused on operations analytics, built with Next.js App Router, strict TypeScript, and evidence-backed project descriptions.
 
 ## Scripts
 

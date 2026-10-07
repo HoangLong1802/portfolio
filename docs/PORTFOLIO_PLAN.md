@@ -1,5 +1,22 @@
 # Portfolio Trương Hoàng Long — Codex Build Plan & Phased Prompts
 
+## Current Product Direction (2026-10-07)
+
+This section supersedes the earlier Application Support / DevOps positioning below. Keep the older phase prompts as historical implementation context; do not use their target roles, featured-project order, or visual direction for new portfolio work.
+
+- Primary target: entry-level Data Analyst. Secondary targets: Operations Analyst, Business Data Analyst, and Support Operations Analyst.
+- Position Long truthfully as an IT and customer-support operations professional transitioning into analytics. Do not present past support or software roles as Data Analyst employment, and do not position him as a senior analyst, data scientist, ML engineer, full-stack developer, AI engineer, or DevOps engineer.
+- First viewport: Data Analyst · Operations Analytics, SQL, Excel, Power BI, Python, and a direct route to projects. Do not add unsupported profile counters.
+- Navigation: Home, Projects, Experience, Skills, About, Contact. Keep GitHub and email available. Resume and LinkedIn remain TODO until verified source files/URLs are supplied.
+- Featured project order: (1) Customer Support Operations Analytics, (2) Stock Data Exploration & Model Evaluation, (3) a data-handling/automation project. Earlier web projects belong in a lower-priority group.
+- The support analytics repository uses a synthetic dataset. Publish the verified 14,774 cleaned ticket snapshots and repository findings with their definitions and caveats. Do not imply employer/customer data, SQL execution in MySQL, or a completed Power BI dashboard: no PBIX or dashboard screenshots exist yet.
+- Serious data case studies use: Business Problem → Dataset → Data Cleaning → Analysis → Visualization → Key Findings → Recommendation → Limitations. Keep unverified project details marked TODO in typed content.
+- Transferable experience may cover support volume, issue categorization, troubleshooting, documentation, escalation, recurring issue patterns, and operational processes only where supported by supplied source material. FPT details, if included, require verification.
+- About should explain the transition from IT/software support to questions about repeat issues, service performance, bottlenecks, and evidence-based decisions.
+- Contact CTA targets entry-level Data Analyst, Operations Analyst, and Business Data Analyst opportunities in Ho Chi Minh City.
+- Visual tokens: background `#FDF6ED`, primary `#778873`, secondary `#A1BC98`, neutral `#DCCFC0`, body text `#252925`. Preserve readable contrast, keyboard focus, reduced motion, and responsive behavior.
+- Required verification remains `npm run lint`, `npm run typecheck`, `npm run test`, and `npm run build`; report results and any remaining source-data TODOs.
+
 ## 1. Kết quả cần xây dựng
 
 Xây một portfolio song ngữ Việt–Anh có thể deploy thật, giúp HR hiểu trong 30–60 giây rằng Trương Hoàng Long là ứng viên có nền tảng phát triển phần mềm, kinh nghiệm hỗ trợ khách hàng quốc tế và định hướng Application/Technical Support, Customer Success và Operations Automation.

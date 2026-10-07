@@ -230,8 +230,10 @@ export type HomeContent = {
 export type Profile = {
   readonly email: string;
   readonly github: string;
+  readonly linkedinUrl?: string | null;
   readonly location: string;
   readonly name: string;
+  readonly resumeUrl?: string | null;
   readonly role: string;
   readonly summary: string;
 };
@@ -263,6 +265,14 @@ export type Project = {
   readonly backendHealthUrl?: string;
   readonly category: ProjectCategory;
   readonly categoryLabel: string;
+  readonly caseStudy?: {
+    readonly analysis: readonly string[];
+    readonly cleaning: readonly string[];
+    readonly dataset: string;
+    readonly findings: readonly string[];
+    readonly recommendations: readonly string[];
+    readonly visualization: string;
+  };
   readonly contributions: readonly string[];
   readonly demoNotice?: string;
   readonly evidence: readonly EvidenceLink[];
@@ -281,11 +291,16 @@ export type FeaturedProject = Project & {
 };
 
 export type ProjectLabels = {
+  readonly analysis: string;
   readonly backToProjects: string;
+  readonly cleaning: string;
   readonly context: string;
+  readonly dataset: string;
   readonly contributions: string;
   readonly evidence: string;
+  readonly earlierProjects: string;
   readonly featuredProjects: string;
+  readonly findings: string;
   readonly limitations: string;
   readonly liveDemo: string;
   readonly moreProjects: string;
@@ -293,13 +308,17 @@ export type ProjectLabels = {
   readonly projectOf: string;
   readonly problem: string;
   readonly readCaseStudy: string;
+  readonly recommendation: string;
+  readonly resumePending: string;
   readonly role: string;
   readonly selectProject: string;
   readonly selectedProject: string;
   readonly sourceRepository: string;
   readonly techStack: string;
+  readonly visualization: string;
   readonly value: string;
   readonly wakeBackend: string;
+  readonly linkedinPending: string;
 };
 
 export type SiteContent = {

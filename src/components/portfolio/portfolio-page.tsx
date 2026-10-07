@@ -1,111 +1,103 @@
 import { portfolioSections } from "@/config/portfolio-sections";
-import { getPublicMetrics } from "@/lib/portfolio";
 import type { PortfolioContent } from "@/types/portfolio";
-import { Reveal } from "../motion/reveal";
-import { ExternalLink } from "../ui/external-link";
-import { PageSection } from "../ui/page-section";
-import { CareerGoal } from "./career-goal";
 import { ExperienceTimeline } from "./experience-timeline";
 import { ProjectShowcase } from "./project-showcase";
-import { ScrollProgressNavigation } from "./scroll-progress-navigation";
 
 type PortfolioPageProps = {
   readonly content: PortfolioContent;
 };
 
 export function PortfolioPage({ content }: PortfolioPageProps) {
-  const publicMetrics = getPublicMetrics(content.home.metrics);
+  const resumeUrl = content.profile.resumeUrl;
+  const linkedinUrl = content.profile.linkedinUrl;
+  const projectAction = content.home.hero.actions[0];
 
   return (
     <>
-      <ScrollProgressNavigation content={content.home.scrollNavigation} />
-
       <section className="section-shell hero" id={portfolioSections.home}>
         <div className="hero__copy">
           <p className="eyebrow">{content.home.hero.eyebrow}</p>
-          <h1>{content.profile.name}</h1>
-          <p className="hero__role">{content.home.hero.title}</p>
+          <p className="hero__name">{content.profile.name}</p>
+          <h1>{content.home.hero.title}</h1>
           <p className="hero__summary">{content.home.hero.summary}</p>
           <ul className="hero__highlights" aria-label={content.home.hero.highlightLabel}>
             {content.home.hero.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
           </ul>
           <div className="action-row">
-            {content.home.hero.actions.map((action, index) => (
-              <a
-                className={`action-link ${index === 0 ? "action-link--primary" : "action-link--secondary"}`}
-                href={action.href}
-                key={action.href}
-              >
-                <span>{action.label}</span>
-                {action.href.startsWith("http") ? (
-                  <>
-                    <span className="external-link__icon" aria-hidden="true">{"\u2197"}</span>
-                    <span className="sr-only"> ({content.a11y.externalLink})</span>
-                  </>
-                ) : null}
+            {projectAction ? (
+              <a className="action-link action-link--primary" href={projectAction.href}>{projectAction.label}</a>
+            ) : null}
+            {resumeUrl ? (
+              <a className="action-link action-link--secondary" download href={resumeUrl}>
+                {content.locale === "vi" ? "Tải CV" : "Download Resume"}
               </a>
-            ))}
+            ) : (
+              <span aria-disabled="true" className="action-link action-link--secondary action-link--disabled" title="TODO: Add a verified current CV PDF.">
+                {content.locale === "vi" ? content.projectLabels.resumePending : content.projectLabels.resumePending}
+              </span>
+            )}
+            <a className="hero__social-link" href={content.profile.github} rel="noreferrer" target="_blank">
+              GitHub <span aria-hidden="true">↗</span>
+              <span className="sr-only"> ({content.a11y.externalLink})</span>
+            </a>
           </div>
         </div>
-        <aside className="hero-status" aria-label={content.home.hero.statusLabel}>
-          <div className="hero-status__bar">
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <p>{content.home.hero.statusLabel}</p>
-          </div>
-          <dl>
-            {content.home.hero.statusItems.map((item) => (
-              <div key={item.label}>
-                <dt><span aria-hidden="true" />{item.label}</dt>
-                <dd>{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="hero-status__note">{content.home.hero.statusNote}</p>
+        <aside className="hero__context" aria-label={content.profile.role}>
+          <p className="hero__context-label">{content.locale === "vi" ? "VAI TRÒ MỤC TIÊU" : "TARGET ROLE"}</p>
+          <strong>Data Analyst</strong>
+          <p>{content.locale === "vi" ? "Operations Analyst · Business Data Analyst" : "Operations Analyst · Business Data Analyst"}</p>
+          <span className="hero__context-rule" aria-hidden="true" />
+          <p>{content.profile.location}</p>
+          <a href="#projects">{content.locale === "vi" ? "Dự án dữ liệu" : "Data projects"} <span aria-hidden="true">↓</span></a>
         </aside>
       </section>
 
-      <section className="support-profile" id={portfolioSections.profile} aria-labelledby="support-profile-title">
-        <div className="evidence-strip" aria-label={content.home.metricsLabel}>
-          <div className="evidence-strip__inner">
-            <p className="evidence-strip__label">{content.home.metricsLabel}</p>
-            <div className="metric-grid">
-              {publicMetrics.map((metric) => (
-                <div className="metric-card" key={metric.label}>
-                  <p className="metric-card__value">{metric.value}</p>
-                  <p className="metric-card__label">{metric.label}</p>
-                </div>
-              ))}
-            </div>
+      <section className="capability-section" aria-labelledby="capability-title">
+        <div className="section-shell">
+          <div className="section-heading section-heading--compact">
+            <p className="eyebrow">{content.home.focus.eyebrow}</p>
+            <h2 id="capability-title">{content.home.focus.title}</h2>
+            <p className="section-intro">{content.home.focus.body}</p>
+          </div>
+          <div className="capability-grid">
+            {content.home.focus.items.map((item, index) => (
+              <article className="capability-item" key={item.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
           </div>
         </div>
-        <div className="section-shell support-profile__story">
-          <Reveal pattern="heading">
-            <div className="support-profile__heading">
-              <p className="eyebrow">{content.home.supportProfileStory.eyebrow}</p>
-              <h2 id="support-profile-title">{content.home.supportProfileStory.title}</h2>
-              <div className="support-profile__description">
-                {content.home.supportProfileStory.description.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              </div>
-            </div>
-          </Reveal>
-          <Reveal>
-            <ol aria-label={content.home.supportProfileStory.eyebrow}>
-              {content.home.supportProfileStory.capabilities.map((capability, index) => (
-                <li key={capability}>
-                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{capability}</strong>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
-        </div>
+      </section>
+
+      <ProjectShowcase content={content} />
+
+      <section className="section-shell workflow-section" id={portfolioSections.workflow} aria-labelledby="workflow-title">
+        <header className="section-heading">
+          <p className="eyebrow">{content.home.supportFlow.eyebrow}</p>
+          <h2 id="workflow-title">{content.home.supportFlow.title}</h2>
+          <p className="section-intro">{content.home.supportFlow.description}</p>
+        </header>
+        <ol className="workflow-list">
+          {content.home.supportFlow.steps.map((step, index) => (
+            <li className="workflow-step" key={step.title}>
+              <span className="workflow-step__number">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <ExperienceTimeline content={content.home.experience} />
 
-      <PageSection body={content.home.skills.body} eyebrow={content.home.skills.eyebrow} id={portfolioSections.skills} title={content.home.skills.title}>
+      <section className="section-shell" id={portfolioSections.skills} aria-labelledby="skills-title">
+        <header className="section-heading">
+          <p className="eyebrow">{content.home.skills.eyebrow}</p>
+          <h2 id="skills-title">{content.home.skills.title}</h2>
+          <p className="section-intro">{content.home.skills.body}</p>
+        </header>
         <div className="skill-grid">
           {content.home.skills.groups.map((group, index) => (
             <article className="skill-card" key={group.title}>
@@ -117,39 +109,43 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
             </article>
           ))}
         </div>
-      </PageSection>
+      </section>
 
-      <ProjectShowcase content={content} />
-
-      <PageSection body={content.home.certifications.body} eyebrow={content.home.certifications.eyebrow} id={portfolioSections.certifications} title={content.home.certifications.title}>
-        <div className="certification-grid">
-          {content.home.certifications.items.map((certification) => (
-            <article className="certification-card" key={certification.title}>
-              <span className="certification-card__mark" aria-hidden="true">✓</span>
-              <div>
-                <h3>{certification.title}</h3>
-                <p>{certification.issuer}</p>
-                {certification.note ? <p className="certification-card__note">{certification.note}</p> : null}
-              </div>
-            </article>
-          ))}
+      <section className="section-shell about-section" id={portfolioSections.profile} aria-labelledby="about-title">
+        <header className="section-heading">
+          <p className="eyebrow">{content.home.story.eyebrow}</p>
+          <h2 id="about-title">{content.home.story.title}</h2>
+          <p className="section-intro">{content.home.story.body}</p>
+        </header>
+        <div className="about-section__copy">
+          {content.home.story.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </div>
-      </PageSection>
+      </section>
 
-      <CareerGoal content={content.home.careerGoal} />
-
-      <PageSection body={content.home.contact.body} eyebrow={content.home.contact.eyebrow} id={portfolioSections.contact} title={content.home.contact.title}>
-        <div className="action-row">
-          {content.contact.links.map((link) =>
-            link.href.startsWith("http") ? (
-              <ExternalLink className="action-link action-link--secondary" externalLabel={content.a11y.externalLink} href={link.href} key={link.href} label={link.label} />
+      <section className="contact-section" id={portfolioSections.contact} aria-labelledby="contact-title">
+        <div className="section-shell contact-section__inner">
+          <div>
+            <p className="eyebrow">{content.home.contact.eyebrow}</p>
+            <h2 id="contact-title">{content.home.contact.title}</h2>
+            <p className="section-intro">{content.home.contact.body}</p>
+          </div>
+          <div className="contact-section__actions">
+            {content.contact.links.map((link) => (
+              <a className="action-link action-link--secondary" href={link.href} key={link.href}>
+                {link.label}{link.href.startsWith("http") ? <span aria-hidden="true"> ↗</span> : null}
+              </a>
+            ))}
+            {linkedinUrl ? (
+              <a className="action-link action-link--secondary" href={linkedinUrl} rel="noreferrer" target="_blank">LinkedIn ↗</a>
             ) : (
-              <a className="action-link action-link--primary" href={link.href} key={link.href}>{link.label}</a>
-            ),
-          )}
+              <span aria-disabled="true" className="action-link action-link--secondary action-link--disabled" title="TODO: Add the verified LinkedIn profile URL.">
+                {content.projectLabels.linkedinPending}
+              </span>
+            )}
+          </div>
+          <p className="contact-section__note">{content.contact.pendingNote}</p>
         </div>
-        <p className="muted-text">{content.contact.pendingNote}</p>
-      </PageSection>
+      </section>
     </>
   );
 }
