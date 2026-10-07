@@ -2,6 +2,16 @@
 
 ## Current Product Direction (2026-10-07)
 
+### Implementation follow-up
+
+- Keep the existing bilingual App Router pages, locale provider, semantic navigation, analytics homepage and eight-part case studies.
+- Make secondary project cards explain the problem, analysis and available finding/limitation; never turn missing evaluation evidence into an outcome.
+- Store support comparison values, denominators, source links and translated labels in `src/config/support-analytics.ts`; render them with a reusable, locale-aware `meter` figure.
+- Give shared legacy styles a lower CSS cascade layer so responsive analytics rules do not require duplicate specificity overrides. Maintain explicit reduced-motion behavior.
+- Verify lint, typecheck, tests and build, then review EN/VI at mobile, tablet and desktop widths. Record environment blockers without claiming checks passed.
+
+Follow-up verification (2026-10-07): `npm run lint`, `npm run typecheck`, `npm run test`, and `npm run build` could not start because npm is not available on PATH. Executed their local CLI equivalents using VS Code's bundled Node runtime (`ELECTRON_RUN_AS_NODE=1`): ESLint passed, Next route type generation and TypeScript passed, Vitest passed 20/20 tests. Default Turbopack build failed because its pooled process could not find `node.exe`; `next build --webpack` passed and generated 30 pages. Local EN/VI home and primary case-study routes returned HTTP 200. Reviewed responsive breakpoints and reduced-motion rules in source; visual viewport and keyboard verification remain pending because the browser inventory is empty and the in-app browser is unavailable. No new dependencies were added.
+
 This section supersedes the earlier Application Support / DevOps positioning below. Keep the older phase prompts as historical implementation context; do not use their target roles, featured-project order, or visual direction for new portfolio work.
 
 - Primary target: entry-level Data Analyst. Secondary targets: Operations Analyst, Business Data Analyst, and Support Operations Analyst.

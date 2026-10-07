@@ -33,7 +33,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
               </a>
             ) : (
               <span aria-disabled="true" className="action-link action-link--secondary action-link--disabled" title="TODO: Add a verified current CV PDF.">
-                {content.locale === "vi" ? content.projectLabels.resumePending : content.projectLabels.resumePending}
+                {content.projectLabels.resumePending}
               </span>
             )}
             <a className="hero__social-link" href={content.profile.github} rel="noreferrer" target="_blank">
@@ -45,7 +45,7 @@ export function PortfolioPage({ content }: PortfolioPageProps) {
         <aside className="hero__context" aria-label={content.profile.role}>
           <p className="hero__context-label">{content.locale === "vi" ? "VAI TRÒ MỤC TIÊU" : "TARGET ROLE"}</p>
           <strong>Data Analyst</strong>
-          <p>{content.locale === "vi" ? "Operations Analyst · Business Data Analyst" : "Operations Analyst · Business Data Analyst"}</p>
+          <p>Operations Analyst · Business Data Analyst</p>
           <span className="hero__context-rule" aria-hidden="true" />
           <p>{content.profile.location}</p>
           <a href="#projects">{content.locale === "vi" ? "Dự án dữ liệu" : "Data projects"} <span aria-hidden="true">↓</span></a>

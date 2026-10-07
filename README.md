@@ -16,6 +16,10 @@ npm run build
 
 Portfolio content lives in `src/content/portfolio.ts`. Public-facing claims must stay traceable to `docs/PHASE_0_AUDIT.md` or a user-supplied source.
 
+The featured support comparison is configured in `src/config/support-analytics.ts`, with its source, denominators and EN/VI labels. Keep these values aligned with the support analytics README. The figure describes synthetic observations, not work in a previous company. Secondary data cards show the problem, analysis and verified finding or limitation.
+
+Shared styles use the `portfolio-base` cascade layer in `src/app/globals.css`; the analytics rules below it control the current visual identity and responsive layout. Do not add another competing override section.
+
 Optional public settings:
 
 ```bash

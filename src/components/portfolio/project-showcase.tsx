@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getLocalizedPath } from "@/lib/portfolio";
 import { portfolioSections } from "@/config/portfolio-sections";
 import type { PortfolioContent } from "@/types/portfolio";
+import { SupportAnalyticsSignal } from "./support-analytics-signal";
 
 type ProjectShowcaseProps = {
   readonly content: PortfolioContent;
@@ -43,20 +44,7 @@ export function ProjectShowcase({ content }: ProjectShowcaseProps) {
             <p className="synthetic-note">{content.locale === "vi" ? "Dataset tổng hợp được thiết kế để mô phỏng hoạt động customer support." : "Synthetic dataset designed to simulate customer-support operations."}</p>
           </div>
 
-          <figure className="project-signal">
-            <figcaption>{content.locale === "vi" ? "Tỷ trọng ticket và resolution SLA breach" : "Ticket share vs. resolution SLA breaches"}</figcaption>
-            <div className="project-signal__row">
-              <span>{content.locale === "vi" ? "Tỷ trọng ticket technical" : "Technical ticket share"}</span>
-              <progress aria-label={content.locale === "vi" ? "Tỷ trọng ticket technical" : "Technical ticket share"} max="100" value="29.49" />
-              <strong>29.49%</strong>
-            </div>
-            <div className="project-signal__row">
-              <span>{content.locale === "vi" ? "Tỷ trọng resolution SLA breach" : "Share of resolution SLA breaches"}</span>
-              <progress aria-label={content.locale === "vi" ? "Tỷ trọng resolution SLA breach" : "Share of resolution SLA breaches"} max="100" value="50.09" />
-              <strong>50.09%</strong>
-            </div>
-            <p>{content.locale === "vi" ? "1.760 trên 3.514 breach resolution thuộc nhóm technical." : "1,760 of 3,514 resolution breaches were in technical cases."}</p>
-          </figure>
+          <SupportAnalyticsSignal locale={content.locale} />
         </div>
 
         <div className="featured-project__findings">
@@ -87,6 +75,18 @@ export function ProjectShowcase({ content }: ProjectShowcaseProps) {
             <h3>{project.title}</h3>
             <p>{project.summary}</p>
             <p className="secondary-project__problem"><strong>{content.projectLabels.problem}:</strong> {project.problem}</p>
+            {project.caseStudy ? (
+              <dl className="project-analysis-summary">
+                <div>
+                  <dt>{content.projectLabels.analysis}</dt>
+                  <dd>{project.caseStudy.analysis.find((item) => !item.startsWith("TODO:")) ?? project.story?.role ?? project.summary}</dd>
+                </div>
+                <div>
+                  <dt>{content.projectLabels.findings}</dt>
+                  <dd>{project.caseStudy.findings.find((item) => !item.startsWith("TODO:")) ?? project.limitations[0]}</dd>
+                </div>
+              </dl>
+            ) : null}
             <ul className="tech-list" aria-label={content.projectLabels.techStack}>
               {project.techStack.slice(0, 5).map((item) => <li className="tech-list__item" key={item}>{item}</li>)}
             </ul>
