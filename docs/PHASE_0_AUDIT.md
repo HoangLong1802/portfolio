@@ -188,10 +188,10 @@ npm run build
 Blocking before Phase 3 or deployment:
 
 - Current English CV PDF and optional Vietnamese CV PDF.
-- Exact email address to publish.
+- Candidate name, email and phone were confirmed by the owner on 2026-10-07; canonical values live in `src/config/personal-info.ts`.
 - Exact LinkedIn URL to publish.
 - Exact Concentrix/Booking.com title and date range.
-- Exact OPPO Vietnam title and date range.
+- OPPO Vietnam title and date range were confirmed by the owner on 2026-10-07: PHP Developer, April 2024 through April 2025.
 - Confirmation that KPI metrics may be public and match current CV.
 - Professional photo decision: real portrait, initials/avatar, or abstract visual.
 - Real screenshots for featured projects, or approval to use labelled placeholders.

@@ -2,6 +2,17 @@
 
 ## Current Product Direction (2026-10-07)
 
+### Candidate contact update
+
+- Use `src/config/personal-info.ts` as the single source for owner-confirmed name, email and phone, and derive `mailto:`/`tel:` URLs from those values.
+- Both localized profiles and Contact CTAs must consume that config and show the email with its exact capitalization. Preserve company, sample and third-party contact information.
+- Search repository-owned files and rebuilt HTML for obsolete candidate contacts; run lint, typecheck, tests and production build.
+
+### Verified OPPO employment timeline
+
+- Owner-confirmed employment: OPPO Vietnam, PHP Developer, April 2024 through April 2025. Keep EN (`Apr 2024 – Apr 2025`) and VI (`04/2024 – 04/2025`) content aligned.
+- Audit all repository-owned source, metadata, documentation and resume assets for duplicate dates; preserve other employers' periods and all unrelated claims.
+
 ### Implementation follow-up
 
 - Keep the existing bilingual App Router pages, locale provider, semantic navigation, analytics homepage and eight-part case studies.

@@ -1,4 +1,5 @@
 import type { PortfolioContent, Project } from "@/types/portfolio";
+import { personalContactLinks, personalInfo } from "@/config/personal-info";
 
 const githubBase = "https://github.com/HoangLong1802";
 
@@ -714,12 +715,13 @@ export const portfolioContent = {
       lastUpdated: "2026-10-07",
     },
     profile: {
-      email: "TruongHoanglong1802@gmail.com",
+      email: personalInfo.email,
+      phone: personalInfo.phone,
       github: githubBase,
       // TODO: Add the verified LinkedIn profile URL when provided.
       linkedinUrl: null,
       location: "Ho Chi Minh City, Vietnam",
-      name: "TRUONG HOANG LONG",
+      name: personalInfo.name,
       // TODO: Add a verified current CV PDF before enabling the download action.
       resumeUrl: null,
       role: "Data Analyst | Operations Analytics",
@@ -920,7 +922,7 @@ export const portfolioContent = {
             label: "DEVELOPMENT BACKGROUND",
             headline: "Development taught me what can happen behind the ticket.",
             role: "PHP Developer",
-            period: "Apr 2024 – Nov 2024",
+            period: "Apr 2024 – Apr 2025",
             responsibilities: [
               "Worked with PHP and MySQL while investigating and reproducing application issues.",
               "Queried or validated application data where needed to support troubleshooting.",
@@ -1074,7 +1076,8 @@ export const portfolioContent = {
     },
     contact: {
       links: [
-        { label: "Email Me", href: "mailto:TruongHoanglong1802@gmail.com" },
+        { label: personalInfo.email, href: personalContactLinks.email },
+        { label: personalInfo.phone, href: personalContactLinks.phone },
         { label: "GitHub", href: githubBase },
       ],
       pendingNote: "TODO: Add the verified LinkedIn profile URL and current CV PDF when available.",
@@ -1131,12 +1134,13 @@ export const portfolioContent = {
       lastUpdated: "2026-10-07",
     },
     profile: {
-      email: "TruongHoanglong1802@gmail.com",
+      email: personalInfo.email,
+      phone: personalInfo.phone,
       github: githubBase,
       // TODO: Bổ sung URL LinkedIn đã xác minh khi có thông tin.
       linkedinUrl: null,
       location: "Thành phố Hồ Chí Minh, Việt Nam",
-      name: "TRƯƠNG HOÀNG LONG",
+      name: personalInfo.name,
       // TODO: Bổ sung CV PDF hiện tại đã xác minh trước khi bật nút tải.
       resumeUrl: null,
       role: "Data Analyst | Operations Analytics",
@@ -1322,7 +1326,7 @@ export const portfolioContent = {
             label: "NỀN TẢNG DEVELOPMENT",
             headline: "Nền tảng software giúp em hiểu thêm bối cảnh phía sau một ticket.",
             role: "PHP Developer",
-            period: "04/2024 – 11/2024",
+            period: "04/2024 – 04/2025",
             responsibilities: ["Làm việc với PHP và MySQL khi điều tra, tái hiện vấn đề ứng dụng.", "Truy vấn hoặc kiểm tra dữ liệu ứng dụng khi cần để hỗ trợ troubleshooting.", "Kiểm thử bản sửa lỗi và ghi lại thông tin kỹ thuật để theo dõi.", "Phối hợp với developer và người dùng nghiệp vụ trong quá trình xử lý vấn đề."],
             highlights: [],
             tags: ["PHP", "MySQL", "SQL", "Testing", "Troubleshooting"],
@@ -1412,7 +1416,11 @@ export const portfolioContent = {
       },
     },
     contact: {
-      links: [{ label: "Email cho em", href: "mailto:TruongHoanglong1802@gmail.com" }, { label: "GitHub", href: githubBase }],
+      links: [
+        { label: personalInfo.email, href: personalContactLinks.email },
+        { label: personalInfo.phone, href: personalContactLinks.phone },
+        { label: "GitHub", href: githubBase },
+      ],
       pendingNote: "TODO: Bổ sung URL LinkedIn đã xác minh và CV PDF hiện tại khi có thông tin.",
     },
     footer: {

@@ -229,6 +229,7 @@ export type HomeContent = {
 
 export type Profile = {
   readonly email: string;
+  readonly phone: string;
   readonly github: string;
   readonly linkedinUrl?: string | null;
   readonly location: string;
