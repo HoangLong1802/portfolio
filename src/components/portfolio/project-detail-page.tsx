@@ -5,6 +5,7 @@ import { ExternalLink } from "../ui/external-link";
 import { PageSection } from "../ui/page-section";
 import { StatusBadge } from "../ui/status-badge";
 import { ProjectDemoSequence } from "./project-demo-sequence";
+import { SupportAnalyticsCaseStudy } from "./support-analytics-case-study";
 
 type ProjectDetailPageProps = {
   readonly content: PortfolioContent;
@@ -12,6 +13,10 @@ type ProjectDetailPageProps = {
 };
 
 export function ProjectDetailPage({ content, project }: ProjectDetailPageProps) {
+  if (project.slug === "customer-support-operations-analytics") {
+    return <SupportAnalyticsCaseStudy content={content} project={project} />;
+  }
+
   const backHref = content.locale === "vi" ? "/vi#projects" : "/#projects";
   const { demo, source } = getProjectEvidenceLinks(project);
   const caseStudySections = project.caseStudy

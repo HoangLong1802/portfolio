@@ -1,0 +1,82 @@
+{
+  "inputs": [
+    {
+      "id": "github-pat-token",
+      "type": "promptString",
+      "description": "GitHub personal access token for GitHub MCP",
+      "password": true
+    }
+  ],
+  "servers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${input:github-pat-token}"
+      }
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "npx.cmd",
+        "-y",
+        "@playwright/mcp@latest",
+        "--browser",
+        "msedge",
+        "--executable-path",
+        "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+      ]
+    },
+    "filesystem": {
+      "type": "stdio",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "npx.cmd",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "D:\\Project\\DA\\support-ops-analytics"
+      ]
+    },
+    "context7": {
+      "type": "stdio",
+      "command": "cmd.exe",
+      "args": ["/c", "npx.cmd", "-y", "@upstash/context7-mcp"]
+    },
+    "sequential_thinking": {
+      "type": "stdio",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "npx.cmd",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "env": {
+        "DISABLE_THOUGHT_LOGGING": "true"
+      }
+    },
+    "powerbi": {
+      "type": "stdio",
+      "command": "cmd.exe",
+      "args": [
+        "/c",
+        "npx.cmd",
+        "-y",
+        "@microsoft/powerbi-modeling-mcp@latest",
+        "--start"
+      ]
+    },
+    "excel": {
+      "type": "stdio",
+      "command": "cmd.exe",
+      "args": ["/c", "npx.cmd", "-y", "@sbroenne/mcp-server-excel@latest"]
+    },
+    "windows": {
+      "type": "stdio",
+      "command": "C:\\Tools\\windows-mcp\\Sbroenne.WindowsMcp.exe"
+    }
+  }
+}

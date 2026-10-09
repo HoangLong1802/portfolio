@@ -1,5 +1,32 @@
 # Portfolio Trương Hoàng Long — Codex Build Plan & Phased Prompts
 
+## Workbook-led refinement (2026-10-09)
+
+Continue from the existing uncommitted recruiter-focused implementation; preserve all prior work, routes, localization and demos. Do not edit the CV, install dependencies, commit, push or deploy.
+
+1. Inspect code and actual desktop/mobile pages before changing application files. Use the local analytics source at `D:/Project/DA/support-ops-analytics`. The latest local output supersedes the older GitHub workbook: 14 sheets, five chart objects, 14,774 cleaned tickets. Technical breach contribution is 1,760/3,514 = 50.09%, distinct from its within-category rate 1,760/4,352 = 40.44%. Average daily arrivals are 46.90 weekday vs 24.37 weekend, or 1.92×. There is no completed Power BI dashboard or executed MySQL output.
+2. Preserve the cream/sage palette and system sans font. Use dark text, 16px mobile body, 1,200px home and 960px case-study widths. Keep one prominent report preview, generous spacing and ordinary keyboard-accessible links. Remove repeated skills presentation rather than add more cards.
+3. Copy the actual workbook and its two existing renders into public project assets after checking size and sensitive content. Label images as workbook renders, preserve their full aspect ratio, and offer full-size links. Serve the local workbook so its preview and download match; add a concise data-quality report based on current reconciliation output. Do not imply these assets are native Excel screenshots or Power BI dashboards.
+4. Refine EN/VI hero and case-study copy, correct chart counts, clarify finding denominators and daily demand, restore the already-sourced Vietnamese education/English qualification. Keep recommendations separate from measured results.
+5. Validate public assets, source links, contact/metadata, all project routes, 390/768/1440px layouts, keyboard controls and reduced motion. Save and inspect before/after screenshots. Run lint, typecheck, tests and production build using npm.cmd on Windows; document actual results and limitations in docs/RECRUITER_REVIEW.md.
+
+Observed before edits: recruiter positioning, project order and most public-copy cleanup already work. Remaining issues are absent real report previews, duplicated capability/skill presentation, small mobile text, missing Vietnamese education, the stale four-chart claim, and findings that need clearer denominators. Playwright MCP could not launch its configured Chrome; the existing ignored playwright-core installation and installed Edge provide browser QA without new dependencies.
+
+## Recruiter-focused content refinement (2026-10-08)
+
+This request supersedes older positioning and instructions to display missing-content markers. Preserve the existing bilingual App Router, portfolio palette, working demos and project URLs. Do not change the CV, add dependencies or publish changes automatically.
+
+1. Inspect all repository source, content, routes, styles, motion, metadata and assets. Search all tracked text for TODO, pending, verified, audit, evidence and related phrases; distinguish internal documentation from visitor-facing copy. Confirm the support-project numbers and available assets against its repository.
+2. Keep one flagship: Customer Support Operations Analytics. Put concise secondary projects after experience. Order the homepage as hero, flagship, capabilities/skills, experience, other projects, about/education, contact. Hide absent resume and LinkedIn actions entirely.
+3. Rewrite EN/VI copy in a natural candidate voice. Keep job titles and OPPO Apr 2024–Apr 2025. Explain support and software skills as transferable experience. Emphasize SQL, Python/pandas and Excel; do not imply a completed Power BI dashboard or executed MySQL project analysis.
+4. Make the support case study readable as overview, business problem, dataset, workflow, analysis, findings, recommendations, tools and repository. Retain the synthetic-data context, denominators and recommendation scope. Use actual outputs; no fabricated dashboard. Keep Stock and Inventory concise instead of filling incomplete analytical templates.
+5. Standardize calm palette, numeric callouts, readable lengths, spacing and responsive layouts. Preserve semantic navigation, keyboard focus and reduced-motion behavior. Update canonical URL, localized metadata, OpenGraph images, manifest and icon.
+6. Run npm run lint, npm run typecheck, npm run test and npm run build. Verify all routes, links, public text and assets; inspect desktop, tablet, mobile, keyboard and reduced motion. Review the final diff for secrets, unsupported claims and regressions. Document actual results and outstanding assets in docs/RECRUITER_REVIEW.md.
+
+Initial inspection: working tree clean on main; no resume PDF, GIF, image preview or PBIX in the portfolio. Public placeholders exist in hero/contact and Stock/Inventory case studies. Support repository confirms five synthetic sources, 14,774 retained snapshots, a 14-sheet/five-chart Excel output, 50.09% Technical resolution-breach share and 1.92× weekday/weekend arrivals. Its SQL files are prepared MySQL queries; Python supplies the published calculations. Power BI specifications exist, but no dashboard images or PBIX. Existing root static HTML has sample links and a non-sending contact form; replace its unused preview with a link to the current portfolio.
+
+Completion (2026-10-08): implemented the refinement in EN/VI without changing the CV or dependency manifest. Lint, strict typecheck, 26 tests and the default Turbopack production build passed (30 pages). Reviewed 24 homepage/case-study viewport combinations from 320 to 1440 px, all 20 localized project routes, keyboard navigation, locale switching, reduced motion and generated OpenGraph assets. No browser console/hydration errors or horizontal overflow were found. External Render demo/backend checks timed out; GitHub push requires authentication. Full changed-file, claim and asset review is in [RECRUITER_REVIEW.md](RECRUITER_REVIEW.md). Changes remain local and uncommitted.
+
 ## Current Product Direction (2026-10-07)
 
 ### Candidate contact update

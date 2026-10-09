@@ -273,6 +273,7 @@ export type Project = {
     readonly findings: readonly string[];
     readonly recommendations: readonly string[];
     readonly visualization: string;
+    readonly workflow?: readonly string[];
   };
   readonly contributions: readonly string[];
   readonly demoNotice?: string;
@@ -300,6 +301,7 @@ export type ProjectLabels = {
   readonly contributions: string;
   readonly evidence: string;
   readonly earlierProjects: string;
+  readonly exploreProject: string;
   readonly featuredProjects: string;
   readonly findings: string;
   readonly limitations: string;
@@ -310,7 +312,8 @@ export type ProjectLabels = {
   readonly problem: string;
   readonly readCaseStudy: string;
   readonly recommendation: string;
-  readonly resumePending: string;
+  readonly overview: string;
+  readonly workflow: string;
   readonly role: string;
   readonly selectProject: string;
   readonly selectedProject: string;
@@ -319,7 +322,6 @@ export type ProjectLabels = {
   readonly visualization: string;
   readonly value: string;
   readonly wakeBackend: string;
-  readonly linkedinPending: string;
 };
 
 export type SiteContent = {
@@ -330,7 +332,6 @@ export type SiteContent = {
 
 export type ContactContent = {
   readonly links: readonly ContactLink[];
-  readonly pendingNote: string;
 };
 
 export type A11yContent = {

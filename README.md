@@ -1,35 +1,42 @@
 # Truong Hoang Long Portfolio
 
-Bilingual portfolio for an entry-level Data Analyst focused on operations analytics, built with Next.js App Router, strict TypeScript, and evidence-backed project descriptions.
+Bilingual portfolio for Junior Data Analyst, Operations Analyst, Reporting Analyst and Data Operations applications. Built with the existing Next.js App Router and strict TypeScript.
 
-## Scripts
+## Development
+
+Use Node.js 24 LTS and install the locked dependencies:
 
 ```bash
+npm ci
 npm run dev
 npm run lint
 npm run typecheck
 npm run test
 npm run build
+npm run start
 ```
 
-## Content
+The default canonical URL is https://portfolio-liart-one-77.vercel.app/. Set NEXT_PUBLIC_SITE_URL only when overriding this address; .env.example contains the production URL. Do not put secrets in public variables.
 
-Portfolio content lives in `src/content/portfolio.ts`. Public-facing claims must stay traceable to `docs/PHASE_0_AUDIT.md` or a user-supplied source.
+On Windows PowerShell, use `npm.cmd` instead of `npm` if the local execution policy blocks `npm.ps1`. Node/npm are available on PATH in the current environment. ESLint excludes `.agents/` because its bundled skill scripts are tooling, not application source.
 
-Edit candidate name, email and phone in `src/config/personal-info.ts`. Both locales consume this source; email and phone CTA URLs are derived from the same values.
+## Editing content
 
-The featured support comparison is configured in `src/config/support-analytics.ts`, with its source, denominators and EN/VI labels. Keep these values aligned with the support analytics README. The figure describes synthetic observations, not work in a previous company. Secondary data cards show the problem, analysis and verified finding or limitation.
+- src/content/portfolio.ts contains EN/VI copy, experience and project descriptions.
+- src/config/personal-info.ts is the shared source for name, email, phone, GitHub and portfolio URL.
+- src/config/portfolio-sections.ts controls the flagship and smaller project selections.
+- src/config/support-analytics.ts holds sourced numeric callouts, denominators and localized labels.
+- public/projects/support-ops contains the actual Excel workbook, its two renders and a readable data-quality summary. The preview and download are the same local delivery; do not replace only one of them. Source details and checksums are recorded in docs/RECRUITER_REVIEW.md.
+- src/types/portfolio.ts defines the content contract. Keep content separate from UI components.
 
-Shared styles use the `portfolio-base` cascade layer in `src/app/globals.css`; the analytics rules below it control the current visual identity and responsive layout. Do not add another competing override section.
+Customer Support Operations Analytics is the single flagship. Its data is synthetic; the published calculations come from Python and the reporting output is Excel. Describe the MySQL work as query design. Add Power BI deliverables only when a real PBIX or dashboard image is available.
 
-Optional public settings:
+Workbook images are renders of the actual XLSX, not native Excel captures. Keep their original aspect ratio and full-size links. The current workbook contains 14 sheets and five chart objects. It stores reporting results, with no claim of PivotTables or formula-based recalculation.
 
-```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-```
+Absent resume and LinkedIn links are hidden. Keep project routes and existing software demos accessible. Stock and Inventory use concise project pages rather than incomplete analytical templates. The old root HTML now links to the current portfolio.
 
-Do not put secrets in `NEXT_PUBLIC_*` variables. CV links, screenshots, and unverified job dates or KPI metrics remain unpublished until verified by the site owner. Candidate contact details use the owner-confirmed config above.
+Shared styles remain in the portfolio-base layer of src/app/globals.css. The existing analytics rules control the palette and responsive layout. Keep reduced-motion overrides consistent in both layers. Next.js generates localized OpenGraph image URLs automatically; do not hard-code image route hashes.
 
-## Phase Notes
+## Review
 
-Detailed implementation phases stay in `docs/PORTFOLIO_PLAN.md`. Current execution state is tracked in `PHASE_STATUS.md`.
+Detailed instructions are in docs/PORTFOLIO_PLAN.md. See docs/RECRUITER_REVIEW.md for the audit, changed files, claim decisions, missing optional assets and verification results. Internal development notes belong in documentation, never in visitor-facing content.

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Quality Report | Customer Support Operations Analytics</title>
+  <meta name="description" content="Cleaning decisions and reconciliation for five synthetic datasets in the Customer Support Operations Analytics project.">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #FDF6ED; color: #252925; font: 16px/1.7 "Segoe UI", sans-serif; }
+    main { max-width: 960px; margin: auto; padding: 40px 20px 64px; }
+    h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); line-height: 1.2; }
+    h2 { margin-top: 40px; font-size: 1.4rem; }
+    p, li { max-width: 75ch; }
+    a { color: #4A5B47; text-underline-offset: 4px; }
+    a:focus-visible { outline: 3px solid #778873; outline-offset: 4px; }
+    nav { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+    nav a { padding-block: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { border-bottom: 1px solid #DCCFC0; padding: 12px 8px; text-align: right; vertical-align: top; }
+    th { background: #A1BC98; }
+    th:first-child, td:first-child { text-align: left; }
+    td:first-child { overflow-wrap: anywhere; }
+    caption { text-align: left; margin-bottom: 12px; }
+    li + li { margin-top: 12px; }
+    footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #DCCFC0; }
+    @media (max-width: 600px) { th, td { padding: 10px 4px; } }
+    @media print { body { background: white; } nav { display: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Report navigation">
+      <a href="/projects/customer-support-operations-analytics">Back to case study</a>
+      <a href="/projects/support-ops/customer_support_analysis.xlsx" download>Download Excel report</a>
+      <a href="https://github.com/HoangLong1802/support-ops-analytics/tree/main/sql">Open SQL on GitHub</a>
+    </nav>
+    <h1>Data Quality Report</h1>
+    <p><strong>Customer Support Operations Analytics</strong><br>Personal project using synthetic data. Analysis period: 1 Oct 2025–30 Sep 2026, Vietnam time (UTC+7). Snapshot: 1 Oct 2026, 00:00.</p>
+    <p>This report summarizes cleaning and reconciliation across five source datasets before KPI calculation. Raw data remains unchanged; missing timestamps and CSAT scores were not imputed.</p>
+    <h2>Row reconciliation</h2>
+    <table>
+      <caption>Every source row is accounted for as a duplicate, quarantined record or retained record.</caption>
+      <thead><tr><th scope="col">Source</th><th scope="col">Input</th><th scope="col">Duplicates removed</th><th scope="col">Quarantined</th><th scope="col">Retained</th></tr></thead>
+      <tbody>
+        <tr><td>Agents</td><td>18</td><td>0</td><td>0</td><td>18</td></tr>
+        <tr><td>SLA policies</td><td>16</td><td>0</td><td>0</td><td>16</td></tr>
+        <tr><td>Tickets</td><td>15,105</td><td>75</td><td>256</td><td>14,774</td></tr>
+        <tr><td>Work logs</td><td>18,278</td><td>36</td><td>341</td><td>17,901</td></tr>
+        <tr><td>Daily workforce</td><td>6,327</td><td>0</td><td>9</td><td>6,318</td></tr>
+      </tbody>
+    </table>
+    <h2>Cleaning decisions</h2>
+    <ul>
+      <li><strong>Duplicates and conflicts:</strong> removed 75 duplicate ticket rows and 36 duplicate work-log rows. Quarantined 60 versions belonging to 30 conflicting ticket IDs because no update timestamp identified the authoritative version.</li>
+      <li><strong>Categories and channels:</strong> restored the category on 60 rows where the subcategory identified it uniquely; quarantined 60 ambiguous rows. Trimmed whitespace and normalized letter case in 120 channel values.</li>
+      <li><strong>Ticket lifecycle:</strong> quarantined invalid timestamp order, missing required fields and invalid references. Individual issue counts may overlap; the table reports unique source rows.</li>
+      <li><strong>CSAT:</strong> set 23 out-of-range scores to null while retaining the ticket. A missing survey response is not treated as a score of zero.</li>
+      <li><strong>Handling time:</strong> retained long durations where event timestamps were valid. Read the mean alongside the median and percentiles to show long-wait cases.</li>
+    </ul>
+    <h2>Preventing double counting</h2>
+    <p>A ticket can have multiple work logs. Aggregate work logs per ticket before joining to keep the 14,774 ticket grain; distinguish final-owner outcomes from the effort of agents who handled the case.</p>
+    <p>Demand comparisons use all 365 calendar days in the period: 12,240 / 261 = 46.90 tickets per weekday; 2,534 / 104 = 24.37 per weekend day. The ratio of daily averages is 1.92×.</p>
+    <h2>Interpretation limits</h2>
+    <p>This synthetic dataset is for practice. Quarantining records can change case mix and observable capacity. CSAT represents respondents only; ticket snapshots do not reconstruct every status transition. Daily capacity estimates do not determine exact shift gaps. Recommendations require further validation before being applied to real operations.</p>
+    <footer>
+      <p>Summary of the project’s data-quality decisions and reconciliation, updated 9 Oct 2026. Quality, Cleaning and Quarantine sheets are included in the <a href="/projects/support-ops/customer_support_analysis.xlsx" download>Excel workbook</a>.</p>
+      <p><a href="https://github.com/HoangLong1802/support-ops-analytics">Project repository</a> · <a href="/vi/projects/customer-support-operations-analytics">Vietnamese case study</a></p>
+    </footer>
+  </main>
+</body>
+</html>

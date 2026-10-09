@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { getAllProjects, getLocalizedPath, getPortfolioContent } from "@/lib/portfolio";
 import type { Locale, PortfolioContent, Project } from "@/types/portfolio";
+import { personalInfo } from "@/config/personal-info";
 
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? personalInfo.portfolio).replace(/\/$/, "");
 
 export const viewport: Viewport = {
   colorScheme: "light",
@@ -29,7 +30,6 @@ export function createHomeMetadata(locale: Locale): Metadata {
 
 export function createRootMetadata(locale: Locale): Metadata {
   const content = getPortfolioContent(locale);
-  const socialImage = getSocialImageUrl(content.locale);
 
   return {
     metadataBase: new URL(siteUrl),
@@ -39,12 +39,8 @@ export function createRootMetadata(locale: Locale): Metadata {
       template: `%s | ${content.profile.name}`,
     },
     description: content.site.description,
-    openGraph: {
-      images: [{ url: socialImage, width: 1200, height: 630, alt: content.site.title }],
-    },
     twitter: {
       card: "summary_large_image",
-      images: [socialImage],
     },
   };
 }
@@ -75,11 +71,9 @@ type MetadataInput = {
 };
 
 function createMetadata({ content, description, path, title }: MetadataInput): Metadata {
-  const socialImage = getSocialImageUrl(content.locale);
-
   return {
     metadataBase: new URL(siteUrl),
-    title,
+    title: { absolute: title },
     description,
     alternates: {
       canonical: absoluteUrl(path),
@@ -92,19 +86,13 @@ function createMetadata({ content, description, path, title }: MetadataInput): M
       title,
       description,
       siteName: content.site.title,
-      images: [{ url: socialImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [socialImage],
     },
   };
-}
-
-function getSocialImageUrl(locale: Locale): string {
-  return absoluteUrl(getLocalizedPath(locale, "/opengraph-image"));
 }
 
 function createLanguageAlternates(path: string): Record<string, string> {

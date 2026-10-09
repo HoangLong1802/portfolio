@@ -4,6 +4,7 @@ import nextTypescript from "eslint-config-next/typescript";
 const eslintConfig = [
   {
     ignores: [
+      ".agents/**",
       ".next/**",
       ".repo-audit/**",
       "coverage/**",

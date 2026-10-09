@@ -1,7 +1,9 @@
 export const personalInfo = {
-  name: "Trương Hoàng Long",
+  name: "Truong Hoang Long",
   email: "Long.truong1802@gmail.com",
   phone: "0355992689",
+  github: "https://github.com/HoangLong1802",
+  portfolio: "https://portfolio-liart-one-77.vercel.app/",
 } as const;
 
 export const personalContactLinks = {

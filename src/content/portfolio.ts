@@ -1,76 +1,69 @@
 import type { PortfolioContent, Project } from "@/types/portfolio";
 import { personalContactLinks, personalInfo } from "@/config/personal-info";
+import { supportReport } from "@/config/support-analytics";
 
-const githubBase = "https://github.com/HoangLong1802";
+const githubBase = personalInfo.github;
 
 const customerSupportAnalytics: Project = {
   slug: "customer-support-operations-analytics",
   title: "Customer Support Operations Analytics",
   category: "data-science-learning",
   categoryLabel: "Operations analytics case study",
-  maturityLabel: "Synthetic dataset · portfolio project",
-  summary:
-    "An end-to-end analysis of service quality, SLA breaches, backlog aging, demand patterns, and workforce capacity using a reproducible synthetic support dataset.",
-  problem:
-    "Support managers need to locate weak service stages, understand breach contributors, find aged backlog and demand peaks, then compare workload with capacity before changing staffing.",
+  maturityLabel: "Personal project · synthetic data",
+  summary: "I analyzed ticket demand, SLA breaches and team workload to identify where support operations need closer attention.",
+  problem: "Support teams need visibility into SLA breaches, ticket demand, backlog and agent workload to allocate resources and improve service performance.",
   story: {
-    role:
-      "Built the Python analysis and Excel workbook, prepared SQL analysis files, and documented the Power BI model, measures, and dashboard specification.",
-    value:
-      "Shows how operational questions can be translated into reconciled data, measurable service KPIs, findings, and practical next steps.",
-    visualAlt:
-      "Verified support operations findings: technical cases account for 29.49% of tickets and 50.09% of resolution SLA breaches.",
-    visualLabels: ["14,774 tickets", "SLA analysis", "Backlog aging", "Capacity planning"],
+    role: "Cleaned and analyzed the data in Python, wrote MySQL analysis queries and built an Excel reporting workbook.",
+    value: "Connected service questions with data preparation, KPI analysis and practical recommendations.",
+    visualAlt: "Technical cases account for 29.49% of tickets and 50.09% of resolution SLA breaches in the synthetic dataset.",
+    visualLabels: ["14,774 tickets", "SLA analysis", "Backlog aging", "Workload planning"],
   },
   contributions: [
-    "Analyzed 14,774 cleaned ticket snapshots across 18 agents and three teams, using synthetic data covering October 2025 through September 2026.",
-    "Reconciled duplicate, conflicting, invalid, and quarantined observations before analysis.",
-    "Used Python calculations for published findings and prepared SQL queries for the project questions; MySQL execution remains pending.",
-    "Produced an Excel workbook with 14 analytical sheets and four charts.",
-    "Documented a Power BI data model, DAX measures, and a three-page dashboard specification.",
+    "Analyzed 14,774 cleaned ticket snapshots across 18 agents and three teams.",
+    "Reconciled duplicates, conflicting records and invalid data before calculating KPIs.",
+    "Calculated findings in Python and wrote MySQL queries for service, customer and workforce questions.",
+    "Produced an Excel workbook with 14 reporting sheets and five charts.",
   ],
-  techStack: ["Python", "pandas", "SQL", "Excel", "Power BI", "DAX"],
+  techStack: ["Python", "pandas", "SQL / MySQL", "Excel"],
   evidence: [
-    {
-      label: "GitHub repository",
-      href: `${githubBase}/support-ops-analytics`,
-      note: "Source data, cleaning decisions, analysis, workbook, tests, and Power BI specifications.",
-    },
-    {
-      label: "Excel analytical workbook",
-      href: `${githubBase}/support-ops-analytics/blob/main/output/customer_support_analysis.xlsx`,
-      note: "Fourteen sheets and four charts expose reconciled analytical outputs.",
-    },
+    { label: "GitHub repository", href: "https://github.com/HoangLong1802/support-ops-analytics", note: "Data, Python pipeline, SQL queries and reporting outputs." },
+    { label: "Download Excel report", href: supportReport.workbookHref, note: "14 reporting sheets and five charts covering service, demand and workload." },
+    { label: "Open SQL on GitHub", href: supportReport.sqlHref, note: "MySQL queries for SLA, demand, CSAT, backlog and workforce questions." },
+    { label: "Data quality report", href: supportReport.qualityHref, note: "Cleaning decisions, row reconciliation and the limits of the analysis." },
   ],
   caseStudy: {
-    dataset:
-      "Synthetic support operations data for 18 agents across three teams, covering October 2025 through September 2026. Cleaning retained 14,774 ticket snapshots. This is not employer or customer data.",
+    dataset: "Five synthetic datasets cover tickets, handling work logs, daily workforce capacity, agents and SLA policies. They represent 18 agents in three teams from October 2025 to September 2026. After cleaning, 14,774 ticket snapshots remain, with dimensions for category, priority, channel, date and team.",
+    workflow: ["Raw CSV", "Data validation", "Python cleaning", "Python analysis & SQL query design", "Excel reporting"],
     cleaning: [
-      "Removed 75 duplicate ticket copies and 36 duplicate work-log copies; normalized 120 channel values.",
-      "Quarantined 60 conflicting ticket versions across 30 IDs and records with invalid lifecycles or unknown agent references.",
-      "Set 23 invalid CSAT scores to null and retained logically valid extreme durations rather than treating unusual waits as errors.",
+      "Removed 75 duplicate ticket copies and 36 duplicate work-log copies; normalized channel values.",
+      "Separated conflicting ticket versions and invalid lifecycles from the records used for analysis.",
+      "Set invalid CSAT scores to null and retained unusual durations when the underlying events were valid.",
     ],
     analysis: [
-      "Compared first-response and resolution SLA compliance, excluding each metric's own pending cases.",
-      "Segmented resolution breaches by ticket category and compared weekday, weekend, and time-of-day demand.",
-      "Reviewed backlog age, reopen/CSAT associations, and workload against daily productive capacity.",
+      "SLA performance — compared response and resolution compliance, then segmented breaches by category and priority.",
+      "Ticket demand — compared daily arrivals, weekdays, weekends and local arrival hours.",
+      "Backlog — grouped unresolved cases by age, category and owner.",
+      "CSAT — compared survey participation, resolution duration and reopened-ticket cohorts.",
+      "Agent and team performance — reviewed service outcomes alongside case mix and sample size.",
+      "Workload and staffing — compared recorded handling effort with daily productive capacity.",
     ],
-    visualization:
-      "The verified output is an Excel workbook with 14 sheets and four charts. Power BI data model, DAX measures, and dashboard specification are included, but the PBIX and dashboard screenshots have not been created.",
+    visualization: "The Excel report contains 14 sheets and five charts, covering service, demand and workload. Python calculates the results. The accompanying MySQL query designs use JOINs, CTEs, aggregations and window functions to answer the same business questions.",
     findings: [
       "Technical cases are 29.49% of tickets but contribute 50.09% of resolution SLA breaches (1,760 of 3,514).",
-      "First-response compliance is 87.93%, versus 76.19% for resolution and 67.66% overall; pending cases are excluded per measure.",
-      "Average weekday arrivals are 1.92 times weekend arrivals; 35.70% arrive from 09:00 to 11:59 local time.",
+      "Average daily arrivals are 46.90 on weekdays and 24.37 on weekends, a 1.92× ratio across 261 weekdays and 104 weekend days.",
+      "At the 1 October 2026 snapshot, 552 of 578 unresolved tickets were over 48 hours old. This makes aged backlog another priority for review.",
     ],
     recommendations: [
-      "Review technical queues, dependency aging, and ownership before increasing staffing across all teams.",
-      "Check triage coverage around weekday demand peaks and validate handling-time assumptions before changing schedules.",
+      "Prioritize Technical-case root-cause review: inspect bug queues, handoffs and dependency aging before changing coverage.",
+      "Review weekday assignment and morning triage coverage; compare arrival timing with handling effort before adjusting shifts.",
+      "Review backlog by age, category, priority and owner, with a named next action for cases waiting on dependencies.",
+      "Investigate agent and team SLA outliers alongside case mix, sample size and daily workload before drawing performance conclusions.",
     ],
   },
   limitations: [
-    "The dataset is synthetic and does not represent proprietary data, a former employer, or real customers.",
-    "Published calculations are from Python; MySQL execution and Power BI Desktop validation remain pending.",
-    "No PBIX or dashboard screenshots exist yet. Synthetic associations do not establish causes; reopen rate is not first-contact resolution.",
+    "This personal project uses synthetic data to practice operational analysis.",
+    "Recommendations are proposals for further review; their business impact has not been measured.",
+    "Arrival timing describes demand, while work logs measure handling effort. Daily capacity estimates cannot determine exact shift gaps. CSAT reflects respondents; ticket snapshots cannot reconstruct every handoff. Associations alone do not establish causes.",
   ],
 };
 
@@ -126,7 +119,7 @@ const englishProjects = [
       },
     ],
     limitations: [
-      "No verified real-world user base or hardened production deployment is claimed.",
+      "A personal learning platform with a public demo.",
       "Retrieval uses bounded chunking and relevance ranking rather than an embeddings-based vector index.",
       "AI features require a configured backend provider key; browser-facing environment variables must not expose secrets.",
     ],
@@ -147,26 +140,26 @@ const englishProjects = [
       value:
         "Demonstrates incident thinking from health signal through escalation and three-check recovery verification.",
       visualAlt:
-        "Product visual based on verified Helpdesk Lab features: application health, a P2 incident, n8n workflow automation, and three-check recovery.",
+        "Helpdesk Lab workflow illustration: application health, a P2 incident, n8n workflow automation, and three-check recovery.",
       visualLabels: ["Health signal", "Incident P2", "n8n workflow", "3-check recovery"],
     },
     contributions: [
       "Composed GLPI, MariaDB, phpMyAdmin, n8n, and web services with Docker Compose.",
       "Documented architecture, release checks, and support workflow boundaries.",
       "Added PowerShell and Bash automation around local lab setup and verification.",
-      "Recorded the GLPI API integration limitation instead of claiming complete production automation.",
+      "Documented the GLPI integration and local ticket-creation fallback.",
     ],
     techStack: ["Docker Compose", "GLPI", "MariaDB", "Nginx", "n8n", "PowerShell", "Bash"],
     evidence: [
       {
         label: "Source repository",
         href: `${githubBase}/Helpdesk-Lab`,
-        note: "README, architecture docs, compose file, and release checklist were audited in Phase 0.",
+        note: "Docker configuration, architecture and workflow documentation.",
       },
     ],
     limitations: [
-      "GLPI REST ticket creation is not complete; the lab documents a local fallback that shares the database.",
-      "This is a portfolio lab, not evidence of a deployed company helpdesk platform.",
+      "Ticket creation uses a local database fallback alongside GLPI.",
+      "A local portfolio lab for practicing incident workflows.",
     ],
   },
   {
@@ -179,21 +172,13 @@ const englishProjects = [
       "Cross-platform scripts for collecting basic IT asset data into local files for support and inventory practice.",
     problem:
       "Practice gathering machine inventory data across Windows and Linux without introducing a centralized production system.",
-    caseStudy: {
-      dataset: "Local machine inventory output is written to CSV and log files. TODO: verify the collected fields and sample records from the repository.",
-      cleaning: ["TODO: document any validation, normalization, or duplicate handling after reviewing the generated files."],
-      analysis: ["TODO: document a verified data question and reproducible analysis from the repository output."],
-      visualization: "No dashboard or visualization is documented for this script-based project.",
-      findings: ["TODO: add a finding only after inspecting and reproducing the repository output."],
-      recommendations: ["TODO: add a practical recommendation after validating the collected inventory fields."],
-    },
     story: {
       role:
         "Authored separate Windows PowerShell and Linux Python/Bash collection paths with inspectable local output.",
       value:
         "Demonstrates practical cross-platform support automation without overstating it as centralized asset management.",
       visualAlt:
-        "Product visual based on verified asset inventory features: a device scan, Windows and Linux collectors, and CSV audit output.",
+        "Asset inventory workflow illustration: a device scan, Windows and Linux collectors, and CSV output.",
       visualLabels: ["Device scan", "Windows", "Linux", "CSV + logs"],
     },
     contributions: [
@@ -206,12 +191,12 @@ const englishProjects = [
       {
         label: "Source repository",
         href: `${githubBase}/Automated-IT-Asset-Inventory`,
-        note: "Windows and Linux scripts plus README were audited in Phase 0.",
+        note: "Windows and Linux collectors with setup documentation.",
       },
     ],
     limitations: [
-      "No automated tests or centralized inventory service were found in the audit.",
-      "The project should not be described as company-scale asset management.",
+      "The collectors write inventory records to local CSV and log files.",
+      "Designed for local inventory collection practice.",
     ],
   },
   {
@@ -259,13 +244,11 @@ const englishProjects = [
       {
         label: "Live demo",
         href: "https://website-ban-jewry.onrender.com/",
-        note: "Owner-supplied Render deployment; availability can vary while the service wakes.",
+        note: "Public Render demo; availability can vary while the service wakes.",
       },
     ],
     limitations: [
-      "The server test script intentionally exits with no tests.",
-      "Default admin credentials in the source repository are not production-safe and must not be reused.",
-      "A public deployment URL is supplied, but no production traffic, customer usage, or uptime claim is made.",
+      "Personal commerce demo with separate customer and administrator clients.",
     ],
   },
   {
@@ -275,33 +258,24 @@ const englishProjects = [
     categoryLabel: "Data science learning project",
     maturityLabel: "Experiment repository",
     summary:
-      "A learning repository exploring stock prediction workflows with classical models and neural-network approaches.",
+      "Explored stock-price forecasting using multiple machine-learning architectures and compared preprocessing, feature engineering and modeling approaches.",
     problem:
       "Practice data preparation, model training, and saved experiment artifacts without presenting financial advice.",
-    caseStudy: {
-      dataset: "TODO: verify the source, date range, fields, and split strategy used by the experiment repository.",
-      cleaning: ["TODO: verify and document the preprocessing steps from the source code."],
-      analysis: ["The repository explores several model approaches; comparable, reproducible evaluation evidence was not found in the audit."],
-      visualization: "TODO: verify whether the repository contains a usable evaluation chart or other analytical output.",
-      findings: ["No verified predictive-performance finding is available; accuracy claims are intentionally omitted."],
-      recommendations: ["Use time-aware baselines and leakage checks before interpreting any future model comparisons."],
-    },
     contributions: [
       "Explored Python data-science workflows with NumPy, pandas, scikit-learn, PyTorch, and XGBoost.",
       "Organized multiple model approaches and saved artifacts for later inspection.",
-      "Identified missing reproducible evaluation evidence during Phase 0.",
     ],
     techStack: ["Python", "NumPy", "pandas", "scikit-learn", "PyTorch", "XGBoost"],
     evidence: [
       {
         label: "Source repository",
         href: `${githubBase}/stock_prediction_AI`,
-        note: "README, requirements, and model artifact references were audited in Phase 0.",
+        note: "Python experiments, dependencies and model artifacts.",
       },
     ],
     limitations: [
-      "No reproducible test or evaluation artifact was found to support accuracy claims.",
-      "This project must not be framed as investment advice or proof of superior prediction performance.",
+      "A learning experiment focused on comparing time-series modeling approaches.",
+      "Model exploration using historical stock data.",
     ],
   },
   {
@@ -324,12 +298,12 @@ const englishProjects = [
       {
         label: "Source repository",
         href: `${githubBase}/Educational_platform`,
-        note: "README, package file, and mock-service implementation were audited in Phase 0.",
+        note: "React source, state management and mock-service implementation.",
       },
     ],
     limitations: [
       "AI behavior is simulated and must not be described as a production AI tutor.",
-      "The audited source repository contains a committed .env file, which is a security caution and not a pattern to copy.",
+      "A frontend prototype using mock services.",
     ],
   },
   {
@@ -352,12 +326,12 @@ const englishProjects = [
       {
         label: "Source repository",
         href: `${githubBase}/user_setup_tool`,
-        note: "README and script files were audited in Phase 0.",
+        note: "Cross-platform scripts and setup instructions.",
       },
     ],
     limitations: [
-      "Privileged local user-creation scripts were not run during the audit.",
-      "No automated tests were found, and the project should not be framed as company onboarding automation.",
+      "Local account creation requires administrator permissions.",
+      "A scripting exercise for local account setup and logging.",
     ],
   },
 ] as const satisfies readonly Project[];
@@ -409,7 +383,7 @@ const vietnameseProjects = [
       },
     ],
     limitations: [
-      "Không claim user base thực tế hoặc production deployment đã harden.",
+      "Nền tảng học tập cá nhân với demo công khai.",
       "Retrieval sử dụng document chunk và relevance ranking có giới hạn, chưa dùng embeddings/vector index.",
       "Tính năng AI cần provider key ở backend; không được expose secret qua biến môi trường phía browser.",
     ],
@@ -428,25 +402,25 @@ const vietnameseProjects = [
       value:
         "Thể hiện tư duy incident từ health signal qua escalation đến xác minh phục hồi sau ba lần kiểm tra.",
       visualAlt:
-        "Minh họa sản phẩm dựa trên tính năng Helpdesk Lab đã xác minh: health ứng dụng, incident P2, n8n workflow và phục hồi ba lần kiểm tra.",
+        "Minh họa quy trình Helpdesk Lab: health ứng dụng, incident P2, n8n workflow và phục hồi ba lần kiểm tra.",
       visualLabels: ["Health signal", "Incident P2", "n8n workflow", "Phục hồi 3 bước"],
     },
     contributions: [
       "Compose GLPI, MariaDB, phpMyAdmin, n8n và web services bằng Docker Compose.",
       "Ghi tài liệu architecture, release checks và ranh giới workflow support.",
       "Thêm PowerShell và Bash automation cho thiết lập và kiểm tra lab cục bộ.",
-      "Ghi rõ giới hạn tích hợp GLPI API thay vì tuyên bố automation production hoàn chỉnh.",
+      "Ghi tài liệu tích hợp GLPI và cách tạo ticket bằng local fallback.",
     ],
     evidence: [
       {
         label: "Repository nguồn",
         href: `${githubBase}/Helpdesk-Lab`,
-        note: "README, tài liệu architecture, compose file và release checklist đã được audit ở Phase 0.",
+        note: "Cấu hình Docker, kiến trúc và tài liệu quy trình.",
       },
     ],
     limitations: [
-      "Tạo ticket qua GLPI REST chưa hoàn chỉnh; lab ghi rõ local fallback dùng chung database.",
-      "Đây là portfolio lab, không phải bằng chứng về nền tảng helpdesk công ty đã triển khai.",
+      "Tạo ticket bằng local database fallback bên cạnh GLPI.",
+      "Lab portfolio cục bộ để thực hành quy trình incident.",
     ],
   },
   {
@@ -457,21 +431,13 @@ const vietnameseProjects = [
       "Script đa nền tảng để thu thập dữ liệu IT asset cơ bản vào file cục bộ cho thực hành support và inventory.",
     problem:
       "Luyện thu thập dữ liệu máy trên Windows và Linux mà không giới thiệu một hệ thống production tập trung.",
-    caseStudy: {
-      dataset: "TODO: Xác minh các trường dữ liệu và bản ghi mẫu từ output của repository.",
-      cleaning: ["TODO: Ghi lại bước validation, normalization hoặc xử lý trùng sau khi kiểm tra output."],
-      analysis: ["TODO: Xác định câu hỏi dữ liệu và phân tích có thể tái lập từ output đã xác minh."],
-      visualization: "Project dùng script; chưa có dashboard hoặc visualization được ghi nhận.",
-      findings: ["TODO: Chỉ thêm insight sau khi kiểm tra và tái lập output của repository."],
-      recommendations: ["TODO: Đề xuất bước tiếp theo sau khi xác minh các trường inventory đã thu thập."],
-    },
     story: {
       role:
         "Viết riêng luồng thu thập Windows bằng PowerShell và Linux bằng Python/Bash với output cục bộ có thể kiểm tra.",
       value:
         "Thể hiện support automation đa nền tảng thực tế mà không mô tả quá mức thành asset management tập trung.",
       visualAlt:
-        "Minh họa sản phẩm dựa trên tính năng asset inventory đã xác minh: quét thiết bị, collector Windows/Linux và output audit CSV.",
+        "Minh họa quy trình asset inventory: quét thiết bị, collector Windows/Linux và output CSV.",
       visualLabels: ["Quét thiết bị", "Windows", "Linux", "CSV + log"],
     },
     contributions: [
@@ -483,12 +449,12 @@ const vietnameseProjects = [
       {
         label: "Repository nguồn",
         href: `${githubBase}/Automated-IT-Asset-Inventory`,
-        note: "Script Windows/Linux và README đã được audit ở Phase 0.",
+        note: "Script thu thập Windows/Linux và hướng dẫn thiết lập.",
       },
     ],
     limitations: [
-      "Audit chưa tìm thấy test tự động hoặc service inventory tập trung.",
-      "Dự án không nên được mô tả như hệ thống asset management quy mô công ty.",
+      "Collector ghi dữ liệu inventory vào CSV và log cục bộ.",
+      "Thiết kế cho thực hành thu thập inventory cục bộ.",
     ],
   },
   {
@@ -523,7 +489,7 @@ const vietnameseProjects = [
       "Chia sẻ API services và utility giữa các client.",
     ],
     demoNotice:
-      "Demo trên Render có thể cần thời gian khởi động hoặc tạm thời không truy cập được; source repository luôn được giữ làm bằng chứng chính.",
+      "Demo trên Render có thể cần thời gian khởi động hoặc tạm thời không truy cập được; có thể xem mã nguồn và hướng dẫn trong repository.",
     evidence: [
       {
         label: "Repository nguồn",
@@ -533,13 +499,11 @@ const vietnameseProjects = [
       {
         label: "Live demo",
         href: "https://website-ban-jewry.onrender.com/",
-        note: "Render deployment do chủ sở hữu cung cấp; availability có thể thay đổi khi service khởi động.",
+        note: "Demo Render công khai; availability có thể thay đổi khi service khởi động.",
       },
     ],
     limitations: [
-      "Script test của server chủ động thoát với trạng thái chưa có test.",
-      "Default admin credentials trong repository nguồn không an toàn cho production và không được tái sử dụng.",
-      "Có URL deployment công khai nhưng không claim production traffic, customer usage hoặc uptime.",
+      "Demo commerce cá nhân với client riêng cho khách hàng và quản trị viên.",
     ],
   },
   {
@@ -548,32 +512,23 @@ const vietnameseProjects = [
     categoryLabel: "Dự án học data science",
     maturityLabel: "Repository thí nghiệm",
     summary:
-      "Repository học tập khám phá workflow dự đoán cổ phiếu với mô hình cổ điển và neural network.",
+      "Khám phá dự báo giá cổ phiếu với nhiều kiến trúc học máy, so sánh cách tiền xử lý, xây dựng đặc trưng và mô hình hóa.",
     problem:
       "Luyện chuẩn bị dữ liệu, huấn luyện mô hình và lưu artifact thí nghiệm mà không biến thành lời khuyên tài chính.",
-    caseStudy: {
-      dataset: "TODO: Xác minh nguồn, khoảng thời gian, trường dữ liệu và cách chia tập từ repository.",
-      cleaning: ["TODO: Xác minh và mô tả bước preprocessing trong source code."],
-      analysis: ["Repository thử nghiệm nhiều mô hình; chưa tìm thấy bằng chứng evaluation có thể tái lập để so sánh."],
-      visualization: "TODO: Kiểm tra repository có biểu đồ evaluation hoặc output phân tích sử dụng được không.",
-      findings: ["Chưa có kết quả dự đoán được xác minh; không đưa ra claim về accuracy."],
-      recommendations: ["Dùng baseline theo thời gian và kiểm tra data leakage trước khi diễn giải các so sánh mô hình sau này."],
-    },
     contributions: [
       "Khám phá workflow data science Python với NumPy, pandas, scikit-learn, PyTorch và XGBoost.",
       "Tổ chức nhiều hướng mô hình và artifact đã lưu để kiểm tra sau.",
-      "Xác định thiếu bằng chứng evaluation có thể tái lập trong Phase 0.",
     ],
     evidence: [
       {
         label: "Repository nguồn",
         href: `${githubBase}/stock_prediction_AI`,
-        note: "README, requirements và tham chiếu model artifact đã được audit ở Phase 0.",
+        note: "Thí nghiệm Python, thư viện và model artifact.",
       },
     ],
     limitations: [
-      "Audit chưa tìm thấy test hoặc evaluation artifact có thể tái lập để hỗ trợ claim về accuracy.",
-      "Dự án không được trình bày như lời khuyên đầu tư hoặc bằng chứng hiệu năng dự đoán vượt trội.",
+      "Thí nghiệm học tập tập trung so sánh cách mô hình hóa chuỗi thời gian.",
+      "Khám phá mô hình bằng dữ liệu cổ phiếu lịch sử.",
     ],
   },
   {
@@ -593,12 +548,12 @@ const vietnameseProjects = [
       {
         label: "Repository nguồn",
         href: `${githubBase}/Educational_platform`,
-        note: "README, package file và mock-service implementation đã được audit ở Phase 0.",
+        note: "Source React, quản lý trạng thái và mock service.",
       },
     ],
     limitations: [
       "Hành vi AI là mô phỏng và không được mô tả như production AI tutor.",
-      "Repository nguồn được audit có file .env đã commit; đây là cảnh báo bảo mật, không phải pattern để sao chép.",
+      "Prototype frontend sử dụng mock service.",
     ],
   },
   {
@@ -618,12 +573,12 @@ const vietnameseProjects = [
       {
         label: "Repository nguồn",
         href: `${githubBase}/user_setup_tool`,
-        note: "README và script files đã được audit ở Phase 0.",
+        note: "Script đa nền tảng và hướng dẫn sử dụng.",
       },
     ],
     limitations: [
-      "Các script tạo user cục bộ cần quyền cao không được chạy trong quá trình audit.",
-      "Audit chưa tìm thấy test tự động, và dự án không nên được mô tả như automation onboarding quy mô công ty.",
+      "Tạo tài khoản cục bộ cần quyền quản trị viên.",
+      "Bài thực hành scripting cho thiết lập tài khoản và ghi log cục bộ.",
     ],
   },
 ] as const satisfies readonly Project[];
@@ -631,53 +586,60 @@ const vietnameseProjects = [
 const vietnameseCustomerSupportAnalytics: Project = {
   ...customerSupportAnalytics,
   categoryLabel: "Case study phân tích vận hành",
-  maturityLabel: "Dữ liệu tổng hợp · dự án portfolio",
-  summary: "Phân tích chất lượng dịch vụ, SLA, backlog, nhu cầu theo thời gian và năng lực xử lý bằng dữ liệu support tổng hợp có thể tái lập.",
-  problem: "Quản lý support cần xác định giai đoạn dịch vụ yếu, yếu tố đóng góp vào SLA breach, backlog lâu ngày và giờ cao điểm trước khi thay đổi cách phân bổ nhân sự.",
+  maturityLabel: "Dự án cá nhân · dữ liệu mô phỏng",
+  summary: "Em phân tích lượng ticket, vi phạm SLA và khối lượng công việc để xác định những vấn đề cần ưu tiên rà soát trong hoạt động hỗ trợ.",
+  problem: "Nhóm hỗ trợ cần theo dõi vi phạm SLA, lượng ticket, backlog và khối lượng công việc để phân bổ nguồn lực và cải thiện chất lượng dịch vụ.",
   story: {
-    role: "Xây dựng phân tích Python và workbook Excel, chuẩn bị file truy vấn SQL, đồng thời tài liệu hóa model, DAX measures và dashboard specification cho Power BI.",
-    value: "Chuyển câu hỏi vận hành thành dữ liệu đã đối soát, KPI dịch vụ, phát hiện và bước hành động thực tế.",
-    visualAlt: "Ticket technical chiếm 29,49% tổng ticket và 50,09% resolution SLA breach trong dữ liệu tổng hợp.",
-    visualLabels: ["14.774 ticket", "Phân tích SLA", "Tuổi backlog", "Năng lực xử lý"],
+    role: "Làm sạch và phân tích dữ liệu bằng Python, viết truy vấn MySQL và xây dựng workbook báo cáo Excel.",
+    value: "Kết nối câu hỏi vận hành với chuẩn bị dữ liệu, phân tích KPI và đề xuất thực tế.",
+    visualAlt: "Nhóm Technical chiếm 29,49% ticket và 50,09% vi phạm SLA xử lý trong bộ dữ liệu mô phỏng.",
+    visualLabels: ["14.774 ticket", "Phân tích SLA", "Tuổi backlog", "Khối lượng công việc"],
   },
   contributions: [
-    "Phân tích 14.774 ticket snapshot đã làm sạch của 18 agent thuộc ba team, từ tháng 10/2025 đến tháng 9/2026.",
-    "Đối soát bản ghi trùng, xung đột, không hợp lệ và được đưa vào quarantine trước khi phân tích.",
-    "Dùng Python để tính kết quả đã công bố và chuẩn bị truy vấn SQL; MySQL chưa được chạy xác minh.",
-    "Tạo workbook Excel gồm 14 sheet phân tích và bốn biểu đồ.",
-    "Tài liệu hóa data model, DAX measures và dashboard specification ba trang cho Power BI.",
+    "Phân tích 14.774 ticket snapshot sau làm sạch, thuộc 18 nhân viên và ba nhóm.",
+    "Đối soát dữ liệu trùng, xung đột và không hợp lệ trước khi tính KPI.",
+    "Tính kết quả bằng Python và viết truy vấn MySQL cho các câu hỏi dịch vụ, khách hàng và nhân lực.",
+    "Tạo workbook Excel gồm 14 sheet báo cáo và năm biểu đồ.",
   ],
   evidence: [
-    { label: "Repository GitHub", href: `${githubBase}/support-ops-analytics`, note: "Source data, cleaning, analysis, workbook, tests và tài liệu Power BI." },
-    { label: "Workbook phân tích Excel", href: `${githubBase}/support-ops-analytics/blob/main/output/customer_support_analysis.xlsx`, note: "Mười bốn sheet và bốn biểu đồ thể hiện kết quả đã đối soát." },
+    { label: "Repository GitHub", href: "https://github.com/HoangLong1802/support-ops-analytics", note: "Dữ liệu, pipeline Python, truy vấn SQL và báo cáo." },
+    { label: "Tải báo cáo Excel", href: supportReport.workbookHref, note: "14 sheet và năm biểu đồ về dịch vụ, lượng ticket và khối lượng công việc." },
+    { label: "Mở SQL trên GitHub", href: supportReport.sqlHref, note: "Truy vấn MySQL cho SLA, lượng ticket, CSAT, backlog và nhân lực." },
+    { label: "Báo cáo chất lượng dữ liệu", href: supportReport.qualityHref, note: "Quyết định làm sạch, đối soát số dòng và giới hạn phân tích." },
   ],
   caseStudy: {
-    dataset: "Dữ liệu support tổng hợp của 18 agent thuộc ba team, từ tháng 10/2025 đến tháng 9/2026; sau làm sạch còn 14.774 ticket snapshot. Đây không phải dữ liệu của công ty hay khách hàng trước đây.",
+    dataset: "Năm bộ dữ liệu mô phỏng gồm ticket, nhật ký xử lý, năng lực nhân lực theo ngày, nhân viên và chính sách SLA. Dữ liệu bao gồm 18 nhân viên thuộc ba nhóm, từ tháng 10/2025 đến tháng 9/2026. Sau làm sạch còn 14.774 ticket snapshot, với các chiều loại vấn đề, độ ưu tiên, kênh, ngày và nhóm.",
+    workflow: ["CSV gốc", "Kiểm tra dữ liệu", "Làm sạch bằng Python", "Phân tích Python & thiết kế truy vấn SQL", "Báo cáo Excel"],
     cleaning: [
-      "Loại 75 bản sao ticket và 36 bản sao work log; chuẩn hóa 120 giá trị channel.",
-      "Đưa 60 phiên bản ticket xung đột thuộc 30 ID, lifecycle không hợp lệ và bản ghi thiếu agent hợp lệ vào quarantine.",
-      "Đặt 23 điểm CSAT không hợp lệ thành null; giữ duration cực đoan nhưng hợp lệ thay vì coi thời gian chờ bất thường là lỗi.",
+      "Loại 75 bản sao ticket và 36 bản sao nhật ký xử lý; chuẩn hóa giá trị kênh.",
+      "Tách phiên bản ticket xung đột và vòng đời không hợp lệ khỏi dữ liệu phân tích.",
+      "Đặt điểm CSAT không hợp lệ thành null; giữ thời gian xử lý bất thường khi các mốc sự kiện vẫn hợp lệ.",
     ],
     analysis: [
-      "So sánh first-response và resolution SLA compliance; mỗi chỉ số loại các trường hợp pending tương ứng.",
-      "Phân nhóm resolution breach theo loại ticket và so sánh nhu cầu ngày thường, cuối tuần, khung giờ.",
-      "Đánh giá tuổi backlog, mối liên hệ reopen/CSAT và workload so với productive capacity theo ngày.",
+      "Hiệu quả SLA — so sánh SLA phản hồi và xử lý, phân nhóm vi phạm theo loại vấn đề và độ ưu tiên.",
+      "Lượng ticket — so sánh theo ngày, ngày thường, cuối tuần và giờ tiếp nhận địa phương.",
+      "Backlog — nhóm các case chưa xử lý theo tuổi, loại vấn đề và người phụ trách.",
+      "CSAT — so sánh tỷ lệ trả lời khảo sát, thời gian xử lý và nhóm ticket mở lại.",
+      "Hiệu quả nhân viên và nhóm — xem kết quả dịch vụ cùng cơ cấu case và cỡ mẫu.",
+      "Khối lượng công việc và nhân lực — so sánh thời gian xử lý ghi nhận với năng lực làm việc theo ngày.",
     ],
-    visualization: "Workbook Excel đã xác minh gồm 14 sheet và bốn biểu đồ. Repository có data model, DAX measures và dashboard specification, nhưng chưa có PBIX hoặc ảnh dashboard.",
+    visualization: "Báo cáo Excel gồm 14 sheet và năm biểu đồ về dịch vụ, lượng ticket và khối lượng công việc. Python tính các kết quả trong báo cáo. Bộ truy vấn MySQL đi kèm dùng JOIN, CTE, tổng hợp và hàm cửa sổ để trả lời các câu hỏi nghiệp vụ tương ứng.",
     findings: [
-      "Ticket technical chiếm 29,49% tổng ticket nhưng góp 50,09% resolution SLA breach (1.760 trên 3.514).",
-      "First-response compliance là 87,93%, so với 76,19% của resolution và 67,66% tổng thể; mỗi chỉ số loại các trường hợp pending.",
-      "Lượng ticket trung bình ngày thường cao gấp 1,92 lần cuối tuần; 35,70% đến trong khung 09:00–11:59 giờ địa phương.",
+      "Nhóm Technical chiếm 29,49% ticket nhưng đóng góp 50,09% vi phạm SLA xử lý (1.760 trên 3.514).",
+      "Trung bình mỗi ngày có 46,90 ticket vào ngày thường và 24,37 vào cuối tuần, chênh lệch 1,92 lần trên 261 ngày thường và 104 ngày cuối tuần.",
+      "Tại thời điểm chốt dữ liệu 01/10/2026, 552 trên 578 ticket chưa xử lý đã tồn tại hơn 48 giờ. Backlog lâu ngày là một nhóm cần ưu tiên rà soát.",
     ],
     recommendations: [
-      "Rà soát queue technical, thời gian chờ dependency và ownership trước khi tăng nhân sự trên tất cả team.",
-      "Kiểm tra triage vào giờ cao điểm ngày thường và xác minh giả định handling time trước khi điều chỉnh lịch.",
+      "Ưu tiên tìm nguyên nhân ở nhóm Technical: rà soát hàng đợi lỗi, bàn giao và thời gian chờ bên liên quan trước khi đổi mức độ bao phủ.",
+      "Rà soát phân công ngày thường và tiếp nhận buổi sáng; so sánh giờ đến với thời gian xử lý trước khi điều chỉnh ca.",
+      "Theo dõi backlog theo tuổi, loại vấn đề, độ ưu tiên và người phụ trách, với bước tiếp theo cụ thể cho case đang chờ.",
+      "Điều tra nhân viên hoặc nhóm có SLA khác biệt cùng cơ cấu case, cỡ mẫu và khối lượng công việc trước khi kết luận về hiệu suất.",
     ],
   },
   limitations: [
-    "Dataset là dữ liệu tổng hợp, không đại diện cho dữ liệu độc quyền, công ty cũ hay khách hàng thực tế.",
-    "Kết quả công bố được tính bằng Python; MySQL chưa chạy xác minh và Power BI Desktop chưa được kiểm tra.",
-    "Chưa có PBIX hoặc ảnh dashboard. Mối liên hệ trong dữ liệu tổng hợp không chứng minh nguyên nhân; reopen rate không đồng nghĩa first-contact resolution.",
+    "Dự án cá nhân sử dụng dữ liệu mô phỏng để thực hành phân tích vận hành.",
+    "Các đề xuất phục vụ điều tra tiếp; tác động kinh doanh chưa được đo lường.",
+    "Giờ tiếp nhận mô tả nhu cầu, còn nhật ký xử lý đo công sức thực tế. Ước tính năng lực theo ngày chưa xác định được thiếu hụt từng ca. CSAT chỉ phản ánh người trả lời; snapshot ticket không tái hiện mọi lần bàn giao. Mối liên hệ chưa đủ để kết luận nguyên nhân.",
   ],
 };
 
@@ -709,20 +671,18 @@ export const portfolioContent = {
     lang: "en",
     languageSwitchLabel: "Tiếng Việt",
     site: {
-      title: "Truong Hoang Long | Data Analyst · Operations Analytics",
+      title: "Truong Hoang Long | Data Analyst Portfolio",
       description:
-        "Entry-level Data Analyst portfolio focused on operations analytics, service performance, SQL, Excel, Python, and Power BI.",
-      lastUpdated: "2026-10-07",
+        "Junior Data Analyst portfolio featuring SQL, Python, Excel and operations analytics projects.",
+      lastUpdated: "2026-10-08",
     },
     profile: {
       email: personalInfo.email,
       phone: personalInfo.phone,
       github: githubBase,
-      // TODO: Add the verified LinkedIn profile URL when provided.
       linkedinUrl: null,
       location: "Ho Chi Minh City, Vietnam",
       name: personalInfo.name,
-      // TODO: Add a verified current CV PDF before enabling the download action.
       resumeUrl: null,
       role: "Data Analyst | Operations Analytics",
       summary:
@@ -740,35 +700,28 @@ export const portfolioContent = {
     navigation: [
       { label: "Home", href: "#home" },
       { label: "Projects", href: "#projects" },
-      { label: "Experience", href: "#experience" },
       { label: "Skills", href: "#skills" },
+      { label: "Experience", href: "#experience" },
       { label: "About", href: "#profile" },
       { label: "Contact", href: "#contact" },
     ],
     home: {
       hero: {
         actions: [
-          { label: "View Data Projects", href: "#projects" },
+          { label: "View Projects", href: "#projects" },
           { label: "GitHub", href: githubBase },
         ],
         eyebrow: "DATA ANALYST · OPERATIONS ANALYTICS",
-        title: "Turning operational data into clear, actionable insights.",
+        title: "Understanding support operations through data.",
         summary:
-          "I combine an IT and support-operations background with SQL, Excel, Python, and Power BI to examine service performance, find operational bottlenecks, and support better decisions.",
+          "IT graduate with experience in software, databases and customer-support operations. I use SQL, Python and Excel to investigate service delays, ticket demand and team workload.",
         highlightLabel: "Data analysis toolkit",
-        highlights: [
-          "SQL",
-          "Excel",
-          "Power BI",
-          "Python",
-          "Data Cleaning",
-          "KPI Analysis",
-        ],
+        highlights: ["SQL", "Python", "pandas", "Excel"],
         statusLabel: "Target roles",
         statusItems: [
-          { label: "Primary", value: "Data Analyst" },
+          { label: "Primary", value: "Junior Data Analyst" },
           { label: "Focus", value: "Operations Analytics" },
-          { label: "Also open to", value: "Operations Analyst" },
+          { label: "Also open to", value: "Operations · Reporting · Data Operations" },
           { label: "Location", value: "Ho Chi Minh City" },
         ],
         statusNote: "Entry-level analytics candidate with IT and support operations experience.",
@@ -777,7 +730,7 @@ export const portfolioContent = {
         eyebrow: "ANALYTICAL WORKFLOW",
         title: "How I Approach Data Problems",
         description:
-          "A practical sequence from a business decision to evidence and a useful next step.",
+          "A practical sequence from a business decision to findings and a useful next step.",
         steps: [
           {
             title: "Ask",
@@ -812,8 +765,8 @@ export const portfolioContent = {
         body: "The questions behind daily support work led me toward operational analytics.",
         paragraphs: [
           "My background began in IT and software support, working directly with users, technical issues, and operational processes.",
-          "Over time, I became more interested in the data behind those operations: why issues repeat, where service performance drops, which steps create bottlenecks, and what the evidence suggests should change.",
-          "I am building that direction through SQL, Excel, Python, and Power BI, with a focus on operational and business analysis. My support experience helps me keep the people and process behind the numbers in view.",
+          "Working with support cases made me curious about recurring issues, service delays and the way workload is distributed. I now explore those questions through operations analytics projects.",
+          "I use SQL, Python and Excel to connect the numbers with the people and processes behind them.",
         ],
       },
       metricsLabel: "",
@@ -823,9 +776,8 @@ export const portfolioContent = {
         chapters: [
           { label: "Home", href: "#home" },
           { label: "Projects", href: "#projects" },
-          { label: "Experience", href: "#experience" },
           { label: "Skills", href: "#skills" },
-          { label: "Workflow", href: "#workflow" },
+          { label: "Experience", href: "#experience" },
           { label: "About", href: "#profile" },
           { label: "Contact", href: "#contact" },
         ],
@@ -844,7 +796,7 @@ export const portfolioContent = {
         title: "Data Analyst focused on operations",
         opening: [
           "I am targeting entry-level Data Analyst roles, with a particular interest in operations, service performance, and business data.",
-          "My IT and support background is the context I bring; SQL, Excel, Python, and Power BI are the tools I am using to build analytical evidence.",
+          "My IT and support background is the context I bring; SQL, Excel and Python help me explore operational questions.",
         ],
         insight: "The transition is grounded in work I already understand: service workflows, cases, incidents, and operational handoffs.",
         labStory: "My portfolio projects let me practice turning those operational questions into analysis, findings, and recommendations.",
@@ -857,7 +809,7 @@ export const portfolioContent = {
         immediateGoal: "Currently looking for entry-level Data Analyst, Operations Analyst, Business Data Analyst, and Support Operations Analyst opportunities.",
         longTermTitle: "Primary target",
         longTermText: "Data Analyst",
-        rationale: "A practical analytical workflow built on domain context and evidence:",
+        rationale: "A practical analytical workflow built on domain context and data:",
         connectionLabel: "From support work to analysis",
         connectionFlow: ["IT foundation", "Operations context", "Data quality", "SQL", "Analysis", "Recommendations"],
         closing: [
@@ -874,7 +826,7 @@ export const portfolioContent = {
       focus: {
         eyebrow: "HOW I CAN CONTRIBUTE",
         title: "Useful analysis starts with trustworthy data",
-        body: "I bring operational context to the analytical process, from preparing records to explaining what the results can and cannot support.",
+        body: "My support analytics project combines Python data cleaning, SQL query design and a 14-sheet Excel report.",
         items: [
           {
             title: "Data Preparation",
@@ -886,7 +838,7 @@ export const portfolioContent = {
           },
           {
             title: "Visualization",
-            body: "Excel reporting and Power BI data modeling and dashboard design.",
+            body: "Excel reports, KPI summaries and clear charts.",
           },
           {
             title: "Business Thinking",
@@ -897,25 +849,21 @@ export const portfolioContent = {
       experience: {
         eyebrow: "Experience",
         title: "Operations experience, analytical direction",
-        body: "These are support and software roles, not previous Data Analyst positions. They provide context for the operational questions I now investigate through data.",
+        body: "Customer-support operations and software development gave me practical experience with structured cases, data checks and cross-team investigation.",
         items: [
-          // TODO: Verify whether FPT belongs in this employment history and confirm its role, dates, and responsibilities.
           {
             company: "Concentrix",
             label: "REAL WORK EXPERIENCE",
             role: "Customer Service Specialist – Platform & Partner Support",
             period: "Jul 2025 – Jul 2026",
             responsibilities: [
-              "Provided L1 platform support for international users through phone, email, CRM, and ticketing systems.",
-              "Worked with a high-volume case queue while following service quality standards and structured support processes.",
-              "Categorized issues, documented symptoms and reproduction details, and escalated cases with relevant evidence.",
-              "Noticed recurring issue patterns while handling tickets and shared context through case notes and internal handoffs.",
-              "Coordinated with internal teams and kept users informed through the case lifecycle.",
-              "Supported Booking-related configuration issues for hotel partners.",
-              "Owner-provided role context includes 110+ cases per week and 97% QA.",
+              "Handled a high-volume queue of customer and partner cases through phone, email and CRM, following structured service processes.",
+              "Reviewed account and case data, categorized issues and documented recurring patterns for follow-up.",
+              "Worked to QA and service standards, maintaining clear case notes and handoffs.",
+              "Coordinated cross-team investigations into platform and hotel-partner issues, keeping users informed.",
             ],
             highlights: ["110+ cases per week", "97% QA"],
-            tags: ["L1 Support", "Troubleshooting", "Incident Triage", "Evidence Collection", "Escalation", "User Communication", "Ticket Management"],
+            tags: ["Case Categorization", "QA / Service Metrics", "Documentation", "Cross-team Investigation"],
           },
           {
             company: "OPPO Vietnam",
@@ -924,9 +872,9 @@ export const portfolioContent = {
             role: "PHP Developer",
             period: "Apr 2024 – Apr 2025",
             responsibilities: [
-              "Worked with PHP and MySQL while investigating and reproducing application issues.",
-              "Queried or validated application data where needed to support troubleshooting.",
-              "Tested fixes and documented technical details for follow-up.",
+              "Developed PHP applications and used SQL/MySQL queries to investigate data and application issues.",
+              "Reproduced bugs and compared expected application behavior with system and database results.",
+              "Validated data, tested fixes and documented technical findings for follow-up.",
               "Coordinated with developers and business users during issue resolution.",
             ],
             highlights: [],
@@ -939,10 +887,10 @@ export const portfolioContent = {
         title: "Tools for analysis and operations",
         body: "A focused toolkit grouped by how I prepare, analyze, communicate, and investigate operational data.",
         groups: [
-          { title: "Data Analysis", items: ["Excel", "SQL", "Python", "pandas", "Data Cleaning", "Exploratory Data Analysis"] },
-          { title: "Business Intelligence", items: ["Power BI", "Power Query", "DAX", "KPI Reporting", "Dashboard Design"] },
-          { title: "Data & Technical Foundations", items: ["MySQL", "CSV / structured data", "REST APIs", "Git / GitHub"] },
-          { title: "Professional / Operations", items: ["Problem Solving", "Root Cause Analysis", "Documentation", "Customer Support Operations", "Incident Investigation"] },
+          { title: "Data Analysis", items: ["SQL", "MySQL", "Python", "pandas", "NumPy", "Excel"] },
+          { title: "SQL & Data", items: ["JOINs", "CTEs", "Aggregations", "Window Functions", "Data Cleaning", "Data Validation"] },
+          { title: "Reporting", items: ["Excel Reporting", "Charts", "KPI Summaries"] },
+          { title: "Technical", items: ["Git", "GitHub", "REST APIs", "PHP"] },
         ],
       },
       featuredLab: {
@@ -969,8 +917,8 @@ export const portfolioContent = {
           { title: "Testing", body: "Keep lab validation explicit and separate from professional production systems.", points: ["12 Application API tests", "6 n8n workflow tests"] },
         ],
         validation: [
-          { value: "12", label: "Application API tests verified locally" },
-          { value: "6", label: "n8n workflow tests verified locally" },
+          { value: "12", label: "Local application API tests" },
+          { value: "6", label: "Local n8n workflow tests" },
         ],
         validationLabel: "Local validation record",
         note: "Local verification recorded on 2026-08-06. Results are environment-specific and should be rerun after cloning. This is a portfolio lab, not a deployed company helpdesk platform.",
@@ -1024,17 +972,17 @@ export const portfolioContent = {
       projects: {
         eyebrow: "Data projects",
         title: "Analysis grounded in operational questions",
-        body: "Start with a support operations case study using synthetic data, then review smaller projects in data exploration and automation.",
+        body: "Further practice in data collection, automation and modeling.",
       },
       projectOverview: {
         eyebrow: "Featured work",
         title: "Customer Support Operations Analytics",
-        body: "A reproducible project about service quality, SLA risk, demand, backlog, and workforce capacity. The dataset is synthetic; the repository separates verified outputs from unfinished Power BI work.",
+        body: "A personal project connecting support data with service performance and workload decisions.",
       },
       education: {
         eyebrow: "Education",
         title: "Education",
-        body: "Formal IT education kept concise so the portfolio stays focused on support evidence.",
+        body: "Information Technology graduate, Van Lang University.",
         items: [
           { title: "Bachelor of Information Technology", note: "Van Lang University · 2020–2024" },
         ],
@@ -1070,8 +1018,8 @@ export const portfolioContent = {
       },
       contact: {
         eyebrow: "Contact",
-        title: "Interested in how I approach real business data?",
-        body: "I am looking for entry-level Data Analyst, Operations Analyst, Business Data Analyst, and Support Operations Analyst opportunities in Ho Chi Minh City.",
+        title: "Let’s talk about data and operations.",
+        body: "Open to Junior Data Analyst, Operations Analyst, Reporting Analyst and Data Operations roles in Ho Chi Minh City.",
       },
     },
     contact: {
@@ -1080,11 +1028,10 @@ export const portfolioContent = {
         { label: personalInfo.phone, href: personalContactLinks.phone },
         { label: "GitHub", href: githubBase },
       ],
-      pendingNote: "TODO: Add the verified LinkedIn profile URL and current CV PDF when available.",
     },
     footer: {
-      note: "Entry-level data analytics portfolio · Project evidence and limitations are stated explicitly.",
-      updatedLabel: "Content updated: 2026-10-07",
+      note: "Truong Hoang Long · Data Analyst | Operations Analytics",
+      updatedLabel: "Ho Chi Minh City, Vietnam",
     },
     projectLabels: {
       analysis: "Analysis",
@@ -1093,34 +1040,35 @@ export const portfolioContent = {
       context: "Context",
       dataset: "Dataset",
       contributions: "Contributions",
-      evidence: "Evidence",
+      evidence: "Repository & reports",
       earlierProjects: "Earlier Software Projects",
       featuredProjects: "Featured data projects",
       findings: "Key Findings",
       limitations: "Limitations",
       liveDemo: "Open Live Demo",
-      moreProjects: "More learning projects",
+      moreProjects: "Other selected projects",
+      exploreProject: "Explore project",
       projectNavigation: "Featured project navigation",
       projectOf: "Project {current} of {total}",
-      problem: "Problem",
+      problem: "Business Problem",
       readCaseStudy: "View case study",
-      recommendation: "Recommendation",
-      resumePending: "Resume PDF pending",
-      role: "My verified role",
+      recommendation: "Recommendations",
+      overview: "Overview",
+      workflow: "Workflow",
+      role: "My contribution",
       selectProject: "Select project",
       selectedProject: "Selected",
       sourceRepository: "Source code",
-      techStack: "Tech stack",
+      techStack: "Tools",
       visualization: "Visualization",
       value: "Value demonstrated",
       wakeBackend: "Wake / Check Backend",
-      linkedinPending: "LinkedIn profile pending",
     },
     notFound: {
       actionLabel: "Return home",
-      body: "The requested portfolio page does not exist in the current audited content model.",
+      body: "This page may have moved. You can find my projects and contact details on the homepage.",
       eyebrow: "Not found",
-      title: "This page is outside the current portfolio scope.",
+      title: "Page not found",
     },
     projects: prioritizedEnglishProjects,
   },
@@ -1129,19 +1077,17 @@ export const portfolioContent = {
     lang: "vi",
     languageSwitchLabel: "English",
     site: {
-      title: "Trương Hoàng Long | Data Analyst · Operations Analytics",
-      description: "Portfolio Data Analyst entry-level tập trung vào phân tích vận hành, hiệu quả dịch vụ, SQL, Excel, Python và Power BI.",
-      lastUpdated: "2026-10-07",
+      title: "Truong Hoang Long | Portfolio Data Analyst",
+      description: "Portfolio Junior Data Analyst với các dự án SQL, Python, Excel và phân tích vận hành.",
+      lastUpdated: "2026-10-08",
     },
     profile: {
       email: personalInfo.email,
       phone: personalInfo.phone,
       github: githubBase,
-      // TODO: Bổ sung URL LinkedIn đã xác minh khi có thông tin.
       linkedinUrl: null,
       location: "Thành phố Hồ Chí Minh, Việt Nam",
       name: personalInfo.name,
-      // TODO: Bổ sung CV PDF hiện tại đã xác minh trước khi bật nút tải.
       resumeUrl: null,
       role: "Data Analyst | Operations Analytics",
       summary: "Ứng viên Data Analyst entry-level tập trung vào vận hành, kết hợp nền tảng IT và customer support để phân tích hiệu quả dịch vụ, vấn đề vận hành và dữ liệu kinh doanh.",
@@ -1158,34 +1104,27 @@ export const portfolioContent = {
     navigation: [
       { label: "Trang chủ", href: "#home" },
       { label: "Dự án", href: "#projects" },
-      { label: "Kinh nghiệm", href: "#experience" },
       { label: "Kỹ năng", href: "#skills" },
+      { label: "Kinh nghiệm", href: "#experience" },
       { label: "Giới thiệu", href: "#profile" },
       { label: "Liên hệ", href: "#contact" },
     ],
     home: {
       hero: {
         actions: [
-          { label: "Xem dự án dữ liệu", href: "#projects" },
+          { label: "Xem dự án", href: "#projects" },
           { label: "GitHub", href: githubBase },
         ],
         eyebrow: "DATA ANALYST · OPERATIONS ANALYTICS",
-        title: "Biến dữ liệu vận hành thành insight rõ ràng, hữu ích.",
-        summary: "Em kết hợp nền tảng IT và support operations với SQL, Excel, Python và Power BI để phân tích hiệu quả dịch vụ, tìm điểm nghẽn vận hành và hỗ trợ ra quyết định.",
+        title: "Hiểu vận hành hỗ trợ qua dữ liệu.",
+        summary: "Em tốt nghiệp CNTT, có kinh nghiệm phần mềm, cơ sở dữ liệu và hỗ trợ khách hàng. Em dùng SQL, Python và Excel để phân tích chậm trễ dịch vụ, lượng ticket và khối lượng công việc.",
         highlightLabel: "Công cụ phân tích dữ liệu",
-        highlights: [
-          "SQL",
-          "Excel",
-          "Power BI",
-          "Python",
-          "Data Cleaning",
-          "KPI Analysis",
-        ],
+        highlights: ["SQL", "Python", "pandas", "Excel"],
         statusLabel: "Vị trí đang hướng tới",
         statusItems: [
-          { label: "Mục tiêu chính", value: "Data Analyst" },
+          { label: "Mục tiêu chính", value: "Junior Data Analyst" },
           { label: "Trọng tâm", value: "Operations Analytics" },
-          { label: "Cũng quan tâm", value: "Operations Analyst" },
+          { label: "Cũng quan tâm", value: "Operations · Reporting · Data Operations" },
           { label: "Địa điểm", value: "TP. Hồ Chí Minh" },
         ],
         statusNote: "Ứng viên phân tích entry-level với kinh nghiệm IT và support operations.",
@@ -1227,9 +1166,8 @@ export const portfolioContent = {
         title: "Từ support operations đến phân tích dữ liệu",
         body: "Những câu hỏi phía sau công việc support hằng ngày đã đưa em đến với phân tích vận hành.",
         paragraphs: [
-          "Nền tảng của em bắt đầu từ IT và software support, nơi em làm việc trực tiếp với người dùng, vấn đề kỹ thuật và quy trình vận hành.",
-          "Dần dần, em quan tâm nhiều hơn đến dữ liệu phía sau những hoạt động đó: vì sao vấn đề lặp lại, khi nào chất lượng dịch vụ giảm, bước nào tạo ra điểm nghẽn và dữ liệu gợi ý nên thay đổi điều gì.",
-          "Em đang phát triển hướng đi này bằng SQL, Excel, Python và Power BI, tập trung vào phân tích vận hành và kinh doanh. Kinh nghiệm support giúp em luôn nhìn thấy con người và quy trình phía sau các con số.",
+          "Nền tảng của em bắt đầu từ IT và software support, với công việc phát triển PHP/MySQL, kiểm tra dữ liệu tài khoản và xử lý case.",
+          "Những vấn đề lặp lại và thời gian chờ xử lý khiến em muốn tìm hiểu dữ liệu phía sau công việc hằng ngày. Dự án support analytics là cách em thực hành trả lời các câu hỏi đó bằng SQL, Python và Excel.",
         ],
       },
       metricsLabel: "",
@@ -1239,9 +1177,8 @@ export const portfolioContent = {
         chapters: [
           { label: "Trang chủ", href: "#home" },
           { label: "Dự án", href: "#projects" },
-          { label: "Kinh nghiệm", href: "#experience" },
           { label: "Kỹ năng", href: "#skills" },
-          { label: "Quy trình", href: "#workflow" },
+          { label: "Kinh nghiệm", href: "#experience" },
           { label: "Giới thiệu", href: "#profile" },
           { label: "Liên hệ", href: "#contact" },
         ],
@@ -1260,7 +1197,7 @@ export const portfolioContent = {
         title: "Data Analyst tập trung vào vận hành",
         opening: [
           "Em đang hướng tới các vị trí Data Analyst entry-level, đặc biệt quan tâm đến vận hành, hiệu quả dịch vụ và dữ liệu kinh doanh.",
-          "Kinh nghiệm IT và support là bối cảnh em mang theo; SQL, Excel, Python và Power BI là những công cụ em đang dùng để xây dựng bằng chứng phân tích.",
+          "Kinh nghiệm IT và support là bối cảnh em mang theo; SQL, Excel và Python giúp em tìm hiểu các câu hỏi vận hành.",
         ],
         insight: "Hướng chuyển đổi này bắt đầu từ những quy trình em đã hiểu: service workflow, case, incident và bàn giao vận hành.",
         labStory: "Các project portfolio giúp em thực hành chuyển câu hỏi vận hành thành phân tích, phát hiện và đề xuất.",
@@ -1290,36 +1227,32 @@ export const portfolioContent = {
       focus: {
         eyebrow: "EM CÓ THỂ ĐÓNG GÓP",
         title: "Phân tích hữu ích bắt đầu từ dữ liệu đáng tin cậy",
-        body: "Em mang bối cảnh vận hành vào quá trình phân tích, từ chuẩn bị dữ liệu đến giải thích điều gì có thể và chưa thể kết luận từ kết quả.",
+        body: "Dự án support analytics kết hợp làm sạch dữ liệu bằng Python, thiết kế truy vấn SQL và báo cáo Excel 14 sheet.",
         items: [
           { title: "Chuẩn bị dữ liệu", body: "Làm sạch, xác thực, đối soát và kiểm tra chất lượng dữ liệu." },
           { title: "Phân tích", body: "SQL, Python/pandas, KPI analysis và exploratory analysis." },
-          { title: "Trực quan hóa", body: "Báo cáo Excel, data modeling và dashboard design bằng Power BI." },
+          { title: "Trực quan hóa", body: "Báo cáo Excel, tổng hợp KPI và biểu đồ rõ ràng." },
           { title: "Tư duy kinh doanh", body: "Chuyển phát hiện thành đề xuất thực tế cho hoạt động vận hành." },
         ],
       },
       experience: {
         eyebrow: "Kinh nghiệm",
         title: "Kinh nghiệm vận hành, định hướng phân tích",
-        body: "Đây là các vai trò support và software, không phải vị trí Data Analyst trước đây. Chúng tạo bối cảnh cho những câu hỏi vận hành em đang tìm hiểu bằng dữ liệu.",
+        body: "Kinh nghiệm hỗ trợ khách hàng và phát triển phần mềm giúp em hiểu cách xử lý case, kiểm tra dữ liệu và phối hợp điều tra vấn đề.",
         items: [
-          // TODO: Xác minh có cần thêm FPT vào quá trình làm việc và kiểm tra chức danh, thời gian, trách nhiệm.
           {
             company: "Concentrix",
             label: "KINH NGHIỆM LÀM VIỆC THỰC TẾ",
             role: "Customer Service Specialist – Platform & Partner Support",
             period: "07/2025 – 07/2026",
             responsibilities: [
-              "Cung cấp hỗ trợ nền tảng L1 cho người dùng quốc tế qua điện thoại, email, CRM và hệ thống ticket.",
-              "Xử lý queue case với khối lượng cao theo tiêu chuẩn chất lượng dịch vụ và quy trình support có cấu trúc.",
-              "Phân loại vấn đề, ghi nhận triệu chứng và bước tái hiện, chuyển escalation kèm bằng chứng phù hợp.",
-              "Nhận diện các dạng vấn đề lặp lại trong quá trình xử lý ticket và chia sẻ bối cảnh qua case note, bàn giao nội bộ.",
-              "Phối hợp với các nhóm nội bộ và cập nhật cho người dùng trong suốt vòng đời case.",
-              "Hỗ trợ các vấn đề cấu hình liên quan đến Booking cho đối tác khách sạn.",
-              "Thông tin vai trò do chủ sở hữu cung cấp gồm 110+ case mỗi tuần và 97% QA.",
+              "Xử lý lượng lớn case của khách hàng và đối tác qua điện thoại, email và CRM theo quy trình dịch vụ có cấu trúc.",
+              "Kiểm tra dữ liệu tài khoản và case, phân loại vấn đề và ghi nhận các dạng lỗi lặp lại để theo dõi.",
+              "Làm việc theo tiêu chuẩn QA và dịch vụ, giữ case note và thông tin bàn giao rõ ràng.",
+              "Phối hợp điều tra vấn đề nền tảng và đối tác khách sạn giữa các nhóm, cập nhật cho người dùng.",
             ],
             highlights: ["110+ case mỗi tuần", "97% QA"],
-            tags: ["L1 Support", "Troubleshooting", "Incident Triage", "Evidence Collection", "Escalation", "User Communication", "Ticket Management"],
+            tags: ["Case Categorization", "QA / Service Metrics", "Documentation", "Cross-team Investigation"],
           },
           {
             company: "OPPO Vietnam",
@@ -1327,7 +1260,7 @@ export const portfolioContent = {
             headline: "Nền tảng software giúp em hiểu thêm bối cảnh phía sau một ticket.",
             role: "PHP Developer",
             period: "04/2024 – 04/2025",
-            responsibilities: ["Làm việc với PHP và MySQL khi điều tra, tái hiện vấn đề ứng dụng.", "Truy vấn hoặc kiểm tra dữ liệu ứng dụng khi cần để hỗ trợ troubleshooting.", "Kiểm thử bản sửa lỗi và ghi lại thông tin kỹ thuật để theo dõi.", "Phối hợp với developer và người dùng nghiệp vụ trong quá trình xử lý vấn đề."],
+            responsibilities: ["Phát triển ứng dụng PHP và dùng truy vấn SQL/MySQL để điều tra vấn đề ứng dụng và dữ liệu.", "Tái hiện lỗi, so sánh hành vi mong đợi với kết quả hệ thống và cơ sở dữ liệu.", "Kiểm tra dữ liệu, kiểm thử bản sửa lỗi và ghi tài liệu kỹ thuật để theo dõi.", "Phối hợp với developer và người dùng nghiệp vụ trong quá trình xử lý vấn đề."],
             highlights: [],
             tags: ["PHP", "MySQL", "SQL", "Testing", "Troubleshooting"],
           },
@@ -1338,10 +1271,10 @@ export const portfolioContent = {
         title: "Công cụ cho phân tích và vận hành",
         body: "Bộ công cụ tập trung vào cách em chuẩn bị, phân tích, truyền đạt và điều tra dữ liệu vận hành.",
         groups: [
-          { title: "Data Analysis", items: ["Excel", "SQL", "Python", "pandas", "Data Cleaning", "Exploratory Data Analysis"] },
-          { title: "Business Intelligence", items: ["Power BI", "Power Query", "DAX", "KPI Reporting", "Dashboard Design"] },
-          { title: "Data & Technical Foundations", items: ["MySQL", "CSV / structured data", "REST APIs", "Git / GitHub"] },
-          { title: "Professional / Operations", items: ["Problem Solving", "Root Cause Analysis", "Documentation", "Customer Support Operations", "Incident Investigation"] },
+          { title: "Data Analysis", items: ["SQL", "MySQL", "Python", "pandas", "NumPy", "Excel"] },
+          { title: "SQL & Data", items: ["JOINs", "CTEs", "Aggregations", "Window Functions", "Data Cleaning", "Data Validation"] },
+          { title: "Reporting", items: ["Excel Reporting", "Charts", "KPI Summaries"] },
+          { title: "Technical", items: ["Git", "GitHub", "REST APIs", "PHP"] },
         ],
       },
       featuredLab: {
@@ -1402,17 +1335,29 @@ export const portfolioContent = {
       projects: {
         eyebrow: "Dự án dữ liệu",
         title: "Phân tích từ những câu hỏi vận hành thực tế",
-        body: "Bắt đầu với case study support operations dùng dữ liệu tổng hợp, sau đó xem các project nhỏ hơn về data exploration và automation.",
+        body: "Thực hành thu thập dữ liệu, automation và mô hình hóa.",
       },
       projectOverview: {
         eyebrow: "Dự án nổi bật",
         title: "Customer Support Operations Analytics",
-        body: "Project có thể tái lập về chất lượng dịch vụ, SLA risk, demand, backlog và workforce capacity. Dataset là dữ liệu tổng hợp; repository phân biệt kết quả đã xác minh với phần Power BI chưa hoàn tất.",
+        body: "Dự án cá nhân kết nối dữ liệu support với hiệu quả dịch vụ và quyết định về khối lượng công việc.",
+      },
+      education: {
+        eyebrow: "Học vấn",
+        title: "Học vấn",
+        body: "Tốt nghiệp Công nghệ Thông tin, Đại học Văn Lang.",
+        items: [{ title: "Cử nhân Công nghệ Thông tin", note: "Đại học Văn Lang · 2020–2024" }],
+      },
+      english: {
+        eyebrow: "Tiếng Anh",
+        title: "Giao tiếp tiếng Anh",
+        body: "Đọc tài liệu kỹ thuật và trao đổi với khách hàng bằng tiếng Anh.",
+        proof: "Aptis ESOL — CEFR B2",
       },
       contact: {
         eyebrow: "Liên hệ",
-        title: "Anh/chị muốn tìm hiểu cách em tiếp cận dữ liệu kinh doanh thực tế?",
-        body: "Em đang tìm kiếm cơ hội Data Analyst, Operations Analyst, Business Data Analyst và Support Operations Analyst entry-level tại TP. Hồ Chí Minh.",
+        title: "Trao đổi về dữ liệu và vận hành.",
+        body: "Em đang tìm kiếm cơ hội Junior Data Analyst, Operations Analyst, Reporting Analyst và Data Operations tại TP. Hồ Chí Minh.",
       },
     },
     contact: {
@@ -1421,11 +1366,10 @@ export const portfolioContent = {
         { label: personalInfo.phone, href: personalContactLinks.phone },
         { label: "GitHub", href: githubBase },
       ],
-      pendingNote: "TODO: Bổ sung URL LinkedIn đã xác minh và CV PDF hiện tại khi có thông tin.",
     },
     footer: {
-      note: "Portfolio phân tích dữ liệu entry-level · Bằng chứng và giới hạn của dự án được trình bày rõ.",
-      updatedLabel: "Nội dung cập nhật: 2026-10-07",
+      note: "Truong Hoang Long · Data Analyst | Operations Analytics",
+      updatedLabel: "TP. Hồ Chí Minh, Việt Nam",
     },
     projectLabels: {
       analysis: "Phân tích",
@@ -1434,34 +1378,35 @@ export const portfolioContent = {
       context: "Bối cảnh",
       dataset: "Dataset",
       contributions: "Đóng góp",
-      evidence: "Bằng chứng",
+      evidence: "Repository và báo cáo",
       earlierProjects: "Các dự án phần mềm trước đây",
       featuredProjects: "Dự án dữ liệu nổi bật",
       findings: "Phát hiện chính",
       limitations: "Giới hạn",
       liveDemo: "Mở Live Demo",
-      moreProjects: "Thêm dự án học tập",
+      moreProjects: "Các dự án khác",
+      exploreProject: "Xem dự án",
       projectNavigation: "Điều hướng dự án nổi bật",
       projectOf: "Dự án {current} / {total}",
-      problem: "Vấn đề",
+      problem: "Bài toán nghiệp vụ",
       readCaseStudy: "Xem case study",
       recommendation: "Đề xuất",
-      resumePending: "CV PDF chưa có",
-      role: "Vai trò đã xác minh",
+      overview: "Tổng quan",
+      workflow: "Quy trình",
+      role: "Đóng góp của em",
       selectProject: "Chọn dự án",
       selectedProject: "Đang chọn",
       sourceRepository: "Mã nguồn",
-      techStack: "Tech stack",
+      techStack: "Công cụ",
       visualization: "Trực quan hóa",
       value: "Giá trị thể hiện",
       wakeBackend: "Khởi động / Kiểm tra Backend",
-      linkedinPending: "Chưa có hồ sơ LinkedIn",
     },
     notFound: {
       actionLabel: "Về trang chủ",
-      body: "Trang portfolio được yêu cầu không tồn tại trong content model đã audit hiện tại.",
+      body: "Trang có thể đã chuyển. Anh/chị có thể xem dự án và thông tin liên hệ ở trang chủ.",
       eyebrow: "Không tìm thấy",
-      title: "Trang này nằm ngoài phạm vi portfolio hiện tại.",
+      title: "Không tìm thấy trang",
     },
     projects: prioritizedVietnameseProjects,
   },

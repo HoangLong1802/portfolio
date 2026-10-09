@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Quality Report | Customer Support Operations Analytics</title>
+  <meta name="description" content="Quyết định làm sạch và đối soát năm bộ dữ liệu mô phỏng trong dự án Customer Support Operations Analytics.">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #FDF6ED; color: #252925; font: 16px/1.7 "Segoe UI", sans-serif; }
+    main { max-width: 960px; margin: auto; padding: 40px 20px 64px; }
+    h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); line-height: 1.2; }
+    h2 { margin-top: 40px; font-size: 1.4rem; }
+    p, li { max-width: 75ch; }
+    a { color: #4A5B47; text-underline-offset: 4px; }
+    a:focus-visible { outline: 3px solid #778873; outline-offset: 4px; }
+    nav { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+    nav a { padding-block: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { border-bottom: 1px solid #DCCFC0; padding: 12px 8px; text-align: right; vertical-align: top; }
+    th { background: #A1BC98; }
+    th:first-child, td:first-child { text-align: left; }
+    td:first-child { overflow-wrap: anywhere; }
+    caption { text-align: left; margin-bottom: 12px; }
+    li + li { margin-top: 12px; }
+    footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #DCCFC0; }
+    @media (max-width: 600px) { th, td { padding: 10px 4px; } }
+    @media print { body { background: white; } nav { display: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Điều hướng báo cáo">
+      <a href="/vi/projects/customer-support-operations-analytics">Về case study</a>
+      <a href="/projects/support-ops/customer_support_analysis.xlsx" download>Tải báo cáo Excel</a>
+      <a href="https://github.com/HoangLong1802/support-ops-analytics/tree/main/sql">Mở SQL trên GitHub</a>
+    </nav>
+    <h1>Data Quality Report</h1>
+    <p><strong>Customer Support Operations Analytics</strong><br>Dự án cá nhân sử dụng dữ liệu mô phỏng. Kỳ phân tích: 01/10/2025–30/09/2026, múi giờ Việt Nam (UTC+7). Snapshot: 01/10/2026 00:00.</p>
+    <p>Báo cáo tóm tắt cách làm sạch và đối soát năm nguồn trước khi tính KPI. Dữ liệu gốc được giữ nguyên; không tự điền timestamp hoặc điểm CSAT còn thiếu.</p>
+    <h2>Đối soát số dòng</h2>
+    <table>
+      <caption>Mỗi dòng gốc thuộc một trong ba nhóm: bản sao bị loại, dữ liệu tách riêng hoặc dữ liệu được giữ lại.</caption>
+      <thead><tr><th scope="col">Nguồn</th><th scope="col">Gốc</th><th scope="col">Bản sao</th><th scope="col">Tách riêng</th><th scope="col">Giữ lại</th></tr></thead>
+      <tbody>
+        <tr><td>Agents</td><td>18</td><td>0</td><td>0</td><td>18</td></tr>
+        <tr><td>SLA policies</td><td>16</td><td>0</td><td>0</td><td>16</td></tr>
+        <tr><td>Tickets</td><td>15.105</td><td>75</td><td>256</td><td>14.774</td></tr>
+        <tr><td>Work logs</td><td>18.278</td><td>36</td><td>341</td><td>17.901</td></tr>
+        <tr><td>Workforce daily</td><td>6.327</td><td>0</td><td>9</td><td>6.318</td></tr>
+      </tbody>
+    </table>
+    <h2>Quyết định làm sạch</h2>
+    <ul>
+      <li><strong>Bản sao và xung đột:</strong> bỏ 75 bản sao ticket và 36 bản sao work log. Tách riêng 60 phiên bản của 30 ticket ID xung đột vì không có thời điểm cập nhật để chọn phiên bản đúng.</li>
+      <li><strong>Danh mục và kênh:</strong> khôi phục category cho 60 dòng khi subcategory xác định duy nhất; tách riêng 60 dòng mơ hồ. Chuẩn hóa khoảng trắng và chữ hoa/thường cho 120 giá trị kênh.</li>
+      <li><strong>Vòng đời ticket:</strong> tách riêng mốc thời gian sai thứ tự, thiếu thông tin bắt buộc và tham chiếu không hợp lệ. Các số lỗi có thể chồng lấp; tổng dòng tách riêng nằm trong bảng trên.</li>
+      <li><strong>CSAT:</strong> đặt 23 điểm ngoài thang 1–5 thành null, giữ thông tin ticket. Không xem việc không trả lời khảo sát là điểm 0.</li>
+      <li><strong>Thời gian xử lý:</strong> giữ các khoảng thời gian dài nếu các mốc sự kiện hợp lệ. Đọc mean cùng median và phân vị để tránh che khuất các case chờ lâu.</li>
+    </ul>
+    <h2>Tránh đếm trùng khi phân tích</h2>
+    <p>Một ticket có thể có nhiều work log. Tổng hợp work log theo ticket trước khi ghép để giữ đúng 14.774 ticket; tách kết quả của người phụ trách cuối cùng khỏi công sức của người thực sự xử lý.</p>
+    <p>So sánh nhu cầu dùng đủ 365 ngày trong kỳ: 12.240 / 261 = 46,90 ticket mỗi ngày thường; 2.534 / 104 = 24,37 mỗi ngày cuối tuần. Tỷ lệ trung bình mỗi ngày là 1,92 lần.</p>
+    <h2>Phạm vi diễn giải</h2>
+    <p>Dữ liệu mô phỏng phục vụ thực hành. Việc tách dòng lỗi có thể thay đổi cơ cấu case và năng lực quan sát được. CSAT chỉ phản ánh người trả lời; snapshot không tái hiện đầy đủ lịch sử trạng thái. Năng lực theo ngày không xác định chính xác thiếu hụt từng ca. Các đề xuất cần được kiểm tra thêm trước khi áp dụng vào hoạt động thực tế.</p>
+    <footer>
+      <p>Tóm tắt từ báo cáo chất lượng dữ liệu và kết quả đối soát của dự án, cập nhật 08/10/2026. Các bảng Quality, Cleaning và Quarantine nằm trong <a href="/projects/support-ops/customer_support_analysis.xlsx" download>workbook Excel</a>.</p>
+      <p><a href="https://github.com/HoangLong1802/support-ops-analytics">Repository dự án</a> · <a href="/projects/customer-support-operations-analytics">English case study</a></p>
+    </footer>
+  </main>
+</body>
+</html>

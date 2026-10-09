@@ -17,6 +17,6 @@ export const portfolioSectionIds = Object.values(portfolioSections);
 
 export const portfolioProjectSelection = [
   "customer-support-operations-analytics",
-  "stock-prediction-ai",
-  "automated-it-asset-inventory",
 ] as const;
+
+export const secondaryProjectSelection = ["automated-it-asset-inventory", "stock-prediction-ai"] as const;

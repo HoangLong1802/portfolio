@@ -16,7 +16,7 @@ export function Reveal({ children, className = "", pattern = "content" }: Reveal
   const revealMotion = prefersReducedMotion
     ? { initial: false as const }
     : {
-        initial: { opacity: 0, y: distance },
+        initial: { opacity: 1, y: distance },
         whileInView: { opacity: 1, y: 0 },
       };
 

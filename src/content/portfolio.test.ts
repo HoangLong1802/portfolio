@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { portfolioProjectSelection, portfolioSectionIds } from "@/config/portfolio-sections";
+import { portfolioProjectSelection, portfolioSectionIds, secondaryProjectSelection } from "@/config/portfolio-sections";
 import { portfolioContent } from "@/content/portfolio";
 import { getAllProjects, getProjectBySlug, getPublicMetrics } from "@/lib/portfolio";
 import type { Locale, PortfolioContent } from "@/types/portfolio";
@@ -126,9 +126,8 @@ describe("portfolio content", () => {
       expect(content.home.scrollNavigation.chapters.map((chapter) => chapter.href)).toEqual([
         "#home",
         "#projects",
-        "#experience",
         "#skills",
-        "#workflow",
+        "#experience",
         "#profile",
         "#contact",
       ]);
@@ -138,9 +137,8 @@ describe("portfolio content", () => {
   it("keeps the visible data project hierarchy complete in both languages", () => {
     expect(portfolioProjectSelection).toEqual([
       "customer-support-operations-analytics",
-      "stock-prediction-ai",
-      "automated-it-asset-inventory",
     ]);
+    expect(secondaryProjectSelection).toEqual(["automated-it-asset-inventory", "stock-prediction-ai"]);
 
     for (const locale of locales) {
       const content = portfolioContent[locale];
@@ -198,18 +196,18 @@ describe("portfolio content", () => {
       const content = portfolioContent[locale];
 
       expect(content.home.hero.eyebrow).toContain("DATA ANALYST");
-      expect(content.home.hero.highlights).toEqual(["SQL", "Excel", "Power BI", "Python", "Data Cleaning", "KPI Analysis"]);
+      expect(content.home.hero.highlights).toEqual(["SQL", "Python", "pandas", "Excel"]);
       expect(content.home.hero.actions[0]?.href).toBe("#projects");
       expect(content.home.scrollNavigation.chapters.map((chapter) => chapter.href)).toEqual([
-        "#home", "#projects", "#experience", "#skills", "#workflow", "#profile", "#contact",
+        "#home", "#projects", "#skills", "#experience", "#profile", "#contact",
       ]);
       expect(content.home.focus.items).toHaveLength(4);
       expect(content.home.experience.items).toHaveLength(2);
       expect(content.home.skills.groups.map((group) => group.title)).toEqual([
         "Data Analysis",
-        "Business Intelligence",
-        "Data & Technical Foundations",
-        "Professional / Operations",
+        "SQL & Data",
+        "Reporting",
+        "Technical",
       ]);
       expect(content.profile.role).toBe("Data Analyst | Operations Analytics");
       expect(content.contact.links.some((link) => link.href.startsWith("mailto:"))).toBe(true);
@@ -228,9 +226,10 @@ describe("portfolio content", () => {
       expect(caseStudy?.findings).toHaveLength(3);
       expect(caseStudy?.findings[0]).toMatch(locale === "en" ? /29\.49%.*50\.09%/ : /29,49%.*50,09%/);
       expect(caseStudy?.recommendations.length).toBeGreaterThan(0);
-      expect(caseStudy?.visualization).toMatch(/PBIX/);
-      expect(project?.limitations.join(" ")).toMatch(/synthetic|tổng hợp/i);
-      expect(project?.limitations.join(" ")).toMatch(/MySQL|Power BI/i);
+      expect(caseStudy?.visualization).toMatch(/Excel/);
+      expect(project?.limitations.join(" ")).toMatch(/synthetic|mô phỏng/i);
+      expect(project?.techStack.join(" ")).not.toMatch(/Power BI|DAX/);
+      expect(caseStudy?.workflow).toHaveLength(5);
       expect(project?.evidence.some((item) => item.href.endsWith("customer_support_analysis.xlsx"))).toBe(true);
     }
   });
@@ -261,8 +260,7 @@ describe("portfolio content", () => {
     }
 
     expect(helpdesk.category).toBe("portfolio-lab");
-    expect(helpdesk.limitations.join(" ")).toContain("GLPI REST ticket creation is not complete");
-    expect(helpdesk.limitations.join(" ")).toContain("local fallback");
+    expect(helpdesk.limitations.join(" ")).toContain("local database fallback");
   });
 
   it("requires project evidence and limitations in every locale", () => {

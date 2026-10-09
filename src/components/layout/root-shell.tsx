@@ -23,7 +23,7 @@ export function RootShell({ children, locale }: RootShellProps) {
             <ActiveSectionProvider>
               <LocalizedSkipLink />
               <SiteHeader />
-              <main id="main-content">{children}</main>
+              <main id="main-content" tabIndex={-1}>{children}</main>
               <SiteFooter />
             </ActiveSectionProvider>
           </PortfolioMotionProvider>
