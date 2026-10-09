@@ -29,3 +29,14 @@ pnpm-debug.log*
 # system
 .DS_Store
 Thumbs.db
+
+# caches and temporary files
+.eslintcache
+.vercel
+*.log
+*.tmp
+.turbo
+.playwright-mcp
+.env*.local
+.env.production
+.env.development

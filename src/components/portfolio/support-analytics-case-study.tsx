@@ -58,6 +58,11 @@ export function SupportAnalyticsCaseStudy({ content, project }: SupportAnalytics
         <h2 id="analysis-title">{labels.analysis}</h2>
         <ul className="case-study-list analysis-question-list">{study.analysis.map((item) => <li key={item}>{item}</li>)}</ul>
         <p>{study.visualization}</p>
+        <div className="workbook-gallery powerbi-gallery" id="powerbi-report">
+          <h3>{supportReport.powerbiTitle[content.locale]}</h3>
+          <p className="project-data-note">{supportReport.powerbiNote[content.locale]}</p>
+          {supportReport.powerbiPreviews.map((preview) => <WorkbookPreview key={preview.id} locale={content.locale} preview={preview} />)}
+        </div>
         <div className="workbook-gallery" id="report-preview">
           <h3>{supportReport.previewTitle[content.locale]}</h3>
           <p className="project-data-note">{supportReport.renderNote[content.locale]}</p>

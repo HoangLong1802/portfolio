@@ -3229,7 +3229,7 @@ main [role="tabpanel"][id] {
 .analytics-metrics dd { display: contents; margin: 0; }
 .analytics-metrics strong { order: 1; color: var(--accent); font-size: clamp(2rem, 4vw, 2.7rem); font-weight: 650; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .analytics-metrics span { order: 3; color: var(--muted); font-size: 0.78rem; line-height: 1.55; }
-.analytics-metrics--scope { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.analytics-metrics--scope { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .analytics-metrics--scope strong { font-size: 1.9rem; }
 .analytics-metrics--findings { border-left: 1px solid var(--border); padding-left: 28px; }
 .project-data-note { max-width: 76ch; margin-top: 20px; color: var(--muted); font-size: 0.85rem; line-height: 1.65; }
@@ -3358,6 +3358,8 @@ ol.case-study-list { list-style: decimal; }
 .workbook-gallery > h3 { margin: 0; }
 .workbook-gallery > .project-data-note { margin: -12px 0 0; }
 .workbook-gallery .workbook-preview + .workbook-preview { margin-top: 12px; }
+.powerbi-gallery .workbook-preview__image { border: 1px solid var(--border, rgba(74, 91, 71, 0.25)); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(36, 48, 34, 0.12); }
+.powerbi-gallery .workbook-preview__image img { display: block; width: 100%; height: auto; }
 .featured-project__report .project-data-note { margin-top: 8px; }
 
 @media (min-width: 1080px) {

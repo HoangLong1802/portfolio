@@ -196,7 +196,7 @@ describe("portfolio content", () => {
       const content = portfolioContent[locale];
 
       expect(content.home.hero.eyebrow).toContain("DATA ANALYST");
-      expect(content.home.hero.highlights).toEqual(["SQL", "Python", "pandas", "Excel"]);
+      expect(content.home.hero.highlights).toEqual(["SQL", "Python", "Power BI", "Excel"]);
       expect(content.home.hero.actions[0]?.href).toBe("#projects");
       expect(content.home.scrollNavigation.chapters.map((chapter) => chapter.href)).toEqual([
         "#home", "#projects", "#skills", "#experience", "#profile", "#contact",
@@ -228,8 +228,8 @@ describe("portfolio content", () => {
       expect(caseStudy?.recommendations.length).toBeGreaterThan(0);
       expect(caseStudy?.visualization).toMatch(/Excel/);
       expect(project?.limitations.join(" ")).toMatch(/synthetic|mô phỏng/i);
-      expect(project?.techStack.join(" ")).not.toMatch(/Power BI|DAX/);
-      expect(caseStudy?.workflow).toHaveLength(5);
+      expect(project?.techStack).toEqual(expect.arrayContaining(["Power BI", "DAX"]));
+      expect(caseStudy?.workflow).toHaveLength(6);
       expect(project?.evidence.some((item) => item.href.endsWith("customer_support_analysis.xlsx"))).toBe(true);
     }
   });

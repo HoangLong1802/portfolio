@@ -24,7 +24,7 @@ describe("recruiter-facing portfolio", () => {
       for (const html of pages) {
         const publicText = html.replace(/<[^>]*>/g, " ");
         expect(publicText).not.toMatch(unfinishedCopy);
-        expect(publicText).not.toMatch(/Power BI|PBIX|DAX/);
+        expect(publicText).not.toMatch(/PBIX/);
         expect(html).not.toContain('aria-disabled="true"');
       }
     });

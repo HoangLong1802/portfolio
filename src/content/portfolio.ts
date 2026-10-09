@@ -13,7 +13,7 @@ const customerSupportAnalytics: Project = {
   summary: "I analyzed ticket demand, SLA breaches and team workload to identify where support operations need closer attention.",
   problem: "Support teams need visibility into SLA breaches, ticket demand, backlog and agent workload to allocate resources and improve service performance.",
   story: {
-    role: "Cleaned and analyzed the data in Python, wrote MySQL analysis queries and built an Excel reporting workbook.",
+    role: "Cleaned and analyzed the data in Python, wrote MySQL analysis queries, modeled it in Power BI with DAX and built an Excel reporting workbook.",
     value: "Connected service questions with data preparation, KPI analysis and practical recommendations.",
     visualAlt: "Technical cases account for 29.49% of tickets and 50.09% of resolution SLA breaches in the synthetic dataset.",
     visualLabels: ["14,774 tickets", "SLA analysis", "Backlog aging", "Workload planning"],
@@ -22,18 +22,22 @@ const customerSupportAnalytics: Project = {
     "Analyzed 14,774 cleaned ticket snapshots across 18 agents and three teams.",
     "Reconciled duplicates, conflicting records and invalid data before calculating KPIs.",
     "Calculated findings in Python and wrote MySQL queries for service, customer and workforce questions.",
+    "Built a five-page Power BI report on a star-schema model with 68 DAX measures.",
+    "Checked the main KPIs against an independent Python calculation: 21 of 21 checks matched.",
     "Produced an Excel workbook with 14 reporting sheets and five charts.",
   ],
-  techStack: ["Python", "pandas", "SQL / MySQL", "Excel"],
+  techStack: ["Power BI", "DAX", "Power Query", "Python", "pandas", "SQL / MySQL", "Excel"],
   evidence: [
     { label: "GitHub repository", href: "https://github.com/HoangLong1802/support-ops-analytics", note: "Data, Python pipeline, SQL queries and reporting outputs." },
+    { label: "Power BI model and DAX", href: supportReport.powerbiHref, note: "Report file, Power Query code and the DAX measures." },
+    { label: "Validation report", href: supportReport.testReportHref, note: "Power BI results compared with an independent Python calculation." },
     { label: "Download Excel report", href: supportReport.workbookHref, note: "14 reporting sheets and five charts covering service, demand and workload." },
     { label: "Open SQL on GitHub", href: supportReport.sqlHref, note: "MySQL queries for SLA, demand, CSAT, backlog and workforce questions." },
     { label: "Data quality report", href: supportReport.qualityHref, note: "Cleaning decisions, row reconciliation and the limits of the analysis." },
   ],
   caseStudy: {
     dataset: "Five synthetic datasets cover tickets, handling work logs, daily workforce capacity, agents and SLA policies. They represent 18 agents in three teams from October 2025 to September 2026. After cleaning, 14,774 ticket snapshots remain, with dimensions for category, priority, channel, date and team.",
-    workflow: ["Raw CSV", "Data validation", "Python cleaning", "Python analysis & SQL query design", "Excel reporting"],
+    workflow: ["Raw CSV", "Data validation", "Python cleaning", "SQL analysis (MySQL 8.4 in CI)", "Power BI model & DAX", "Power BI and Excel reporting"],
     cleaning: [
       "Removed 75 duplicate ticket copies and 36 duplicate work-log copies; normalized channel values.",
       "Separated conflicting ticket versions and invalid lifecycles from the records used for analysis.",
@@ -47,7 +51,7 @@ const customerSupportAnalytics: Project = {
       "Agent and team performance — reviewed service outcomes alongside case mix and sample size.",
       "Workload and staffing — compared recorded handling effort with daily productive capacity.",
     ],
-    visualization: "The Excel report contains 14 sheets and five charts, covering service, demand and workload. Python calculates the results. The accompanying MySQL query designs use JOINs, CTEs, aggregations and window functions to answer the same business questions.",
+    visualization: "The Power BI report has five pages: overview, SLA and demand, workforce, customer experience, and backlog risk. The Excel report adds 14 sheets and five charts. The MySQL queries use JOINs, CTEs, aggregations and window functions; they run in a GitHub Actions workflow on MySQL 8.4, not on a local server.",
     findings: [
       "Technical cases are 29.49% of tickets but contribute 50.09% of resolution SLA breaches (1,760 of 3,514).",
       "Average daily arrivals are 46.90 on weekdays and 24.37 on weekends, a 1.92× ratio across 261 weekdays and 104 weekend days.",
@@ -590,7 +594,7 @@ const vietnameseCustomerSupportAnalytics: Project = {
   summary: "Em phân tích lượng ticket, vi phạm SLA và khối lượng công việc để xác định những vấn đề cần ưu tiên rà soát trong hoạt động hỗ trợ.",
   problem: "Nhóm hỗ trợ cần theo dõi vi phạm SLA, lượng ticket, backlog và khối lượng công việc để phân bổ nguồn lực và cải thiện chất lượng dịch vụ.",
   story: {
-    role: "Làm sạch và phân tích dữ liệu bằng Python, viết truy vấn MySQL và xây dựng workbook báo cáo Excel.",
+    role: "Làm sạch và phân tích dữ liệu bằng Python, viết truy vấn MySQL, xây dựng mô hình Power BI với DAX và workbook báo cáo Excel.",
     value: "Kết nối câu hỏi vận hành với chuẩn bị dữ liệu, phân tích KPI và đề xuất thực tế.",
     visualAlt: "Nhóm Technical chiếm 29,49% ticket và 50,09% vi phạm SLA xử lý trong bộ dữ liệu mô phỏng.",
     visualLabels: ["14.774 ticket", "Phân tích SLA", "Tuổi backlog", "Khối lượng công việc"],
@@ -599,17 +603,21 @@ const vietnameseCustomerSupportAnalytics: Project = {
     "Phân tích 14.774 ticket snapshot sau làm sạch, thuộc 18 nhân viên và ba nhóm.",
     "Đối soát dữ liệu trùng, xung đột và không hợp lệ trước khi tính KPI.",
     "Tính kết quả bằng Python và viết truy vấn MySQL cho các câu hỏi dịch vụ, khách hàng và nhân lực.",
+    "Xây dựng báo cáo Power BI năm trang trên mô hình star schema với 68 measure DAX.",
+    "Đối chiếu các KPI chính với phép tính Python độc lập: khớp 21 trên 21 kiểm tra.",
     "Tạo workbook Excel gồm 14 sheet báo cáo và năm biểu đồ.",
   ],
   evidence: [
     { label: "Repository GitHub", href: "https://github.com/HoangLong1802/support-ops-analytics", note: "Dữ liệu, pipeline Python, truy vấn SQL và báo cáo." },
+    { label: "Mô hình Power BI và DAX", href: supportReport.powerbiHref, note: "File báo cáo, code Power Query và các measure DAX." },
+    { label: "Báo cáo kiểm chứng", href: supportReport.testReportHref, note: "Kết quả Power BI được so với phép tính Python độc lập." },
     { label: "Tải báo cáo Excel", href: supportReport.workbookHref, note: "14 sheet và năm biểu đồ về dịch vụ, lượng ticket và khối lượng công việc." },
     { label: "Mở SQL trên GitHub", href: supportReport.sqlHref, note: "Truy vấn MySQL cho SLA, lượng ticket, CSAT, backlog và nhân lực." },
     { label: "Báo cáo chất lượng dữ liệu", href: supportReport.qualityHref, note: "Quyết định làm sạch, đối soát số dòng và giới hạn phân tích." },
   ],
   caseStudy: {
     dataset: "Năm bộ dữ liệu mô phỏng gồm ticket, nhật ký xử lý, năng lực nhân lực theo ngày, nhân viên và chính sách SLA. Dữ liệu bao gồm 18 nhân viên thuộc ba nhóm, từ tháng 10/2025 đến tháng 9/2026. Sau làm sạch còn 14.774 ticket snapshot, với các chiều loại vấn đề, độ ưu tiên, kênh, ngày và nhóm.",
-    workflow: ["CSV gốc", "Kiểm tra dữ liệu", "Làm sạch bằng Python", "Phân tích Python & thiết kế truy vấn SQL", "Báo cáo Excel"],
+    workflow: ["CSV gốc", "Kiểm tra dữ liệu", "Làm sạch bằng Python", "Phân tích SQL (MySQL 8.4 trong CI)", "Mô hình Power BI & DAX", "Báo cáo Power BI và Excel"],
     cleaning: [
       "Loại 75 bản sao ticket và 36 bản sao nhật ký xử lý; chuẩn hóa giá trị kênh.",
       "Tách phiên bản ticket xung đột và vòng đời không hợp lệ khỏi dữ liệu phân tích.",
@@ -623,7 +631,7 @@ const vietnameseCustomerSupportAnalytics: Project = {
       "Hiệu quả nhân viên và nhóm — xem kết quả dịch vụ cùng cơ cấu case và cỡ mẫu.",
       "Khối lượng công việc và nhân lực — so sánh thời gian xử lý ghi nhận với năng lực làm việc theo ngày.",
     ],
-    visualization: "Báo cáo Excel gồm 14 sheet và năm biểu đồ về dịch vụ, lượng ticket và khối lượng công việc. Python tính các kết quả trong báo cáo. Bộ truy vấn MySQL đi kèm dùng JOIN, CTE, tổng hợp và hàm cửa sổ để trả lời các câu hỏi nghiệp vụ tương ứng.",
+    visualization: "Báo cáo Power BI gồm năm trang: tổng quan, SLA và lượng ticket, nhân lực, trải nghiệm khách hàng, và rủi ro backlog. Báo cáo Excel bổ sung 14 sheet và năm biểu đồ. Truy vấn MySQL dùng JOIN, CTE, tổng hợp và hàm cửa sổ; chúng chạy trong workflow GitHub Actions trên MySQL 8.4, chưa chạy trên máy chủ cục bộ.",
     findings: [
       "Nhóm Technical chiếm 29,49% ticket nhưng đóng góp 50,09% vi phạm SLA xử lý (1.760 trên 3.514).",
       "Trung bình mỗi ngày có 46,90 ticket vào ngày thường và 24,37 vào cuối tuần, chênh lệch 1,92 lần trên 261 ngày thường và 104 ngày cuối tuần.",
@@ -673,7 +681,7 @@ export const portfolioContent = {
     site: {
       title: "Truong Hoang Long | Data Analyst Portfolio",
       description:
-        "Junior Data Analyst portfolio featuring SQL, Python, Excel and operations analytics projects.",
+        "Junior Data Analyst portfolio featuring SQL, Python, Power BI and operations analytics projects.",
       lastUpdated: "2026-10-08",
     },
     profile: {
@@ -714,9 +722,9 @@ export const portfolioContent = {
         eyebrow: "DATA ANALYST · OPERATIONS ANALYTICS",
         title: "Understanding support operations through data.",
         summary:
-          "IT graduate with experience in software, databases and customer-support operations. I use SQL, Python and Excel to investigate service delays, ticket demand and team workload.",
+          "IT graduate with experience in software, databases and customer-support operations. I use SQL, Python, Power BI and Excel to investigate service delays, ticket demand and team workload.",
         highlightLabel: "Data analysis toolkit",
-        highlights: ["SQL", "Python", "pandas", "Excel"],
+        highlights: ["SQL", "Python", "Power BI", "Excel"],
         statusLabel: "Target roles",
         statusItems: [
           { label: "Primary", value: "Junior Data Analyst" },
@@ -826,7 +834,7 @@ export const portfolioContent = {
       focus: {
         eyebrow: "HOW I CAN CONTRIBUTE",
         title: "Useful analysis starts with trustworthy data",
-        body: "My support analytics project combines Python data cleaning, SQL query design and a 14-sheet Excel report.",
+        body: "My support analytics project combines Python data cleaning, SQL analysis, a five-page Power BI report and a 14-sheet Excel report.",
         items: [
           {
             title: "Data Preparation",
@@ -889,7 +897,7 @@ export const portfolioContent = {
         groups: [
           { title: "Data Analysis", items: ["SQL", "MySQL", "Python", "pandas", "NumPy", "Excel"] },
           { title: "SQL & Data", items: ["JOINs", "CTEs", "Aggregations", "Window Functions", "Data Cleaning", "Data Validation"] },
-          { title: "Reporting", items: ["Excel Reporting", "Charts", "KPI Summaries"] },
+          { title: "Reporting", items: ["Power BI", "DAX", "Power Query", "Excel Reporting", "KPI Summaries"] },
           { title: "Technical", items: ["Git", "GitHub", "REST APIs", "PHP"] },
         ],
       },
@@ -1078,7 +1086,7 @@ export const portfolioContent = {
     languageSwitchLabel: "English",
     site: {
       title: "Truong Hoang Long | Portfolio Data Analyst",
-      description: "Portfolio Junior Data Analyst với các dự án SQL, Python, Excel và phân tích vận hành.",
+      description: "Portfolio Junior Data Analyst với các dự án SQL, Python, Power BI và phân tích vận hành.",
       lastUpdated: "2026-10-08",
     },
     profile: {
@@ -1117,9 +1125,9 @@ export const portfolioContent = {
         ],
         eyebrow: "DATA ANALYST · OPERATIONS ANALYTICS",
         title: "Hiểu vận hành hỗ trợ qua dữ liệu.",
-        summary: "Em tốt nghiệp CNTT, có kinh nghiệm phần mềm, cơ sở dữ liệu và hỗ trợ khách hàng. Em dùng SQL, Python và Excel để phân tích chậm trễ dịch vụ, lượng ticket và khối lượng công việc.",
+        summary: "Em tốt nghiệp CNTT, có kinh nghiệm phần mềm, cơ sở dữ liệu và hỗ trợ khách hàng. Em dùng SQL, Python, Power BI và Excel để phân tích chậm trễ dịch vụ, lượng ticket và khối lượng công việc.",
         highlightLabel: "Công cụ phân tích dữ liệu",
-        highlights: ["SQL", "Python", "pandas", "Excel"],
+        highlights: ["SQL", "Python", "Power BI", "Excel"],
         statusLabel: "Vị trí đang hướng tới",
         statusItems: [
           { label: "Mục tiêu chính", value: "Junior Data Analyst" },
@@ -1227,7 +1235,7 @@ export const portfolioContent = {
       focus: {
         eyebrow: "EM CÓ THỂ ĐÓNG GÓP",
         title: "Phân tích hữu ích bắt đầu từ dữ liệu đáng tin cậy",
-        body: "Dự án support analytics kết hợp làm sạch dữ liệu bằng Python, thiết kế truy vấn SQL và báo cáo Excel 14 sheet.",
+        body: "Dự án support analytics kết hợp làm sạch dữ liệu bằng Python, phân tích SQL, báo cáo Power BI năm trang và báo cáo Excel 14 sheet.",
         items: [
           { title: "Chuẩn bị dữ liệu", body: "Làm sạch, xác thực, đối soát và kiểm tra chất lượng dữ liệu." },
           { title: "Phân tích", body: "SQL, Python/pandas, KPI analysis và exploratory analysis." },
@@ -1273,7 +1281,7 @@ export const portfolioContent = {
         groups: [
           { title: "Data Analysis", items: ["SQL", "MySQL", "Python", "pandas", "NumPy", "Excel"] },
           { title: "SQL & Data", items: ["JOINs", "CTEs", "Aggregations", "Window Functions", "Data Cleaning", "Data Validation"] },
-          { title: "Reporting", items: ["Excel Reporting", "Charts", "KPI Summaries"] },
+          { title: "Reporting", items: ["Power BI", "DAX", "Power Query", "Excel Reporting", "KPI Summaries"] },
           { title: "Technical", items: ["Git", "GitHub", "REST APIs", "PHP"] },
         ],
       },

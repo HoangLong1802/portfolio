@@ -21,6 +21,7 @@ export const supportAnalyticsMetrics = {
   scope: [
     { id: "tickets", value: { en: "14,774", vi: "14.774" }, label: { en: "Cleaned ticket records", vi: "Ticket sau làm sạch" }, context: { en: "One snapshot per retained ticket", vi: "Một snapshot cho mỗi ticket được giữ lại" } },
     { id: "datasets", value: { en: "5", vi: "5" }, label: { en: "Support datasets", vi: "Bộ dữ liệu support" }, context: { en: "Tickets, work logs, workforce, agents, SLA", vi: "Ticket, work log, nhân lực, nhân viên, SLA" } },
+    { id: "powerbi", value: { en: "5", vi: "5" }, label: { en: "Power BI report pages", vi: "Trang báo cáo Power BI" }, context: { en: "68 DAX measures; 21 of 21 checks vs. Python", vi: "68 measure DAX; khớp 21/21 kiểm tra với Python" } },
     { id: "workbook", value: { en: "14", vi: "14" }, label: { en: "Excel reporting sheets", vi: "Sheet báo cáo Excel" }, context: { en: "KPI summaries and five charts", vi: "Tổng hợp KPI và năm biểu đồ" } },
   ],
   findings: [
@@ -31,6 +32,17 @@ export const supportAnalyticsMetrics = {
 
 export const supportReport = {
   workbookHref: "/projects/support-ops/customer_support_analysis.xlsx",
+  powerbiHref: "https://github.com/HoangLong1802/support-ops-analytics/tree/main/powerbi",
+  testReportHref: "https://github.com/HoangLong1802/support-ops-analytics/blob/main/docs/test_report.md",
+  powerbiTitle: { en: "Power BI report", vi: "Báo cáo Power BI" },
+  powerbiNote: { en: "Screenshots captured from Power BI Desktop. Five pages on a star-schema model; synthetic data.", vi: "Ảnh chụp từ Power BI Desktop. Năm trang trên mô hình star schema; dữ liệu mô phỏng." },
+  powerbiPreviews: [
+    { id: "pbi-overview", src: "/projects/support-ops/powerbi-operations_overview.png", width: 1330, height: 735, title: { en: "1 · Operations overview", vi: "1 · Tổng quan vận hành" }, alt: { en: "Power BI overview page with ticket volume, SLA compliance, backlog and CSAT cards.", vi: "Trang tổng quan Power BI với lượng ticket, SLA, backlog và CSAT." }, caption: { en: "Volume, SLA compliance, backlog and CSAT on one page.", vi: "Lượng ticket, SLA, backlog và CSAT trên một trang." } },
+    { id: "pbi-sla", src: "/projects/support-ops/powerbi-sla_demand.png", width: 1330, height: 735, title: { en: "2 · SLA and demand", vi: "2 · SLA và lượng ticket" }, alt: { en: "Power BI page showing SLA by priority and ticket demand by weekday and hour.", vi: "Trang Power BI về SLA theo độ ưu tiên và lượng ticket theo thứ và giờ." }, caption: { en: "SLA by priority, with demand by weekday and hour of day.", vi: "SLA theo độ ưu tiên, cùng lượng ticket theo thứ và giờ." } },
+    { id: "pbi-workforce", src: "/projects/support-ops/powerbi-workforce_performance.png", width: 1330, height: 735, title: { en: "3 · Workforce", vi: "3 · Nhân lực" }, alt: { en: "Power BI workforce page with tickets per agent, handling time, absence and shrinkage.", vi: "Trang nhân lực Power BI với ticket mỗi nhân viên, thời gian xử lý, vắng mặt và shrinkage." }, caption: { en: "Tickets per agent, handling time, absence and shrinkage.", vi: "Ticket mỗi nhân viên, thời gian xử lý, vắng mặt và shrinkage." } },
+    { id: "pbi-customer", src: "/projects/support-ops/powerbi-customer_experience.png", width: 1330, height: 735, title: { en: "4 · Customer experience", vi: "4 · Trải nghiệm khách hàng" }, alt: { en: "Power BI page with CSAT and reopen rate by month, category and channel.", vi: "Trang Power BI về CSAT và tỷ lệ mở lại theo tháng, loại vấn đề và kênh." }, caption: { en: "CSAT and reopen rate. Only about half of completed tickets have a rating.", vi: "CSAT và tỷ lệ mở lại. Chỉ khoảng một nửa ticket hoàn tất có đánh giá." } },
+    { id: "pbi-backlog", src: "/projects/support-ops/powerbi-backlog_operational_risk.png", width: 1330, height: 735, title: { en: "5 · Backlog and risk", vi: "5 · Backlog và rủi ro" }, alt: { en: "Power BI page showing the age of unresolved tickets.", vi: "Trang Power BI về tuổi của các ticket chưa xử lý." }, caption: { en: "Unresolved tickets by age at the 1 October 2026 snapshot.", vi: "Ticket chưa xử lý theo tuổi tại thời điểm chốt 01/10/2026." } },
+  ],
   qualityHref: "/projects/support-ops/data-quality-report.html",
   qualityHrefEn: "/projects/support-ops/data-quality-report-en.html",
   sqlHref: "https://github.com/HoangLong1802/support-ops-analytics/tree/main/sql",

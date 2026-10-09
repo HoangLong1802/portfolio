@@ -2,9 +2,18 @@ import Image from "next/image";
 import { supportReport } from "@/config/support-analytics";
 import type { Locale } from "@/types/portfolio";
 
+type Preview = {
+  readonly src: string;
+  readonly width: number;
+  readonly height: number;
+  readonly title: Readonly<Record<Locale, string>>;
+  readonly alt: Readonly<Record<Locale, string>>;
+  readonly caption: Readonly<Record<Locale, string>>;
+};
+
 type WorkbookPreviewProps = {
   readonly locale: Locale;
-  readonly preview: (typeof supportReport.previews)[number];
+  readonly preview: Preview;
   readonly preload?: boolean;
 };
 
